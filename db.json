@@ -1,0 +1,52 @@
+{
+    "items":[
+        {
+          "id": 1,
+          "name": "Apple",
+          "account": "@appl3",
+          "time": "3 小時",
+          "avatar": "https://picsum.photos/300/300?text=1",
+          "showText": "true",
+          "text": "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum",
+          "showFollow": "false",
+          "isFollowing": "false",
+          "showIcon": "true"
+        },
+        {
+          "id": 2,
+          "name": "jahdn",
+          "account": "@fjkj",
+          "time": "4 小時",
+          "avatar": "https://picsum.photos/300/300?text=2",
+          "showText": "true",
+          "text": "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum",
+          "showFollow": "false",
+          "isFollowing": "false",
+          "showIcon": "true"
+        },
+        {
+          "id": 3,
+          "name": "jahdn",
+          "account": "@fjkj",
+          "time": "4 小時",
+          "avatar": "https://picsum.photos/300/300?text=2",
+          "showText": "true",
+          "text": "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum",
+          "showFollow": "false",
+          "isFollowing": "false",
+          "showIcon": "true"
+        },
+        {
+          "id": 4,
+          "name": "jahdn",
+          "account": "@fjkj",
+          "time": "4 小時",
+          "avatar": "https://picsum.photos/300/300?text=2",
+          "showText": "true",
+          "text": "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum",
+          "showFollow": "false",
+          "isFollowing": "false",
+          "showIcon": "true"
+        }
+      ]
+}
