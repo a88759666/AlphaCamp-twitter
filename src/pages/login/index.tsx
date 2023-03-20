@@ -42,7 +42,7 @@ export const SubmitBtn = (props: { btn: string }) => {
   const {btn} = props
   return(
     <div>
-      <button className="bg-[#FF6600] text-white w-full h-[46px] rounded-[50px] cursor-pointer">{btn}</button>
+      <button className="bg-[#FF6600] text-white w-full h-[46px] rounded-[50px] cursor-pointer hover:bg-orange-700 focus:ring-orange-300">{btn}</button>
     </div>
   )
 }
