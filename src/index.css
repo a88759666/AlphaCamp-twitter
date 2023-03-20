@@ -56,3 +56,9 @@ body {
       @apply ring-blue-400;
   }
 }
+
+@layer components{
+  .link {
+    @apply underline text-[#0062FF] cursor-pointer;
+  }
+}
