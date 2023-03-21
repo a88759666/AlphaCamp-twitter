@@ -27,4 +27,3 @@ const Setting: React.FC = () => {
 
 export default Setting;
 
-//做完記得要改input的hover/focus樣式

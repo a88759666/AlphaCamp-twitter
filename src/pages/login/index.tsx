@@ -7,9 +7,9 @@ export const InputCard = (props : {label:string, placeholder:string}) => {
   const {label, placeholder} = props
   return(
     <form>
-      <div className="bg-[#F5F8FA] border-b-2 border-b-black my-8 px-2.5">
+      <div className="bg-[#F5F8FA]  my-8 px-2.5 ">
         <label htmlFor="account" className="block text-[14px]">{label}</label>
-        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="bg-inherit focus:outline-none"></input>
+        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="focus:outline-none inputDefault inputDefault:hover inputDefault:focus"></input>
       </div>      
     </form>
   )

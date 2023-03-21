@@ -61,4 +61,16 @@ body {
   .link {
     @apply underline text-[#0062FF] cursor-pointer;
   }
+  .inputDefault {
+    @apply bg-inherit border-b-2 border-b-black w-full
+  }
+  .inputDefault:hover {
+    @apply border-b-[#50B5FF] z-10
+  }
+  .inputDefault:focus {
+    @apply border-b-[#50B5FF] z-10
+  }
+  .inputError {
+    @apply bg-b-[#FC5A5A]
+  }
 }
