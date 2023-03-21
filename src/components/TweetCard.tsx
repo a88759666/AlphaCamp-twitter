@@ -22,20 +22,20 @@ const TweetCard = (props: {
         <div className="ml-2 pt-2 ">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
-              @{account} &#8729; {postTime}
+              @{account} &#8729; {postTime}小時
             </span>
           </p>
           <p className="leading-[26px]">{tweet}</p>
           <div className="flex w-[150px]">
             <div className="basis-1/2 flex">
               <div className="pt-[3.5px]">
-                <LikeIcon />
+                <ReplyIcon />
               </div>
               <p className="text-[14px] ml-2.5">{likeCount}</p>
             </div>
             <div className="basis-1/2 flex ">
               <div className="pt-[3.5px]">
-                <ReplyIcon />
+                <LikeIcon />
               </div>
               <p className="text-[14px] ml-2.5">{replyCount}</p>
             </div>
