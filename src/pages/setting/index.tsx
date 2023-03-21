@@ -1,4 +1,4 @@
-import { InputCard, SubmitBtn } from "../login/index"
+import { InputCard, SubmitBtn } from "../../components/AuthInput"
 import SideBar from "../../components/SideBar"
 
 const Setting: React.FC = () => {

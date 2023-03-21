@@ -68,7 +68,7 @@ body {
     @apply border-b-[#50B5FF] z-10
   }
   .inputDefault:focus {
-    @apply border-b-[#50B5FF] z-10
+    @apply outline-none border-b-[#50B5FF] z-10
   }
   .inputError {
     @apply bg-b-[#FC5A5A]
