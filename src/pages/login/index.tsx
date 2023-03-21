@@ -1,51 +1,5 @@
-import { ACLogoIcon as Logo } from "../../assets/images/index"
+import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/AuthInput"
 
-interface Props {children: React.ReactNode}
-
-//註冊頁面共用元件
-export const InputCard = (props : {label:string, placeholder:string}) => {
-  const {label, placeholder} = props
-  return(
-    <form>
-      <div className="bg-[#F5F8FA] my-8 px-2.5 ">
-        <label htmlFor="account" className="block text-[14px]">{label}</label>
-        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="inputDefault inputDefault:hover inputDefault:focus"></input>
-      </div>      
-    </form>
-  )
-}
-
-//跟註冊頁面共用
-export const LogoTitle = (props : {title: string}) => {
-  const { title } = props
-  return(
-    <>
-      <div className ="w-[50px] mx-auto pl-1">
-        <Logo />
-      </div>
-      <h3 className="text-center">{title}</h3>
-    </>
-  )
-}
-
-export const Container: React.FC<Props> = ({children}) => {
-  return(
-    <div className="container max-w-[1140px] mx-auto">
-      <div className="w-2/6 mt-16 mx-auto">
-        {children}
-      </div>
-    </div>
-  )
-}
-
-export const SubmitBtn = (props: { btn: string }) => {
-  const {btn} = props
-  return(
-    <div>
-      <button className="bg-[#FF6600] text-white w-full h-[46px] rounded-[50px] cursor-pointer hover:bg-orange-700 focus:ring-orange-300">{btn}</button>
-    </div>
-  )
-}
 
 const Login: React.FC = () => {
     return (

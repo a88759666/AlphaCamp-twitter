@@ -1,4 +1,4 @@
-import { InputCard, LogoTitle, Container, SubmitBtn} from "../login/index"
+import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/AuthInput"
 
 const Register = () => {
     return (
