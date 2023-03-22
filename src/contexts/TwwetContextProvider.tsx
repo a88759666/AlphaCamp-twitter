@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, useContext } from "react"
 
 const dummydata = [
   {
@@ -22,6 +22,7 @@ const dummydata = [
 ]
 
 export const TweetContext = createContext(dummydata)
+export function useTweetContext(){ return useContext(TweetContext)}
 
 interface Props {children: React.ReactNode}
 

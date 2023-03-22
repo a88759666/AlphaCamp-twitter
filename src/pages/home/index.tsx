@@ -1,5 +1,6 @@
 import Container from "components/Container";
 import SideBar from "components/SideBar";
+import TweetContextProvider from "contexts/TwwetContextProvider";
 import MainPage from "./components/MainPage";
 import RecommendFollowSidebar from "./components/RecommendFollow";
 
@@ -11,9 +12,10 @@ const Home = () => {
         <nav className="basis-3/7 pl-[30px] py-4">
           <SideBar />
         </nav>
-        <MainPage />
-        <RecommendFollowSidebar />
-
+        <TweetContextProvider>
+          <MainPage />
+          <RecommendFollowSidebar />
+        </TweetContextProvider>
       </div>
     </Container>
   )
