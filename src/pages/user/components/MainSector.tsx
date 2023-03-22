@@ -2,6 +2,7 @@ import TweetCard from "components/TweetCard";
 import { useTweetContext } from "../../../contexts/TwwetContextProvider";
 import { useNavigate } from "react-router-dom";
 
+
 const MainHeader = (props:{currentUserName: string, currentUserTweets:number}) => {
   const {currentUserName, currentUserTweets} = props
   return(

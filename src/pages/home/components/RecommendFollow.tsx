@@ -20,7 +20,7 @@ const IsFollowedBtn = (props: {
 }
 
 //右邊的名字和帳號按鈕
-const RecommendFollowCard = (props: {
+export const UserBriefCard = (props: {
   userName:string, 
   account:string }) =>{
   const [isFollowed, setIsFollowed] = useState(false)
@@ -54,7 +54,7 @@ const RecommendFollowSidebar = () => {
           return(
             <div className="ml-4 my-4 flex relative">
               <UserImage url={item.url}/>
-              <RecommendFollowCard 
+              <UserBriefCard 
               userName={item.userName} 
               account={item.account} 
             /> 
