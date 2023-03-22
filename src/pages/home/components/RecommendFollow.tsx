@@ -1,6 +1,6 @@
 import { UserImage } from "components/TweetCard"
 import { useState } from "react"
-import { useTweetContext } from "contexts/TwwetContextProvider";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 
 const FollowBtn = (props: {

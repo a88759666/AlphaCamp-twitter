@@ -1,6 +1,6 @@
 import { SubmitBtn } from "components/AuthInput";
 import TweetCard, { UserImage } from "components/TweetCard";
-import { useTweetContext } from "contexts/TwwetContextProvider";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 const PostTweet = () => {
   return(

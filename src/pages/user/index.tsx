@@ -1,7 +1,7 @@
 import  SideBar  from "components/SideBar"
 import Container from "components/Container";
 import RecommendFollowSidebar from "pages/home/components/RecommendFollow";
-import TweetContextProvider from "contexts/TwwetContextProvider";
+import TweetContextProvider from "contexts/TweetContextProvider";
 import MainSector from "./components/MainSector"
 
 const User:React.FC = () => {

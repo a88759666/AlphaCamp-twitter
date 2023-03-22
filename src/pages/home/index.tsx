@@ -1,6 +1,6 @@
 import Container from "components/Container";
 import SideBar from "components/SideBar";
-import TweetContextProvider from "contexts/TwwetContextProvider";
+import TweetContextProvider from "contexts/TweetContextProvider";
 import MainPage from "./components/MainPage";
 import RecommendFollowSidebar from "./components/RecommendFollow";
 
