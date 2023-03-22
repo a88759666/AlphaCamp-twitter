@@ -33,6 +33,14 @@ const MainPage = () => {
           likeCount={13}
           replyCount={76}
           />  
+           <TweetCard 
+          userName="Apple" 
+          account="Apple" 
+          postTime="3" 
+          tweet="Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum."
+          likeCount={13}
+          replyCount={76}
+          /> 
         </div>
       </main>
       <RecommendFollowSidebar />
