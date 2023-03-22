@@ -1,6 +1,5 @@
 import { SubmitBtn } from "components/AuthInput";
 import TweetCard, { UserImage } from "components/TweetCard";
-import RecommendFollowSidebar from "./RecommendFollow";
 
 const PostTweet = () => {
   return(
@@ -20,7 +19,6 @@ const PostTweet = () => {
 
 const MainPage = () => {
   return (
-    <>
       <main className="basis-4/7 border-x ">
         <h4 className="pl-7 h-[74px] leading-[74px] font-bold border-b">首頁</h4>
         <PostTweet />
@@ -45,8 +43,6 @@ const MainPage = () => {
           /> 
         </div>
       </main>
-      <RecommendFollowSidebar />
-    </>
 
   )
 };

@@ -1,6 +1,8 @@
 import Container from "components/Container";
 import SideBar from "components/SideBar";
 import MainPage from "./components/MainPage";
+import RecommendFollowSidebar from "./components/RecommendFollow";
+
 
 const Home = () => {
   return (
@@ -10,6 +12,8 @@ const Home = () => {
           <SideBar />
         </nav>
         <MainPage />
+        <RecommendFollowSidebar />
+
       </div>
     </Container>
   )
