@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <Container>
       <div className="flex h-screen  ">
-        <nav className="basis-3/7 pl-[30px] py-4">
+        <nav className="basis-1/3 pl-[30px] py-4">
           <SideBar />
         </nav>
         <TweetContextProvider>
