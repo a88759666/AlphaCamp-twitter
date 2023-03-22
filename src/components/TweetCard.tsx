@@ -1,6 +1,4 @@
 import {LikeIcon, ReplyIcon} from "assets/images/index"
-import { TweetContext } from "contexts/TwwetContextProvider";
-import { useContext } from "react";
 
 
 export const UserImage = (props: {url: string}) => {
@@ -19,6 +17,7 @@ const TweetCard = (props: {
   replyCount:number,
   url:string}) => {
     const { userName,account,postTime,tweet, likeCount, replyCount, url } = props
+
 
     return (
       <div className="flex px-7 py-4 border-b">
