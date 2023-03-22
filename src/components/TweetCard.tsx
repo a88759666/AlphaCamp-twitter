@@ -27,7 +27,7 @@ const TweetCard = (props: {
             </span>
           </p>
           <p className="leading-[26px]">{tweet}</p>
-          <div className="flex w-[150px]">
+          <div className="flex max-w-[150px]">
             <div className="basis-1/2 flex">
               <div className="pt-[3.5px]">
                 <ReplyIcon />
