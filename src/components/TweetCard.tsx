@@ -1,6 +1,7 @@
 import {LikeIcon, ReplyIcon} from "assets/images/index"
 
-const UserImage = (props: {url: string}) => {
+
+export const UserImage = (props: {url: string}) => {
   const {url} = props
   return (
     <img src={url} alt="user" className="w-[50px] h-[50px] rounded-full"/>
