@@ -14,13 +14,14 @@ const TweetCard = (props: {
   postTime:string, 
   tweet:string, 
   likeCount:number, 
-  replyCount:number} ) => {
-    const { userName,account,postTime,tweet, likeCount, replyCount } = props
+  replyCount:number,
+  url:string}) => {
+    const { userName,account,postTime,tweet, likeCount, replyCount, url } = props
     return (
       <div className="flex px-7 py-4 border-b">
-        <div >
-          <UserImage url="assets/images/logo.svg"/>
-        </div>
+        
+          <UserImage url={url}/>
+        
         <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
