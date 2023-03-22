@@ -1,9 +1,10 @@
 import {LikeIcon, ReplyIcon} from "assets/images/index"
 
-const UserImage = () => {
+const UserImage = (props: {url: string}) => {
+  const {url} = props
   return (
-  <div className="w-[50px] h-[50px] rounded-full bg-black">
-  </div>)
+    <img src={url} alt="user" className="w-[50px] h-[50px] rounded-full"/>
+  )
 }
 
 const TweetCard = (props: {
@@ -16,28 +17,28 @@ const TweetCard = (props: {
     const { userName,account,postTime,tweet, likeCount, replyCount } = props
     return (
       <div className="flex px-7 py-4 border-b">
-        <div className="">
-          <UserImage />
+        <div >
+          <UserImage url="assets/images/logo.svg"/>
         </div>
-        <div className="ml-2 pt-2 ">
+        <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
               @{account} &#8729; {postTime}小時
             </span>
           </p>
           <p className="leading-[26px]">{tweet}</p>
-          <div className="flex w-[150px]">
+          <div className="flex max-w-[150px]">
             <div className="basis-1/2 flex">
               <div className="pt-[3.5px]">
                 <ReplyIcon />
               </div>
-              <p className="text-[14px] ml-2.5">{likeCount}</p>
+              <p className="text-[14px] ml-2">{likeCount}</p>
             </div>
-            <div className="basis-1/2 flex ">
+            <div className="basis-1/2 flex ml-5 ">
               <div className="pt-[3.5px]">
                 <LikeIcon />
               </div>
-              <p className="text-[14px] ml-2.5">{replyCount}</p>
+              <p className="text-[14px] ml-2">{replyCount}</p>
             </div>
           </div>
         </div>

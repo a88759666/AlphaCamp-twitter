@@ -20,16 +20,16 @@ const PostTweet = () => {
 const MainPage: React.FC = () => {
   return (
     <main className="basis-4/7 border-x ">
-      <h4 className="pl-7 h-[74px] leading-[74px] font-bold border-b">首頁</h4>
+      <h4 className="pl-7 py-6 leading-[26px] font-bold border-b">首頁</h4>
       <PostTweet />
       <div>
         <TweetCard 
-        userName="Apple" 
-        account="Apple" 
-        postTime="3" 
-        tweet="Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum."
-        likeCount={13}
-        replyCount={76}
+          userName="Apple" 
+          account="Apple" 
+          postTime="3" 
+          tweet="Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum."
+          likeCount={13}
+          replyCount={76}
         />  
       </div>
     </main>
