@@ -10,9 +10,6 @@ const Home = () => {
           <SideBar />
         </nav>
         <MainPage />
-        <section className="basis-3/7 ">
-
-        </section>
       </div>
     </Container>
   )
