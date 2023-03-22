@@ -20,7 +20,7 @@ const TweetCard = (props: {
         <div >
           <UserImage url="assets/images/logo.svg"/>
         </div>
-        <div className="ml-2 pt-2 ">
+        <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
               @{account} &#8729; {postTime}小時
