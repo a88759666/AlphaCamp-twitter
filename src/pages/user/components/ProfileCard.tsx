@@ -3,12 +3,19 @@ const ProfileCard = (props :{
   currentUserAccount:string,
   currentUserBio:string,
   currentUserFollow:number,
-  currentUserFollowed:number
+  currentUserFollowed:number,
+  coverUrl:string
   }) => {
-    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed} = props
+    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl} = props
   return(
     <div className="flex flex-col h-1/2 relative">
-      <div className="basis-1/2 bg-orange-100"></div>
+      <div className="basis-1/2 bg-orange-100 overflow-hidden"
+        style={{
+          backgroundImage: `url(${coverUrl})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}>
+      </div>
       <div className="basis-1/2 ml-4">
         <div className="mt-[72px]">
           <p className=" font-bold">{currentUserName}</p>

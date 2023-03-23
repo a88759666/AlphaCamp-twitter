@@ -43,6 +43,7 @@ const MainSector = () => {
         currentUserBio="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint." 
         currentUserFollow={34} 
         currentUserFollowed={29}
+        coverUrl="https://picsum.photos/300/300?text=1"
       />
       <div className="flex border-b">
         <button autoFocus className="userPageTab" onClick={() => setCurrentTab("tweets")}>推文</button>
