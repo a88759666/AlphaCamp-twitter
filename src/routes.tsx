@@ -4,8 +4,9 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import Setting from "./pages/setting"
 import User from "./pages/user"
-import Admin from "./pages/admin"
-
+import AdminHome from "pages/admin/home"
+import AdminLogin from "pages/admin/login"
+import AdminUser from "pages/admin/user"
 
 
 
