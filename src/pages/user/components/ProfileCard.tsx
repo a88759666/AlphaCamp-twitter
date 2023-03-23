@@ -4,9 +4,10 @@ const ProfileCard = (props :{
   currentUserBio:string,
   currentUserFollow:number,
   currentUserFollowed:number,
-  coverUrl:string
+  coverUrl:string,
+  handleEdit:() => void
   }) => {
-    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl} = props
+    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl, handleEdit} = props
   return(
     <div className="flex flex-col h-1/2 relative">
       <div className="basis-1/2 bg-orange-100 overflow-hidden"
@@ -26,7 +27,10 @@ const ProfileCard = (props :{
             <span className="text-black ml-4">{currentUserFollowed}位</span>追隨者
           </p>
         </div>
-        <button className="rounded-[50px] px-4 py-2 border border-[#FF6600] bg-white text-[#FF6600] hover:opacity-50 absolute top-1/2 right-4 mt-4">
+        <button  
+          className="rounded-[50px] px-4 py-2 border border-[#FF6600] bg-white text-[#FF6600] hover:opacity-50 absolute top-1/2 right-4 mt-4"
+          onClick={handleEdit}
+        >
           編輯個人資料
         </button>
       </div>
