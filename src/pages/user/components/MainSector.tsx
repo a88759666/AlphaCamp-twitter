@@ -4,6 +4,7 @@ import ReplyCard from "./ReplyCard";
 import { useTweetContext } from "../../../contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import UserInfoEditModal from "./UserInfoEditModal";
 
 
 const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
@@ -33,7 +34,13 @@ const BackBtn = () => {
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
   const dummydata = useTweetContext()
-
+  const [ show, setShow ] = useState(false)
+  function handleEditModal() {
+    setShow(!show)
+  }
+  function handleCloseModal() {
+    setShow(false)
+  }
   return(
     <main className="basis-5/7 border-x ">
       <MainHeader currentUserName="John Doe" currentUserTweetsCount={25} />
@@ -44,6 +51,7 @@ const MainSector = () => {
         currentUserFollow={34} 
         currentUserFollowed={29}
         coverUrl="https://picsum.photos/300/300?text=1"
+        handleEdit={handleEditModal}
       />
       <div className="flex border-b">
         <button autoFocus className="userPageTab" onClick={() => setCurrentTab("tweets")}>推文</button>
@@ -95,8 +103,12 @@ const MainSector = () => {
             )
           })
         }
-        
       </div>
+      {show && (
+          <UserInfoEditModal 
+            onClose={handleCloseModal}
+          />
+      )}
     </main>
   )
 } 
