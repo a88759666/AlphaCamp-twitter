@@ -47,7 +47,7 @@ const ReplyTweetCard = (props: {
 
 
 const ReplyPage = () => {
-  const dummydata = useTweetContext()
+  const {dummydata} = useTweetContext()
 
   return(
    <main className="basis-5/7 border-x ">
