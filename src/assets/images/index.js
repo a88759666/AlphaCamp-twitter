@@ -12,6 +12,8 @@ import {ReactComponent as CloseIcon} from './close.svg'
 import {ReactComponent as BellIcon} from './bell.svg'
 import {ReactComponent as BellRingIcon} from './bellRing.svg'
 import {ReactComponent as EmailIcon} from './email.svg'
+import { ReactComponent as ReplyBigIcon } from './replyBig.svg';
+import { ReactComponent as LikeBigIcon } from './likeBig.svg';
 
 export { 
     ACLogoIcon,  
@@ -26,5 +28,7 @@ export {
     CloseIcon,
     BellIcon,
     BellRingIcon,
-    EmailIcon
+    EmailIcon,
+    ReplyBigIcon,
+    LikeBigIcon
 };

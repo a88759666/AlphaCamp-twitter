@@ -8,7 +8,7 @@ const dummydata = [
   tweet:"Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.", 
   likeCount:13, 
   replyCount:76,
-  url:"https://picsum.photos/300/300?text=2"
+  avatar:"https://picsum.photos/300/300?text=2"
   },
   {
   userName:"Apple", 
@@ -17,7 +17,7 @@ const dummydata = [
   tweet:"Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.", 
   likeCount:13, 
   replyCount:76,
-  url:"https://picsum.photos/300/300?text=2"
+  avatar:"https://picsum.photos/300/300?text=2"
   }
 ]
 

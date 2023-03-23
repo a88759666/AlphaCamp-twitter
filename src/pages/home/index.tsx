@@ -3,6 +3,7 @@ import SideBar from "components/SideBar";
 import TweetContextProvider from "contexts/TweetContextProvider";
 import MainPage from "./components/MainPage";
 import RecommendFollowSidebar from "./components/RecommendFollow";
+import ReplyPage from "./components/reply";
 
 
 const Home = () => {
@@ -13,7 +14,8 @@ const Home = () => {
           <SideBar />
         </nav>
         <TweetContextProvider>
-          <MainPage />
+          {/* <MainPage /> */}
+          <ReplyPage />
           <RecommendFollowSidebar />
         </TweetContextProvider>
       </div>

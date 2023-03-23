@@ -10,7 +10,7 @@ const ProfileCard = (props :{
     const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl, handleEdit} = props
   return(
     <div className="flex flex-col h-1/2 relative">
-      <div className="basis-1/2 bg-orange-100 overflow-hidden"
+      <div className="basis-1/2 overflow-hidden"
         style={{
           backgroundImage: `url(${coverUrl})`,
           backgroundPosition: "center",

@@ -53,7 +53,7 @@ const RecommendFollowSidebar = () => {
         {dummydata.map(item => {
           return(
             <div className="ml-4 my-4 flex relative">
-              <UserImage url={item.url}/>
+              <UserImage avatar={item.avatar}/>
               <UserBriefCard 
               userName={item.userName} 
               account={item.account} 

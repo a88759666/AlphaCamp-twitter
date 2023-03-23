@@ -5,13 +5,13 @@ const ReplyCard = (props: {
   account:string, 
   postTime:string, 
   tweet:string, 
-  url:string,
+  avatar:string,
   replyAccount:string
   }) => {
-    const { userName,account,postTime,tweet, url, replyAccount } = props
+    const { userName,account,postTime,tweet, avatar, replyAccount } = props
     return(
       <div className="flex px-6 py-4 border-b">
-        <UserImage url={url}/>
+        <UserImage avatar={avatar}/>
         <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
