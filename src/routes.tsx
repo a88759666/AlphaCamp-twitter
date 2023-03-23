@@ -36,8 +36,18 @@ const routes: RouteObject[] = [
         children: []
     },
     {
-        path: "/admin",
-        element: <Admin />,
+        path: "/admin/home",
+        element: <AdminHome />,
+        children: []
+    },
+    {
+        path: "/admin/login",
+        element: <AdminLogin />,
+        children: []
+    },
+    {
+        path: "/admin/user",
+        element: <AdminUser />,
         children: []
     }
    
