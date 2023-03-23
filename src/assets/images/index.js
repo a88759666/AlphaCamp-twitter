@@ -8,6 +8,10 @@ import {ReactComponent as LogoutIcon} from './logout.svg'
 import {ReactComponent as ReplyIcon} from './reply.svg'
 import {ReactComponent as LikeIcon} from './like.svg'
 import {ReactComponent as BackIcon} from './back.svg'
+import {ReactComponent as CloseIcon} from './close.svg'
+import {ReactComponent as BellIcon} from './bell.svg'
+import {ReactComponent as BellRingIcon} from './bellRing.svg'
+import {ReactComponent as EmailIcon} from './email.svg'
 
 export { 
     ACLogoIcon,  
@@ -18,5 +22,9 @@ export {
     LogoutIcon, 
     ReplyIcon, 
     LikeIcon,
-    BackIcon
+    BackIcon,
+    CloseIcon,
+    BellIcon,
+    BellRingIcon,
+    EmailIcon
 };
