@@ -7,6 +7,8 @@ import User from "./pages/user"
 import AdminHome from "pages/admin/home"
 import AdminLogin from "pages/admin/login"
 import AdminUser from "pages/admin/user"
+import UserSelfFollowingPage from "pages/user/components/UserSelfFollowingPage"
+import UserSelfFollowerPage from "pages/user/components/UserSelfFollowerPage"
 
 
 
@@ -37,6 +39,14 @@ const routes: RouteObject[] = [
         children: []
     },
     {
+        path: "/user/following",
+        element: <UserSelfFollowingPage />,
+    },
+    {
+        path: "/user/follower",
+        element: <UserSelfFollowerPage />,
+    },
+    {
         path: "/admin/home",
         element: <AdminHome />,
         children: []
@@ -50,8 +60,10 @@ const routes: RouteObject[] = [
         path: "/admin/user",
         element: <AdminUser />,
         children: []
-    }
+    },
+
    
 ]
 
 export default routes
+
