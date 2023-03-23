@@ -18,7 +18,6 @@ const TweetCard = (props: {
   avatar:string}) => {
     const { userName,account,postTime,tweet, likeCount, replyCount, avatar } = props
 
-
     return (
       <div className="flex px-6 py-4 border-b">
         <UserImage avatar={avatar}/>
