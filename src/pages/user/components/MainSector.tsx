@@ -20,11 +20,11 @@ const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:numbe
   )
 }
 
-const BackBtn = () => {
+export const BackBtn = () => {
   const navigate = useNavigate()
   return(
     <button 
-      className="mr-[19px] mx-6 hover:opacity-50 cursor-pointer"
+      className=" px-6 hover:opacity-50 cursor-pointer"
       onClick={() => navigate("/home")}>&#8592;
     </button>)
 }
@@ -69,7 +69,7 @@ const MainSector = () => {
                 tweet={item.tweet}
                 likeCount={item.likeCount}
                 replyCount={item.replyCount}
-                url={item.url}
+                avatar={item.avatar}
               />
             )
           })
@@ -82,7 +82,7 @@ const MainSector = () => {
                 account={item.account} 
                 postTime={item.postTime}
                 tweet={item.tweet}
-                url={item.url}
+                avatar={item.avatar}
                 replyAccount="Apple"
               />
             )
@@ -98,7 +98,7 @@ const MainSector = () => {
                 tweet={item.tweet}
                 likeCount={item.likeCount}
                 replyCount={item.replyCount}
-                url={item.url}
+                avatar={item.avatar}
               />
             )
           })
