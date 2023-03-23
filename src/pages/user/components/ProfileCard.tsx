@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom"
+
+
 const ProfileCard = (props :{
   currentUserName:string,
   currentUserAccount:string,
@@ -8,6 +11,7 @@ const ProfileCard = (props :{
   handleEdit:() => void
   }) => {
     const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl, handleEdit} = props
+    const go = useNavigate()
   return(
     <div className="flex flex-col h-1/2 relative">
       <div className="basis-1/2 overflow-hidden"
@@ -23,8 +27,14 @@ const ProfileCard = (props :{
           <p className="text-[14px] text-[#6C757D] ">@{currentUserAccount}</p>
           <p className="text-[14px] py-[6px]">{currentUserBio}</p>
           <p className="text-[14px] text-[#6C757D]">
-            <span className="text-black">{currentUserFollow}個</span>跟隨中
-            <span className="text-black ml-4">{currentUserFollowed}位</span>追隨者
+            <span 
+              className="text-black"
+              onClick={() => go('/user/following')}
+            >{currentUserFollow}個</span>跟隨中
+            <span 
+              className="text-black ml-4"
+              onClick={() => go('/user/follower')}
+            >{currentUserFollowed}位</span>追隨者
           </p>
         </div>
         <button  
@@ -40,3 +50,4 @@ const ProfileCard = (props :{
 }
 
 export default ProfileCard;
+
