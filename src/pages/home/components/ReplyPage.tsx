@@ -3,6 +3,8 @@ import ReplyCard from "pages/user/components/ReplyCard"
 import { UserImage } from "components/TweetCard";
 import { useTweetContext } from "../../../contexts/TweetContextProvider";
 import { LikeBigIcon, ReplyBigIcon } from "assets/images";
+import { useState } from "react";
+import Modal from "components/Modal";
 
 const ReplyTweetCard = (props: {
   tweetUserName:string,
@@ -14,35 +16,48 @@ const ReplyTweetCard = (props: {
   tweetLikes:number
 }) => {
   const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes} = props
-  return(
+  const [ show, setShow ] = useState(false)
+  function handleClose() {
+      setShow(false)
+  }
+  return <>
     <div className="px-4 py-2">
-        <div className="flex">
-          <UserImage avatar="https://picsum.photos/300/300?text=2"/>
-          <div className="ml-2">
-            <p className=" font-bold">{tweetUserName}</p>
-            <p className="text-[14px] text-[#6C757D] ">@{tweetUserAccount}</p>
-          </div>
-        </div>
-        <div className="border-b pb-2">
-          <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
-          <p className="text-[14px] text-[#6C757D]">
-            {tweetPostTime} &#8729; {tweetPostDate}
-          </p>
-        </div>
-        <div className="border-b py-4">
-          <b>{tweetReplies}</b> 回覆 
-          <b className="ml-6">{tweetLikes}</b> 喜歡次數
-        </div>
-        <div className="flex pt-[22px] h-[68px]">
-          <div className="mr-20 cursor-pointer">
-            <ReplyBigIcon />
-          </div>
-          <div className="cursor-pointer">
-            <LikeBigIcon />
-          </div>
+      <div className="flex">
+        <UserImage avatar="https://picsum.photos/300/300?text=2"/>
+        <div className="ml-2">
+          <p className=" font-bold">{tweetUserName}</p>
+          <p className="text-[14px] text-[#6C757D] ">@{tweetUserAccount}</p>
         </div>
       </div>
-  )
+      <div className="border-b pb-2">
+        <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
+        <p className="text-[14px] text-[#6C757D]">
+          {tweetPostTime} &#8729; {tweetPostDate}
+        </p>
+      </div>
+      <div className="border-b py-4">
+        <b>{tweetReplies}</b> 回覆 
+        <b className="ml-6">{tweetLikes}</b> 喜歡次數
+      </div>
+      <div className="flex pt-[22px] h-[68px]">
+        <div className="mr-20 cursor-pointer">
+          <ReplyBigIcon 
+            onDoubleClick={() => setShow(!show)}
+          />
+        </div>
+        <div className="cursor-pointer">
+          <LikeBigIcon />
+        </div>
+      </div>
+    </div>
+    {show && (
+      <Modal 
+          postTweetModal={false}
+          replyTweetModal={true}
+          onClose={handleClose}
+      />
+    )}
+  </>
 }
 
 
