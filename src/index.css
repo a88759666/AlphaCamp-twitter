@@ -73,4 +73,14 @@ body {
   .inputError {
     @apply bg-b-[#FC5A5A]
   }
+  .userPageTab {
+    @apply px-[40px] py-2 font-[15px] text-[#657786] cursor-pointer
+  }
+  .userPageTab:hover {
+    @apply text-black
+  }
+  .userPageTab:focus {
+    @apply border-b-2 border-[#FF6600] text-[#FF6600] outline-none
+  }
 }
+

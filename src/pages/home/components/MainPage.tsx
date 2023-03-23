@@ -1,6 +1,6 @@
 import { SubmitBtn } from "components/AuthInput";
 import TweetCard, { UserImage } from "components/TweetCard";
-import { useTweetContext } from "contexts/TwwetContextProvider";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 const PostTweet = () => {
   return(
@@ -22,8 +22,8 @@ const MainPage = () => {
   const dummydata = useTweetContext()
 
   return (
-      <main className="basis-4/7 border-x ">
-        <h4 className="pl-7 h-[74px] leading-[74px] font-bold border-b">首頁</h4>
+      <main className="basis-5/7 border-x ">
+        <h4 className="pl-7 py-6 leading-[26px] font-bold border-b">首頁</h4>
         <PostTweet />
         <div>
           {dummydata.map(item => {
@@ -36,7 +36,7 @@ const MainPage = () => {
                 likeCount={item.likeCount}
                 replyCount={item.replyCount}
                 url={item.url}
-              />
+              /> 
             )
           })}
         </div>

@@ -20,10 +20,8 @@ const TweetCard = (props: {
 
 
     return (
-      <div className="flex px-7 py-4 border-b">
-        
-          <UserImage url={url}/>
-        
+      <div className="flex px-6 py-4 border-b">
+        <UserImage url={url}/>
         <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
