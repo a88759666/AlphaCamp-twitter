@@ -4,13 +4,13 @@ import { ACLogoIcon as Logo } from "../assets/images/index"
 interface Props {children: React.ReactNode}
 
 //註冊頁面共用元件
-export const InputCard = (props : {label:string, placeholder?:string}) => {
-  const {label, placeholder} = props
+export const InputCard = (props : {label:string, placeholder?:string, width?:string, height?: string}) => {
+  const {label, placeholder, width, height} = props
   return(
     <form>
       <div className="bg-[#F5F8FA] my-8 px-2.5 ">
         <label htmlFor="account" className="block text-[14px]">{label}</label>
-        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="inputDefault inputDefault:hover inputDefault:focus"></input>
+        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="inputDefault inputDefault:hover inputDefault:focus" style={{width:`${width}`,height:`${height}`}}></input>
       </div>      
     </form>
   )
