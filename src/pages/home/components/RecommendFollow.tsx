@@ -44,7 +44,7 @@ export const UserBriefCard = (props: {
 }
 
 const RecommendFollowSidebar = () => {
-  const dummydata = useTweetContext()
+  const {dummydata} = useTweetContext()
 
   return(
      <section className="basis-3/7 ">

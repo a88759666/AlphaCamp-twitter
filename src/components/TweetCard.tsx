@@ -15,8 +15,10 @@ const TweetCard = (props: {
   tweet:string, 
   likeCount:number, 
   replyCount:number,
-  avatar:string}) => {
-    const { userName,account,postTime,tweet, likeCount, replyCount, avatar } = props
+  avatar:string,
+  handleReplyModal?: () => void
+}) => {
+    const { userName,account,postTime,tweet, likeCount, replyCount, avatar, handleReplyModal } = props
 
     return (
       <div className="flex px-6 py-4 border-b">
@@ -31,7 +33,9 @@ const TweetCard = (props: {
           <div className="flex max-w-[150px]">
             <div className="basis-1/2 flex">
               <div className="pt-[3.5px]">
-                <ReplyIcon />
+                <ReplyIcon 
+                  onDoubleClick={handleReplyModal}
+                />
               </div>
               <p className="text-[14px] ml-2">{likeCount}</p>
             </div>

@@ -33,7 +33,7 @@ export const BackBtn = () => {
 
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
-  const dummydata = useTweetContext()
+  const {dummydata} = useTweetContext()
   const [ show, setShow ] = useState(false)
   function handleEditModal() {
     setShow(!show)
