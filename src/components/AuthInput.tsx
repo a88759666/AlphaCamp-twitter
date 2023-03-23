@@ -4,7 +4,7 @@ import { ACLogoIcon as Logo } from "../assets/images/index"
 interface Props {children: React.ReactNode}
 
 //註冊頁面共用元件
-export const InputCard = (props : {label:string, placeholder:string}) => {
+export const InputCard = (props : {label:string, placeholder?:string}) => {
   const {label, placeholder} = props
   return(
     <form>
