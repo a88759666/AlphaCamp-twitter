@@ -33,10 +33,10 @@ type userState = 'user1' | 'user2'
 
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
-  const  { dummydata } = useTweetContext()
   const [ user, setUser ] = useState<userState>('user2')
   const [ show, setShow ] = useState(false)
   const [ ringBell, setRingBell ] = useState(false)
+  const  { dummydata } = useTweetContext()
 
   function handleCloseModal() {
       setShow(false)

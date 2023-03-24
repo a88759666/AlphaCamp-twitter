@@ -10,8 +10,8 @@ const ProfileCard = (props :{
   currentUserFollowed:number,
   coverUrl:string,
   handleEdit:() => void,
-  type?: string
-  ringBell?: boolean
+  type?: string,
+  ringBell?: boolean,
   handleBellIcon: () => void
   }) => {
     const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl, handleEdit, type, ringBell, handleBellIcon} = props
