@@ -4,13 +4,43 @@ import { ACLogoIcon as Logo } from "../assets/images/index"
 interface Props {children: React.ReactNode}
 
 //註冊頁面共用元件
-export const InputCard = (props : {label:string, placeholder?:string, width?:string, height?: string}) => {
-  const {label, placeholder, width, height} = props
-  return(
+export const InputCard = (props : {
+  label:string, 
+  placeholder?:string, 
+  wSize?: "medium" | "small" | "large"
+  hSize?: "medium" | "small" | undefined
+  type?: string,
+  name?: string,
+  id?: string,
+  value?: any,
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
+}) => {
+  const {label, placeholder, wSize, hSize, type, name, id, value, onChange} = props
+  return (
     <form>
-      <div className="bg-[#F5F8FA] my-8 px-2.5 ">
-        <label htmlFor="account" className="block text-[14px]">{label}</label>
-        <input id="account" type="text" name="userAccount" placeholder={placeholder} className="inputDefault inputDefault:hover inputDefault:focus" style={{width:`${width}`,height:`${height}`}}></input>
+      <div className={`
+        ${
+          wSize === 'small' ? "w-[380px]" : null
+        }
+        ${
+          wSize === 'medium' ? "w-[480px]" : null
+        }
+        ${
+          wSize === 'large' ? "w-[593px]" : null
+        }    
+        ${
+          hSize === 'small' ? "h-[54px]" : "h-[150px]"  
+        } bg-[#F5F8FA] my-8 px-2.5`}>
+        <label htmlFor={name} className="block text-[14px]">{label}</label>
+        <input 
+          id={id}
+          type={ type || 'text' }
+          name={name} 
+          value={value}
+          placeholder={placeholder} 
+          onChange={onChange}
+          className="inputDefault inputDefault:hover inputDefault:focus" 
+        />
       </div>      
     </form>
   )
