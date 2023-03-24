@@ -1,5 +1,6 @@
 import type { RouteObject } from "react-router-dom"
 import Home from "./pages/home"
+import Reply from "./pages/reply"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import Setting from "./pages/setting"
@@ -31,6 +32,11 @@ const routes: RouteObject[] = [
     {
         path: "/home",
         element: <Home />,
+        children: []
+    },
+    {
+        path: "/reply",
+        element: <Reply />,
         children: []
     },
     {

@@ -40,7 +40,7 @@ const PostTweet = () => {
 
 const MainPage = () => {
 
-  const dummydata = useTweetContext()
+  const {dummydata} = useTweetContext()
   const [ show, setShow ] = useState(false)
   function handleClose() {
     setShow(false)
@@ -48,9 +48,6 @@ const MainPage = () => {
   function handleReplyModal() {
     setShow(!show)
   }
-
-  const { dummydata } = useTweetContext()
-
 
   return (
       <main className="basis-5/7 border-x ">

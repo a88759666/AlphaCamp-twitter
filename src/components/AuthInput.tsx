@@ -24,7 +24,7 @@ export const LogoTitle = (props : {title: string}) => {
       <div className ="w-[50px] mx-auto pl-1">
         <Logo />
       </div>
-      <h3 className="text-center">{title}</h3>
+      <h3 className="text-[28px] text-center font-bold">{title}</h3>
     </>
   )
 }
