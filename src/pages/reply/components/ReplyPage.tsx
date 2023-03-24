@@ -40,7 +40,7 @@ const ReplyTweetCard = (props: {
         <b className="ml-6">{tweetLikes}</b> 喜歡次數
       </div>
       <div className="flex pt-[22px] h-[68px]">
-        <div className="mr-20 cursor-pointer">
+        <div className="mr-16 cursor-pointer">
           <ReplyBigIcon 
             onDoubleClick={() => setShow(!show)}
           />
