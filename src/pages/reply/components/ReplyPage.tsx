@@ -45,7 +45,7 @@ const ReplyTweetCard = (props: {
             onDoubleClick={() => setShow(!show)}
           />
         </div>
-        <div className="cursor-pointer">
+        <div className="cursor-pointer mt-0.5">
           <LikeBigIcon />
         </div>
       </div>
