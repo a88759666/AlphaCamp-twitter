@@ -29,19 +29,25 @@ export const BackBtn = () => {
     </button>)
 }
 
-
+type userState = 'user1' | 'user2' 
 
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
-  const {dummydata} = useTweetContext()
+  const  { dummydata } = useTweetContext()
+  const [ user, setUser ] = useState<userState>('user2')
   const [ show, setShow ] = useState(false)
-  function handleEditModal() {
-    setShow(!show)
-  }
+  const [ ringBell, setRingBell ] = useState(false)
+
   function handleCloseModal() {
-    setShow(false)
+      setShow(false)
   }
-  return(
+  function handleEditModal() {
+      setShow(true)
+  }
+  function handleBellIcon() {
+      setRingBell(!ringBell)
+  }
+  return <>
     <main className="basis-5/7 border-x ">
       <MainHeader currentUserName="John Doe" currentUserTweetsCount={25} />
       <ProfileCard 
@@ -52,6 +58,9 @@ const MainSector = () => {
         currentUserFollowed={29}
         coverUrl="https://picsum.photos/300/300?text=1"
         handleEdit={handleEditModal}
+        type={user} 
+        ringBell={ringBell}
+        handleBellIcon={handleBellIcon}
       />
       <div className="flex border-b">
         <button autoFocus className="userPageTab" onClick={() => setCurrentTab("tweets")}>推文</button>
@@ -110,6 +119,6 @@ const MainSector = () => {
           />
       )}
     </main>
-  )
+  </>
 } 
 export default MainSector;
