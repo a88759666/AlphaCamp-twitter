@@ -13,6 +13,19 @@ const UserInfoEditModal:React.FC<Props> = ({
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
+    const [ name, setName ] = useState('')
+    const [ intro, setIntro ] = useState('')
+
+    function onChangeNameHandler(event: React.FormEvent<HTMLInputElement>) {
+        if (event.currentTarget) {
+          setName(event.currentTarget.value)
+        }
+    }
+    function onChangeIntroHandler(event: React.FormEvent<HTMLInputElement>) {
+        if (event.currentTarget) {
+          setIntro(event.currentTarget.value)
+        }
+    }
     return <>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -62,11 +75,27 @@ const UserInfoEditModal:React.FC<Props> = ({
                                     </div>
                                     <div className="flex flex-col px-[15px] mt-[80px] mb-[50px]">
                                         <InputCard 
-                                            label="名稱"                  
+                                            label="名稱" 
+                                            placeholder="請輸入使用者名稱" 
+                                            type='text'
+                                            name='name'
+                                            id="name"
+                                            value={name}
+                                            onChange={onChangeNameHandler}
+                                            wSize='medium'
+                                            hSize="small"
                                         />
                                         <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mt-[-30px] ml-auto mb-[20px]">8/50</p>
                                         <InputCard 
-                                            label="自我介紹"
+                                            label="自我介紹" 
+                                            placeholder="請輸入斥我介紹" 
+                                            type='text'
+                                            name='intro'
+                                            id="intro"
+                                            value={intro}
+                                            onChange={onChangeIntroHandler}
+                                            wSize='medium'
+                                            hSize='medium'
                                         />
                                         <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mt-[-30px] ml-auto">0/160</p>
                                     </div>
