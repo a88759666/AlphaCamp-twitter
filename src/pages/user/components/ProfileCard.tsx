@@ -76,7 +76,7 @@ const ProfileCard = (props :{
           )
         }
       </div>
-      <img src="https://picsum.photos/300/300?text=2" alt="profile pic" className="absolute rounded-full width-[140px] h-[140px] top-[124px] left-4 border-4 border-white" />
+      <img src="https://picsum.photos/300/300?text=2" alt="profile pic" className="absolute rounded-full width-[140px] h-[140px] top-[80px] left-4 border-4 border-white" />
     </div>
   )
 }
