@@ -1,6 +1,10 @@
 import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/AuthInput"
+import { useNavigate } from "react-router-dom";
+
 
 const Register = () => {
+  const navigate = useNavigate()
+
     return (
       <Container>
         <LogoTitle title="建立你的帳號" />
@@ -11,7 +15,7 @@ const Register = () => {
         <InputCard label="密碼確認" placeholder="請再次輸入密碼" />
         <SubmitBtn btn="註冊" />
         <div className="mt-6">
-          <p className="link text-center">註冊</p>
+          <p className="link text-center" onClick={() => navigate("/login")}>取消</p>
         </div>
       </Container>
     )
