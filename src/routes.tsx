@@ -35,7 +35,7 @@ const routes: RouteObject[] = [
         children: []
     },
     {
-        path: "/reply",
+        path: "/reply/:id",
         element: <Reply />,
         children: []
     },

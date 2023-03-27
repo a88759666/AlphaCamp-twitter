@@ -1,25 +1,47 @@
 import { BackBtn } from "pages/user/components/MainSector"
 import ReplyCard from "pages/user/components/ReplyCard"
 import { UserImage } from "components/TweetCard";
-import { useTweetContext } from "../../../contexts/TweetContextProvider";
 import { LikeBigIcon, ReplyBigIcon } from "assets/images";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Modal from "components/Modal";
+import {getSingleTweet} from "api/tweet"
+import { useParams } from "react-router-dom";
+import "../../../scrollbar.css"
+
+type ResProp = {
+  id: number,
+  UserId: number,
+  description: string,
+  createdAt: string,
+  updatedAt: string,
+  Replies?:ReplyProps[]
+}
+type ReplyProps = {
+    id: number,
+    UserId: number,
+    TweetId: number,
+    comment: string,
+    createdAt: string,
+    updatedAt: string
+}
 
 const ReplyTweetCard = (props: {
-  tweetUserName:string,
-  tweetUserAccount:string,
-  tweetContent:string,
-  tweetPostTime:string,
-  tweetPostDate:string,
-  tweetReplies:number,
-  tweetLikes:number
+  tweetUserName?:string,
+  tweetUserAccount?:string,
+  tweetContent?:string,
+  tweetPostTime?:string,
+  tweetPostDate?:string,
+  tweetReplies?:number,
+  tweetLikes?:number
 }) => {
   const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes} = props
   const [ show, setShow ] = useState(false)
+
   function handleClose() {
       setShow(false)
   }
+
+
   return <>
     <div className="px-4 py-2">
       <div className="flex">
@@ -62,10 +84,26 @@ const ReplyTweetCard = (props: {
 
 
 const ReplyPage = () => {
-  const {dummydata} = useTweetContext()
+  const [ titleTweet, setTitleTweet ] = useState<ResProp | null>(null)
+  const {id} = useParams()
+
+  useEffect(() => {
+    const getSingleTweetAsync = async () => {
+      const res = await getSingleTweet(Number(id))
+      try{
+        if(res){
+          setTitleTweet(res)
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+    getSingleTweetAsync()
+  },[id])
+
 
   return(
-   <main className="basis-5/7 border-x ">
+   <main className="basis-5/7 border-x overflow-auto">
       {/* Header */}
       <div className="flex ml-2 border-b">
         <BackBtn />
@@ -75,23 +113,24 @@ const ReplyPage = () => {
       <ReplyTweetCard 
         tweetUserName="Apple" 
         tweetUserAccount="Apple" 
-        tweetContent="Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt." 
-        tweetPostTime="上午 10:13" 
-        tweetPostDate="2021年11月10日" 
+        tweetContent={titleTweet?.description} 
+        tweetPostTime={titleTweet?.createdAt} 
+        tweetPostDate={titleTweet?.createdAt}
         tweetReplies={36} 
         tweetLikes={808}
       />
       {/* Reply */}
       <div className="border-t">
-        {dummydata.map(item => {
+        {titleTweet?.Replies?.map(item => {
             return(
               <ReplyCard 
-                userName={item.userName} 
-                account={item.account} 
-                postTime={item.postTime}
-                tweet={item.tweet}
-                avatar={item.avatar}
+                userName="Jogn Doe" 
+                account="HeyJohn"
+                postTime={item.createdAt}
+                tweet={item.comment}
+                avatar="https://picsum.photos/300/300?text=2"
                 replyAccount="Apple"
+                key={item.id}
               />
             )
           })

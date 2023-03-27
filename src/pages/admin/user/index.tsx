@@ -2,7 +2,6 @@ import AdminSideBar from "../components/AdminSideBar";
 import Container from "components/Container";
 import { VectorIcon, LikeBigIcon } from "assets/images";
 import TweetContextProvider, { useTweetContext } from "contexts/TweetContextProvider";
-import { login } from "api/auth";
 
 const UserCard = (props: {
   coverUrl:string, 
@@ -60,7 +59,6 @@ const UserCard = (props: {
 
 const AdminUser: React.FC = () => {
   const{dummydata} = useTweetContext()
-  login({account:"user1", password:"12345678"})
   return (
     <Container>
       <div className="flex flex-row h-screen">

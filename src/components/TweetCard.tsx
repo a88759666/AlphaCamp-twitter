@@ -8,6 +8,7 @@ export const UserImage = (props: {avatar: string}) => {
   )
 }
 
+
 const TweetCard = (props: {
   userName:string, 
   account:string, 
@@ -18,10 +19,11 @@ const TweetCard = (props: {
   avatar:string,
   handleReplyModal?: () => void
 }) => {
-    const { userName,account,postTime,tweet, likeCount, replyCount, avatar, handleReplyModal } = props
+    const { userName,account,postTime,tweet, likeCount, replyCount, avatar,  handleReplyModal } = props
 
+   
     return (
-      <div className="flex px-6 py-4 border-b">
+      <div className="flex pl-6 pr-8 py-4 border-b"  >
         <UserImage avatar={avatar}/>
         <div className="ml-2">
           <p>{userName} 

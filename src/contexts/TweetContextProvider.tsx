@@ -27,6 +27,7 @@ const friends = [
 ]
 const dummydata = [
   {
+  id:1,
   userName:"Apple", 
   account:"Apple", 
   postTime:"3", 
@@ -36,6 +37,7 @@ const dummydata = [
   avatar:"https://picsum.photos/300/300?text=2"
   },
   {
+  id:2,
   userName:"Apple", 
   account:"Apple", 
   postTime:"3", 
