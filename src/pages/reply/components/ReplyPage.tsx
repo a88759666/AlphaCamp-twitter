@@ -1,10 +1,10 @@
 import { BackBtn } from "pages/user/components/MainSector"
 import ReplyCard from "pages/user/components/ReplyCard"
 import { UserImage } from "components/TweetCard";
-import { LikeBigIcon, ReplyBigIcon } from "assets/images";
-import { useState, useEffect} from "react";
+import { LikeBigIcon, LikeBigActiveIcon, ReplyBigIcon } from "assets/images";
+import { useState, useEffect } from "react";
 import Modal from "components/Modal";
-import {getSingleTweet} from "api/tweet"
+import {getSingleTweet, likeTweet, unlikeTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "../../../scrollbar.css"
 
@@ -32,13 +32,40 @@ const ReplyTweetCard = (props: {
   tweetPostTime?:string,
   tweetPostDate?:string,
   tweetReplies?:number,
-  tweetLikes?:number
+  tweetLikes?:number,
+  tweetId?:number
 }) => {
-  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes} = props
+  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId} = props
   const [ show, setShow ] = useState(false)
+  const [ like, setLike ] = useState(false)
 
   function handleClose() {
       setShow(false)
+  }
+
+  async function handleLike(id:number) {
+      if(!like){
+        setLike(true)
+        try{
+          const res = await likeTweet(id)
+          if(res === "success"){
+            console.log("like ok")
+          }
+        }catch(error){
+          console.log(error)
+        } 
+      }else{
+        setLike(false)
+        try{
+          const res = await unlikeTweet(id)
+          if(res === "success"){
+            console.log("unlike ok")
+          }
+        }catch(error){
+          console.log(error)
+        } 
+      }
+    
   }
 
 
@@ -48,12 +75,12 @@ const ReplyTweetCard = (props: {
         <UserImage avatar="https://picsum.photos/300/300?text=2"/>
         <div className="ml-2">
           <p className=" font-bold">{tweetUserName}</p>
-          <p className="text-[14px] text-[#6C757D] ">@{tweetUserAccount}</p>
+          <p className="text-[14px] text-[#7d6c6c] ">@{tweetUserAccount}</p>
         </div>
       </div>
       <div className="border-b pb-2">
         <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
-        <p className="text-[14px] text-[#6C757D]">
+        <p className="text-[14px] text-[#7d6c6c]">
           {tweetPostTime} &#8729; {tweetPostDate}
         </p>
       </div>
@@ -62,13 +89,14 @@ const ReplyTweetCard = (props: {
         <b className="ml-6">{tweetLikes}</b> 喜歡次數
       </div>
       <div className="flex pt-[22px] h-[68px]">
-        <div className="mr-16 cursor-pointer">
+        <div className="mr-20 cursor-pointer">
           <ReplyBigIcon 
             onDoubleClick={() => setShow(!show)}
           />
         </div>
-        <div className="cursor-pointer mt-0.5">
-          <LikeBigIcon />
+        <div className="cursor-pointer mt-0.5" 
+        onClick={() => {if(tweetId){handleLike(tweetId)}}}>
+          {like ? <LikeBigActiveIcon /> : <LikeBigIcon />}
         </div>
       </div>
     </div>
@@ -118,6 +146,7 @@ const ReplyPage = () => {
         tweetPostDate={titleTweet?.createdAt}
         tweetReplies={36} 
         tweetLikes={808}
+        tweetId={titleTweet?.id}
       />
       {/* Reply */}
       <div className="border-t">

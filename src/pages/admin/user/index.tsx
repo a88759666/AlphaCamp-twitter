@@ -33,12 +33,12 @@ const UserCard = (props: {
             <VectorIcon/>
             <p className="ml-2">{posts}</p>
           </div>
-          <div className="flex">
+          <div className="flex ml-4">
             <LikeBigIcon/>
             <p className="ml-1">{likes}</p>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-2">
           <div className="flex mr-2">
             <p className="text-black text-[14px]">
               {following}個

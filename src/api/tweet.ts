@@ -67,7 +67,7 @@ export const postTweet = async (post:string) => {
 //瀏覽推文的回覆
 export const getReplies = async (id:number | string) => {
   try{
-    const response = await axiosInstance.get(`${baseUrl}/tweets/:${id}/replies`)
+    const response = await axiosInstance.get(`${baseUrl}/tweets/${id}/replies`)
     return response.data
   }catch(error){
     console.error("get replies error: ", error)
@@ -77,7 +77,7 @@ export const getReplies = async (id:number | string) => {
 //回覆貼文
 export const replyTweet = async (id:number | string, comment:string) => {
   try{
-    const response = await axiosInstance.post(`${baseUrl}/tweets/:${id}/replies`,comment)
+    const response = await axiosInstance.post(`${baseUrl}/tweets/${id}/replies`,comment)
     return response.data.data 
   }catch(error){
     console.error("Reply tweet error: ", error)
@@ -87,8 +87,8 @@ export const replyTweet = async (id:number | string, comment:string) => {
 //喜歡貼文
 export const likeTweet = async (id:number | string) => {
   try{
-    const response = await axiosInstance.post(`${baseUrl}/tweets/:${id}/likes`)
-    return response.data.data
+    const response = await axiosInstance.post(`${baseUrl}/tweets/${id}/like`)
+    return response.data.status as string
   }catch(error){
     console.error("like tweet error: ", error)
   }
@@ -97,8 +97,8 @@ export const likeTweet = async (id:number | string) => {
 //取消喜歡貼文
 export const unlikeTweet = async (id:number | string) => {
   try{
-    const response = await axiosInstance.post(`${baseUrl}/:${id}/unlike`)
-    return response.data.data
+    const response = await axiosInstance.post(`${baseUrl}/tweets/${id}/unlike`)
+    return response.data.status as string
   }catch(error){
     console.error("unlike tweet error: ", error)
   }
