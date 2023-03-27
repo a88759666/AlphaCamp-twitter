@@ -1,6 +1,7 @@
 import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/AuthInput"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { register } from "api/Auth";
 
 
 const Register = () => {
@@ -8,8 +9,8 @@ const Register = () => {
   const [ name, setName ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-  const [ passwordConfirm, setPasswordConfirm ] = useState('')
-  const navigate = useNavigate()
+  const [ checkPassword, setCheckPassword ] = useState('')
+  const go = useNavigate()
 
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
@@ -31,10 +32,41 @@ const Register = () => {
         setPassword(event.currentTarget.value)
       }
   }
-  function onChangePasswordConfirmHandler(event: React.FormEvent<HTMLInputElement>) {
-      if (event.currentTarget) {
-        setPasswordConfirm(event.currentTarget.value)
-      }
+  function onChangeCheckPasswordHandler(event: React.FormEvent<HTMLInputElement>) {
+    if (event.currentTarget) {
+      setCheckPassword(event.currentTarget.value)
+    }
+  }
+  async function handleClickRegister() {
+    if (account.length === 0) {
+      return;
+    }
+    if (password.length === 0) {
+      return;
+    }
+    if (email.length === 0) {
+      return;
+    }
+    if (checkPassword.length === 0) {
+        return;
+    }
+    if (password.length === 0) {
+        return;
+    }
+   
+    const { success } = await register({
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    })
+    if (success) {
+      console.log(success)
+      go('/login')
+      
+    }
+    
   }
     return (
       <Container>
@@ -87,16 +119,19 @@ const Register = () => {
           label="密碼確認" 
           placeholder="請再次輸入密碼"
           type='password'
-          name='passwordConfirm'
+          name='checkPassword'
           id="password"
-          value={passwordConfirm}
-          onChange={onChangePasswordConfirmHandler}
+          value={checkPassword}
+          onChange={onChangeCheckPasswordHandler}
           wSize="small"
           hSize="small" 
         />
-        <SubmitBtn btn="註冊" />
+        <SubmitBtn 
+          btn="註冊"
+          onClickEvent={handleClickRegister} 
+        />
         <div className="mt-6">
-          <p className="link text-center" onClick={() => navigate("/login")}>取消</p>
+          <p className="link text-center" onClick={() => go("/login")}>取消</p>
         </div>
       </Container>
     )
