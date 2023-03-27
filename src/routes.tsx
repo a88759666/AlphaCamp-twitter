@@ -35,7 +35,7 @@ const routes: RouteObject[] = [
         children: []
     },
     {
-        path: "/reply",
+        path: "/reply/:id",
         element: <Reply />,
         children: []
     },
@@ -63,7 +63,7 @@ const routes: RouteObject[] = [
         children: []
     },
     {
-        path: "/admin/user",
+        path: "/admin/users",
         element: <AdminUser />,
         children: []
     },

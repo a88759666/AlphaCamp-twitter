@@ -82,5 +82,7 @@ body {
   .userPageTab:focus {
     @apply border-b-2 border-[#FF6600] text-[#FF6600] outline-none
   }
+
 }
+
 
