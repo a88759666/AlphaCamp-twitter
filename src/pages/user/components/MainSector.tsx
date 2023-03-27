@@ -33,7 +33,7 @@ type userState = 'user1' | 'user2'
 
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
-  const [ user, setUser ] = useState<userState>('user2')
+  const [ user, setUser ] = useState<userState>('user1')
   const [ show, setShow ] = useState(false)
   const [ ringBell, setRingBell ] = useState(false)
   const  { dummydata } = useTweetContext()
