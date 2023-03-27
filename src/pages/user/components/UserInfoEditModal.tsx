@@ -3,6 +3,8 @@ import { InputCard } from "components/AuthInput"
 import React from 'react';
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { useNavigate } from "react-router-dom";
+import { editUserModal } from "api/Auth";
 
 type Props = {
     onClose?: () => void
@@ -14,16 +16,45 @@ const UserInfoEditModal:React.FC<Props> = ({
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
     const [ name, setName ] = useState('')
-    const [ intro, setIntro ] = useState('')
+    const [ avatar, setAvatar ] = useState('')
+    const [ cover, setCover ] = useState('')
+    const [ introduction, setIntroduction ] = useState('')
+    const go = useNavigate()
 
     function onChangeNameHandler(event: React.FormEvent<HTMLInputElement>) {
         if (event.currentTarget) {
           setName(event.currentTarget.value)
         }
     }
-    function onChangeIntroHandler(event: React.FormEvent<HTMLInputElement>) {
+    function onChangeIntroductionHandler(event: React.FormEvent<HTMLInputElement>) {
         if (event.currentTarget) {
-          setIntro(event.currentTarget.value)
+          setIntroduction(event.currentTarget.value)
+        }
+    }
+    async function handleClickSaveModal(){
+        // if (avatar.length === 0) {
+        //     return;
+        // }
+        // if (cover.length === 0) {
+        // return;
+        // }
+        if (name.length === 0) {
+            return;
+        }
+        if (introduction.length === 0) {
+            return;
+        }
+        const userId = localStorage.getItem('userId') as string
+        const { success } = await editUserModal({
+            name,
+            avatar,
+            cover,
+            introduction,
+            userId
+        })
+        if (success) {
+            console.log(success)
+            setOpen(false)
         }
     }
     return <>
@@ -59,7 +90,10 @@ const UserInfoEditModal:React.FC<Props> = ({
                                             <CloseIcon onClick={onClose}/>
                                         </div>
                                         <h1 className="font-[700] text-[19px] leading-[28px]">編輯個人資料</h1>
-                                        <div className="btn-orange focus:btn-orange-focus hover:btn-orange-hover ml-auto">
+                                        <div 
+                                            className="btn-orange focus:btn-orange-focus hover:btn-orange-hover ml-auto"
+                                            onClick={handleClickSaveModal} 
+                                        >
                                             <h1 className="px-[15px] text-[15px] text-white font-[700] leading-[15px]">儲存</h1>
                                         </div>
                                     </div>
@@ -90,10 +124,10 @@ const UserInfoEditModal:React.FC<Props> = ({
                                             label="自我介紹" 
                                             placeholder="請輸入斥我介紹" 
                                             type='text'
-                                            name='intro'
-                                            id="intro"
-                                            value={intro}
-                                            onChange={onChangeIntroHandler}
+                                            name='introduction'
+                                            id="introduction"
+                                            value={introduction}
+                                            onChange={onChangeIntroductionHandler}
                                             wSize='medium'
                                             hSize='medium'
                                         />
