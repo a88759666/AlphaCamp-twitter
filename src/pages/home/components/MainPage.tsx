@@ -12,6 +12,8 @@ type ResProp = {
   description: string,
   createdAt: string,
   updatedAt: string,
+  tweetsRepliesCount:number,
+  tweetsLikedCount:number
 }
 
 const PostTweet = () => {
@@ -93,8 +95,8 @@ const MainPage = () => {
                   account="Apple"
                   postTime={item.createdAt}
                   tweet={item.description}
-                  likeCount={36}
-                  replyCount={72}
+                  likeCount={item.tweetsLikedCount}
+                  replyCount={item.tweetsRepliesCount}
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
                   key={item.id}

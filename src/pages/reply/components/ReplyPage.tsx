@@ -14,7 +14,9 @@ type ResProp = {
   description: string,
   createdAt: string,
   updatedAt: string,
-  Replies?:ReplyProps[]
+  tweetsRepliesCount:number,
+  tweetsLikedCount:number
+  Replies?:ReplyProps[],
 }
 type ReplyProps = {
     id: number,
@@ -22,7 +24,8 @@ type ReplyProps = {
     TweetId: number,
     comment: string,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+
 }
 
 const ReplyTweetCard = (props: {
@@ -50,6 +53,7 @@ const ReplyTweetCard = (props: {
         try{
           const res = await likeTweet(id)
           if(res === "success"){
+            window.location.reload()
             console.log("like ok")
           }
         }catch(error){
@@ -60,6 +64,7 @@ const ReplyTweetCard = (props: {
         try{
           const res = await unlikeTweet(id)
           if(res === "success"){
+            window.location.reload()
             console.log("unlike ok")
           }
         }catch(error){
@@ -172,8 +177,8 @@ const ReplyPage = () => {
         tweetContent={titleTweet?.description} 
         tweetPostTime={titleTweet?.createdAt} 
         tweetPostDate={titleTweet?.createdAt}
-        tweetReplies={36} 
-        tweetLikes={808}
+        tweetReplies={titleTweet?.tweetsRepliesCount} 
+        tweetLikes={titleTweet?.tweetsLikedCount}
         tweetId={titleTweet?.id}
       />
       {/* Reply */}

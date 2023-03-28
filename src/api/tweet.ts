@@ -12,6 +12,8 @@ type ResProp = {
   description: string,
   createdAt: string,
   updatedAt: string,
+  tweetsRepliesCount:number,
+  tweetsLikedCount:number,
   Replies?:ReplyProps[]
 }
 type ReplyProps = {

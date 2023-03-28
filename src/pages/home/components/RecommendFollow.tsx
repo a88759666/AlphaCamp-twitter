@@ -1,7 +1,14 @@
 import { UserImage } from "components/TweetCard"
-import { useState } from "react"
-import { useTweetContext } from "contexts/TweetContextProvider";
+import { useEffect, useState } from "react"
+import { getTopFollow } from "api/follow";
 
+type followProps = {
+  id: number,
+  name: string,
+  account: string,
+  avatar: string,
+  followingNum: number
+}
 
 const FollowBtn = (props: {
   onFollowClick:React.MouseEventHandler<HTMLButtonElement>}) => {
@@ -44,19 +51,35 @@ export const UserBriefCard = (props: {
 }
 
 const RecommendFollowSidebar = () => {
-  const {dummydata} = useTweetContext()
+  const [topFollowList, setTopFollowList] = useState<followProps[] | null>(null)
+
+  useEffect(() => {
+    async function getFollowAsync(){
+      try{
+        const res = await getTopFollow()
+        console.log(res)
+        if(res){
+          setTopFollowList(res)
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+    getFollowAsync()
+  },[])
 
   return(
      <section className="basis-3/7 ">
       <div className="bg-[#FAFAFB] min-w-[270px] mt-4 ml-6">
         <h4 className="py-6 pl-6 border-b font-bold" >推薦跟隨</h4>
-        {dummydata.map(item => {
+        {topFollowList?.map(item => {
           return(
             <div className="ml-4 my-4 flex relative">
               <UserImage avatar={item.avatar}/>
               <UserBriefCard 
-              userName={item.userName} 
+              userName={item.name} 
               account={item.account} 
+              key={item.id}
             /> 
             </div>
           )
