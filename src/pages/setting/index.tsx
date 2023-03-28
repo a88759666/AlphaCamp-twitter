@@ -152,7 +152,6 @@ const Setting: React.FC = () => {
           <div className="w-20 absolute right-6">
             <SubmitBtn 
               btn="儲存"
-              onClickEvent={handleClickSetting} 
             />
           </div>
         </main>

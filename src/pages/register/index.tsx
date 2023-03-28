@@ -160,7 +160,6 @@ const Register:React.FC = () => {
         />
         <SubmitBtn 
           btn="註冊"
-          onClickEvent={handleClickRegister} 
         />
         <div className="mt-6">
             <p className="link text-center" onClick={() => go("/login")}>取消</p>

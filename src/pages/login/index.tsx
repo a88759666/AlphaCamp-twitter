@@ -95,7 +95,6 @@ const Login: React.FC = () => {
         />
         <SubmitBtn 
           btn="登入"
-          onClickEvent={handleClickLogin}
         />
         <div className="mt-6 flex">
             <p className="flex-1 text-end link" onClick={() => go("/register")}>註冊</p>

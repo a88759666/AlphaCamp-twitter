@@ -64,16 +64,6 @@ export const postTweet = async (post:string) => {
   }
 }
 
-//瀏覽推文的回覆
-export const getReplies = async (id:number | string) => {
-  try{
-    const response = await axiosInstance.get(`${baseUrl}/tweets/${id}/replies`)
-    return response.data
-  }catch(error){
-    console.error("get replies error: ", error)
-  }
-}
-
 //回覆貼文
 export const replyTweet = async (id:number | string, comment:string) => {
   try{
