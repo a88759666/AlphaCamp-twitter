@@ -65,10 +65,10 @@ export const postTweet = async (post:string) => {
 }
 
 //回覆貼文
-export const replyTweet = async (id:number | string, comment:string) => {
+export const replyTweet = async (id:number | string, comment:string)=> {
   try{
-    const response = await axiosInstance.post(`${baseUrl}/tweets/${id}/replies`,comment)
-    return response.data.data 
+    const response = await axiosInstance.post(`${baseUrl}/tweets/${id}/replies`,{comment})
+    return response.data.status as string 
   }catch(error){
     console.error("Reply tweet error: ", error)
   }

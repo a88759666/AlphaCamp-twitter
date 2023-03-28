@@ -4,7 +4,7 @@ import { UserImage } from "components/TweetCard";
 import { LikeBigIcon, LikeBigActiveIcon, ReplyBigIcon } from "assets/images";
 import { useState, useEffect } from "react";
 import Modal from "components/Modal";
-import {getSingleTweet, likeTweet, unlikeTweet} from "api/tweet"
+import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "../../../scrollbar.css"
 
@@ -38,6 +38,7 @@ const ReplyTweetCard = (props: {
   const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId} = props
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
+  const [ comment, setComment] = useState<string>("")
 
   function handleClose() {
       setShow(false)
@@ -68,7 +69,26 @@ const ReplyTweetCard = (props: {
     
   }
 
-  
+  function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
+    if(event.currentTarget){
+      setComment(event.currentTarget.value)
+    }
+    
+  }
+
+  async function handleReplyClick(id:number, comment:string){
+    try{
+      const res = await replyTweet(id,comment)
+      console.log(res, comment)
+      if(res === "success"){
+      setShow(false)
+      //重整讓回覆出現
+      window.location.reload()
+    }
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   return <>
     <div className="px-4 py-2">
@@ -92,7 +112,7 @@ const ReplyTweetCard = (props: {
       <div className="flex pt-[22px] h-[68px]">
         <div className="mr-20 cursor-pointer">
           <ReplyBigIcon 
-            onDoubleClick={() => setShow(!show)}
+            onDoubleClick={()=> setShow(!show)}
           />
         </div>
         <div className="cursor-pointer mt-0.5" 
@@ -111,6 +131,8 @@ const ReplyTweetCard = (props: {
           tweet={tweetContent}
           tweetPostTime={tweetPostTime}
           currentUserName="John Doe"
+          onChange={handleChange}
+          onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
       />
     )}
   </>
@@ -159,7 +181,7 @@ const ReplyPage = () => {
         {titleTweet?.Replies?.map(item => {
             return(
               <ReplyCard 
-                userName="Jogn Doe" 
+                userName="John Doe" 
                 account="HeyJohn"
                 postTime={item.createdAt}
                 tweet={item.comment}

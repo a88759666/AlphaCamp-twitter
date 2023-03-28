@@ -1,5 +1,5 @@
 import { CloseIcon } from "assets/images"
-import { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 
@@ -12,13 +12,17 @@ type Props = {
     account?:string,
     tweet?:string,
     tweetPostTime?:string,
-    currentUserName?:string
+    currentUserName?:string,
+    onChange?:React.ChangeEventHandler<HTMLTextAreaElement>
+    onClick?:React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Modal:React.FC<Props> = ({
     postTweetModal,
     replyTweetModal,
     onClose,
+    onChange,
+    onClick,
     userName,
     account,
     tweet,
@@ -62,6 +66,7 @@ const Modal:React.FC<Props> = ({
                                         <div className="w-full flex flex-row  p-[15px] min-h-[210px] justify-start items-start">
                                             <img
                                                 src="https://picsum.photos/300/300?text=1"
+                                                alt="user"
                                                 className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                             />
                                             <textarea
@@ -108,6 +113,7 @@ const Modal:React.FC<Props> = ({
                                             <div className="flex flex-row px-[24px] pb-[16px] justify-start items-start min-h-[120px]">
                                                 <img
                                                     src="https://picsum.photos/300/300?text=1"
+                                                    alt="user"
                                                     className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                                 />
                                                 <textarea
@@ -117,8 +123,10 @@ const Modal:React.FC<Props> = ({
                                                     rows={10}
                                                     className="py-[10px] h-[50px] appearance-none outline-none"
                                                     placeholder="推你的回覆"
+                                                    onChange={onChange}
                                                 />
-                                                <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
+                                                <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]"
+                                                    onClick={onClick}>
                                                     回覆
                                                 </button>
                                         </div>
