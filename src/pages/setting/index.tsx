@@ -1,5 +1,7 @@
+import { editUserSetting } from "api/Auth";
 import Container from "components/Container";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { InputCard, SubmitBtn } from "../../components/AuthInput"
 import SideBar from "../../components/SideBar"
 
@@ -8,7 +10,9 @@ const Setting: React.FC = () => {
   const [ name, setName ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-  const [ passwordConfirm, setPasswordConfirm ] = useState('')
+  const [ checkPassword, setCheckPassword ] = useState('')
+  const [ userId, setUserId ] = useState('')
+  const go = useNavigate()
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
         setAccount(event.currentTarget.value)
@@ -29,10 +33,41 @@ const Setting: React.FC = () => {
         setPassword(event.currentTarget.value)
       }
   }
-  function onChangePasswordConfirmHandler(event: React.FormEvent<HTMLInputElement>) {
-      if (event.currentTarget) {
-        setPasswordConfirm(event.currentTarget.value)
-      }
+  function onChangeCheckPasswordHandler(event: React.FormEvent<HTMLInputElement>) {
+    if (event.currentTarget) {
+      setCheckPassword(event.currentTarget.value)
+    }
+  }
+  async function handleClickSetting() {
+    if (account.length === 0) {
+      return;
+    }
+    if (password.length === 0) {
+      return;
+    }
+    if (email.length === 0) {
+      return;
+    }
+    if (checkPassword.length === 0) {
+        return;
+    }
+    if (password.length === 0) {
+        return;
+    }
+    
+    const userId = localStorage.getItem('userId') as string
+    const { success } = await editUserSetting({
+      account,
+      name,
+      email,
+      password,
+      checkPassword,
+      userId
+    })
+    if (success) {
+      console.log(success)
+      go('/home')
+    }
   }
   return (
     <Container>
@@ -91,16 +126,19 @@ const Setting: React.FC = () => {
               label="密碼確認" 
               placeholder="請再次輸入密碼"
               type='password'
-              name='passwordConfirm'
+              name='checkPassword'
               id="password"
-              value={passwordConfirm}
-              onChange={onChangePasswordConfirmHandler}
+              value={checkPassword}
+              onChange={onChangeCheckPasswordHandler}
               wSize='large'
               hSize="small" 
             />
           </div>
           <div className="w-20 absolute right-6">
-            <SubmitBtn btn="儲存" />
+            <SubmitBtn 
+              btn="儲存"
+              onClickEvent={handleClickSetting} 
+            />
           </div>
         </main>
         <section className="basis-3/7 "></section>
