@@ -75,7 +75,7 @@ const MainPage = () => {
     setShow(!show)
   }
 
-  function handleClick(id:number) {
+  function handleTweetClick(id:number) {
     navigate(`/reply/${id}`)
   }
 
@@ -87,7 +87,7 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             return(
-              <div onClick={() => handleClick?.(item.id)}>
+              <div onClick={() => handleTweetClick?.(item.id)}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"

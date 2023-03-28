@@ -68,6 +68,7 @@ const ReplyTweetCard = (props: {
     
   }
 
+  
 
   return <>
     <div className="px-4 py-2">
@@ -105,6 +106,11 @@ const ReplyTweetCard = (props: {
           postTweetModal={false}
           replyTweetModal={true}
           onClose={handleClose}
+          userName={tweetUserName}
+          account={tweetUserAccount}
+          tweet={tweetContent}
+          tweetPostTime={tweetPostTime}
+          currentUserName="John Doe"
       />
     )}
   </>

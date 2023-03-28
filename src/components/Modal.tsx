@@ -5,15 +5,25 @@ import { Dialog, Transition } from '@headlessui/react'
 
 
 type Props = {
-    postTweetModal?: boolean
-    replyTweetModal?: boolean
-    onClose?: () => void
+    postTweetModal?: boolean,
+    replyTweetModal?: boolean,
+    onClose?: () => void,
+    userName?:string,
+    account?:string,
+    tweet?:string,
+    tweetPostTime?:string,
+    currentUserName?:string
 }
 
 const Modal:React.FC<Props> = ({
     postTweetModal,
     replyTweetModal,
-    onClose
+    onClose,
+    userName,
+    account,
+    tweet,
+    tweetPostTime,
+    currentUserName
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
@@ -83,14 +93,14 @@ const Modal:React.FC<Props> = ({
                                                 </div>
                                                 <div className="flex flex-col ml-[8px]">
                                                     <div className="flex flex-row items-end mb-[6px]">
-                                                        <p className="font-bold text-[16px] leading-[26px] mr-[8px]">Aplle</p>
-                                                        <p className="text-gray-400 text-[14px] leading-[22px] mr-[5px] font-[400]">@apple</p>
-                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">3小時</p>
+                                                        <p className="font-bold text-[16px] leading-[26px] mr-[8px]">{userName}</p>
+                                                        <p className="text-gray-400 text-[14px] leading-[22px] mr-[5px] font-[400]">@{account}</p>
+                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">{tweetPostTime}</p>
                                                     </div>
-                                                    <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum</text>
-                                                    <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆 
+                                                    <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>{tweet}</text>
+                                                    <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆給 
                                                         <span className='text-[#FF6600]'>
-                                                            @george
+                                                            @{currentUserName}
                                                         </span>
                                                     </text>
                                                 </div>
