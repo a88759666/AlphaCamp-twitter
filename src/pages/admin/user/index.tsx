@@ -4,6 +4,7 @@ import { VectorIcon, LikeBigIcon } from "assets/images";
 import TweetContextProvider, { useTweetContext } from "contexts/TweetContextProvider";
 import { useEffect, useState } from "react";
 import { getUsers } from "api/admin";
+import "scrollbar.css"
 
 interface User  {
   id: number,
@@ -76,6 +77,7 @@ const UserCard = (props: {
   )
 }
 
+
 const AdminUser: React.FC = () => {
   const [users, setUsers ] = useState<User[] | null>(null)
 
@@ -96,23 +98,24 @@ const AdminUser: React.FC = () => {
           <AdminSideBar />
         </div>
         <TweetContextProvider >
-          <main className="basis-5/7 border-l ">
+          <main className="basis-5/7 border-l overflow-auto">
             <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">使用者列表</header>
             <div className="grid grid-flow-row grid-cols-4 gap-4 p-4">
-              {users?.map(item => {
-                return(
-                  <UserCard 
-                    coverUrl="https://picsum.photos/300/300?text=1"
-                    avatar={item.avatar}
-                    userName={item.name}
-                    userAccount={item.account}
-                    posts={1.5}
-                    likes={20}
-                    following={36}
-                    followed={59}
-                    key={item.id}
-                    />
-                )
+              {users?.sort(function(a,b){return b.tweetsCount-a.tweetsCount})
+                .map(item => {
+                  return(
+                    <UserCard 
+                      coverUrl="https://picsum.photos/300/300?text=1"
+                      avatar={item.avatar}
+                      userName={item.name}
+                      userAccount={item.account}
+                      posts={1.5}
+                      likes={20}
+                      following={36}
+                      followed={59}
+                      key={item.id}
+                      />
+                  )
               })}
             </div>
           </main>
