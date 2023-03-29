@@ -2,6 +2,25 @@ import AdminSideBar from "../components/AdminSideBar";
 import Container from "components/Container";
 import { VectorIcon, LikeBigIcon } from "assets/images";
 import TweetContextProvider, { useTweetContext } from "contexts/TweetContextProvider";
+import { useEffect, useState } from "react";
+import { getUsers } from "api/admin";
+
+interface User  {
+  id: number,
+  account: string,
+  email: string,
+  name: string,
+  avatar: string,
+  cover: string,
+  introduction: string,
+  role: string,
+  createdAt: string,
+  updatedAt: string,
+  tweetsCount: number,
+  followersCount: number,
+  followingsCount: number,
+  tweetsLikedCount: number
+}
 
 const UserCard = (props: {
   coverUrl:string, 
@@ -16,7 +35,7 @@ const UserCard = (props: {
   const {coverUrl, avatar, userName, userAccount, posts, likes, following, followed} = props
 
   return(
-    <div className="w-[210px] relative">
+    <div className="w-[210px] relative break-all cursor-pointer hover:opacity-50">
       <div className="h-[140px] overflow-hidden" 
         style={{backgroundImage: `url(${coverUrl})`,
             backgroundPosition: "center",
@@ -58,7 +77,18 @@ const UserCard = (props: {
 }
 
 const AdminUser: React.FC = () => {
-  // const{dummydata} = useTweetContext()
+  const [users, setUsers ] = useState<User[] | null>(null)
+
+  useEffect(() => {
+    async function getUsersAsync(){
+      const res = await getUsers()
+      if(res){
+        setUsers(res)
+      }
+    }
+    getUsersAsync()
+  },[])
+
   return (
     <Container>
       <div className="flex flex-row h-screen">
@@ -69,20 +99,21 @@ const AdminUser: React.FC = () => {
           <main className="basis-5/7 border-l ">
             <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">使用者列表</header>
             <div className="grid grid-flow-row grid-cols-4 gap-4 p-4">
-              {/* {dummydata.map(item => {
+              {users?.map(item => {
                 return(
                   <UserCard 
                     coverUrl="https://picsum.photos/300/300?text=1"
                     avatar={item.avatar}
-                    userName={item.userName}
+                    userName={item.name}
                     userAccount={item.account}
                     posts={1.5}
                     likes={20}
                     following={36}
                     followed={59}
+                    key={item.id}
                     />
                 )
-              })} */}
+              })}
             </div>
           </main>
         </TweetContextProvider>
