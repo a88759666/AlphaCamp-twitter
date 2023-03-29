@@ -14,8 +14,10 @@ export const InputCard = (props : {
   id?: string,
   value?: any,
   onChange?: React.ChangeEventHandler<HTMLInputElement>
+  showError?: boolean,
+  ErrorText?: string
 }) => {
-  const {label, placeholder, wSize, hSize, type, name, id, value, onChange} = props
+  const {label, placeholder, wSize, hSize, type, name, id, value, onChange, showError, ErrorText} = props
   return (
     <form>
       <div className={`
@@ -39,8 +41,15 @@ export const InputCard = (props : {
           value={value}
           placeholder={placeholder} 
           onChange={onChange}
-          className="inputDefault inputDefault:hover inputDefault:focus" 
+          className={`
+            ${
+              showError ? "border-b-2 border-[#FC5A5A]" : null
+            } inputDefault inputDefault:hover inputDefault:focus`}
+            
         />
+        { showError &&
+          <p className="mt-[5px] font-[500] text-[12px] leading-[20px] text-[#FC5A5A]">{ErrorText}</p>
+        }
       </div>      
     </form>
   )
