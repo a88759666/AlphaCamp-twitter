@@ -44,6 +44,12 @@ const UserInfoEditModal:React.FC<Props> = ({
         if (introduction.length === 0) {
             return;
         }
+        if (name.length >= 51) {
+            return;
+        }
+        if (introduction.length >= 160) {
+            return;
+        }
         const userId = localStorage.getItem('userId') as string
         const { success } = await editUserModal({
             name,
@@ -119,10 +125,19 @@ const UserInfoEditModal:React.FC<Props> = ({
                                             wSize='medium'
                                             hSize="small"
                                         />
-                                        <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mt-[-30px] ml-auto mb-[20px]">8/50</p>
+                                        {name.length <= 50 &&
+                                            <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mb-[20px] mt-[-30px] ml-auto">{name.length}/50</p>
+                                        }
+                                        {name.length > 50 &&
+                                            <div className="flex flex-row items-center justify-between mb-[20px] mt-[-30px]">
+                                                <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數超出上限</p>
+                                                <p className="text-slate-600 font-[500] text-[15px] leading-[22px]">{name.length}/50</p>
+                                             </div>
+                                        }
+                                       
                                         <InputCard 
                                             label="自我介紹" 
-                                            placeholder="請輸入斥我介紹" 
+                                            placeholder="請輸入自我介紹" 
                                             type='text'
                                             name='introduction'
                                             id="introduction"
@@ -130,8 +145,17 @@ const UserInfoEditModal:React.FC<Props> = ({
                                             onChange={onChangeIntroductionHandler}
                                             wSize='medium'
                                             hSize='medium'
+
                                         />
-                                        <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mt-[-30px] ml-auto">0/160</p>
+                                        {introduction.length <= 160 &&
+                                            <p className="text-slate-600 font-[500] text-[15px] leading-[22px] mb-[20px] mt-[-30px] ml-auto">{introduction.length}/160</p>
+                                        }
+                                        {introduction.length > 160 &&
+                                            <div className="flex flex-row items-center justify-between mb-[20px] mt-[-30px]">
+                                                <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數超出上限</p>
+                                                <p className="text-slate-600 font-[500] text-[15px] leading-[22px]">{introduction.length}/160</p>
+                                             </div>
+                                        }
                                     </div>
                                 </div>
                             </Dialog.Panel>
