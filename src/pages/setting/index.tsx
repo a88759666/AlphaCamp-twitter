@@ -12,7 +12,10 @@ const Setting: React.FC = () => {
   const [ password, setPassword ] = useState('')
   const [ checkPassword, setCheckPassword ] = useState('')
   const [ userId, setUserId ] = useState('')
+  const [ accountError, setAccountError ] = useState(false)
+  const [ emailError, setEmailError ] = useState(false)
   const go = useNavigate()
+
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
         setAccount(event.currentTarget.value)
@@ -67,6 +70,14 @@ const Setting: React.FC = () => {
     if (success) {
       console.log(success)
       go('/home')
+    } else {
+      let errorMsg = localStorage.getItem('errorMsg')
+      if( errorMsg === 'Error: account 已重複註冊!'){
+        setAccountError(true)
+      }
+      if( errorMsg = 'Error: email 已重複註冊!'){
+        setEmailError(true)
+      }  
     }
   }
   return (
@@ -88,6 +99,8 @@ const Setting: React.FC = () => {
               onChange={onChangeAccountHandler}
               wSize='large'
               hSize="small"
+              showError={accountError}
+              ErrorText="帳戶已經註冊過"
             />
             <InputCard 
               label="名稱" 
@@ -110,6 +123,8 @@ const Setting: React.FC = () => {
               onChange={onChangeEmailHandler}
               wSize='large'
               hSize="small" 
+              showError={emailError}
+              ErrorText="信箱已經註冊過" 
             />
             <InputCard 
               label="密碼" 
@@ -148,4 +163,5 @@ const Setting: React.FC = () => {
 };
 
 export default Setting;
+
 
