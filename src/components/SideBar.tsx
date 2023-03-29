@@ -1,3 +1,4 @@
+import { logout } from 'api/Auth';
 import { ACLogoSmallIcon, HomeIcon, ProfileIcon, SettingIcon, LogoutIcon } from 'assets/images';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const SideBar: React.FC = () => {
     const go = useNavigate()
     function handleClickSignout() {
-        localStorage.removeItem('token')
+        logout()
         go('/login')
     }
     return (
