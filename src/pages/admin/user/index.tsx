@@ -58,7 +58,7 @@ const UserCard = (props: {
 }
 
 const AdminUser: React.FC = () => {
-  const{dummydata} = useTweetContext()
+  // const{dummydata} = useTweetContext()
   return (
     <Container>
       <div className="flex flex-row h-screen">
@@ -69,7 +69,7 @@ const AdminUser: React.FC = () => {
           <main className="basis-5/7 border-l ">
             <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">使用者列表</header>
             <div className="grid grid-flow-row grid-cols-4 gap-4 p-4">
-              {dummydata.map(item => {
+              {/* {dummydata.map(item => {
                 return(
                   <UserCard 
                     coverUrl="https://picsum.photos/300/300?text=1"
@@ -82,7 +82,7 @@ const AdminUser: React.FC = () => {
                     followed={59}
                     />
                 )
-              })}
+              })} */}
             </div>
           </main>
         </TweetContextProvider>

@@ -1,19 +1,37 @@
 import { CloseIcon } from "assets/images"
-import { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 
 
 type Props = {
-    postTweetModal?: boolean
-    replyTweetModal?: boolean
-    onClose?: () => void
+    postTweetModal?: boolean,
+    replyTweetModal?: boolean,
+    onClose?: () => void,
+    userName?:string,
+    account?:string,
+    tweet?:string,
+    tweetPostTime?:string,
+    currentUserName?:string,
+    onChange?:React.ChangeEventHandler<HTMLTextAreaElement>
+    onClick?:React.MouseEventHandler<HTMLButtonElement>
+    onPostChange?:React.ChangeEventHandler<HTMLTextAreaElement>
+    onPostClick?:React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Modal:React.FC<Props> = ({
     postTweetModal,
     replyTweetModal,
-    onClose
+    onClose,
+    onChange,
+    onClick,
+    userName,
+    account,
+    tweet,
+    tweetPostTime,
+    currentUserName,
+    onPostChange,
+    onPostClick
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
@@ -52,6 +70,7 @@ const Modal:React.FC<Props> = ({
                                         <div className="w-full flex flex-row  p-[15px] min-h-[210px] justify-start items-start">
                                             <img
                                                 src="https://picsum.photos/300/300?text=1"
+                                                alt="user"
                                                 className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                             />
                                             <textarea
@@ -61,8 +80,10 @@ const Modal:React.FC<Props> = ({
                                                 rows={10}
                                                 className="py-[10px] h-[50px] appearance-none outline-none"
                                                 placeholder="有什麼新鮮事?"
+                                                onChange={onPostChange}
                                             />
-                                            <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
+                                            <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]"
+                                            onClick={onPostClick}>
                                                 推文
                                             </button>
                                         </div>
@@ -83,14 +104,14 @@ const Modal:React.FC<Props> = ({
                                                 </div>
                                                 <div className="flex flex-col ml-[8px]">
                                                     <div className="flex flex-row items-end mb-[6px]">
-                                                        <p className="font-bold text-[16px] leading-[26px] mr-[8px]">Aplle</p>
-                                                        <p className="text-gray-400 text-[14px] leading-[22px] mr-[5px] font-[400]">@apple</p>
-                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">3小時</p>
+                                                        <p className="font-bold text-[16px] leading-[26px] mr-[8px]">{userName}</p>
+                                                        <p className="text-gray-400 text-[14px] leading-[22px] mr-[5px] font-[400]">@{account}</p>
+                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">{tweetPostTime}</p>
                                                     </div>
-                                                    <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum</text>
-                                                    <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆 
+                                                    <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>{tweet}</text>
+                                                    <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆給 
                                                         <span className='text-[#FF6600]'>
-                                                            @george
+                                                            @{currentUserName}
                                                         </span>
                                                     </text>
                                                 </div>
@@ -98,6 +119,7 @@ const Modal:React.FC<Props> = ({
                                             <div className="flex flex-row px-[24px] pb-[16px] justify-start items-start min-h-[120px]">
                                                 <img
                                                     src="https://picsum.photos/300/300?text=1"
+                                                    alt="user"
                                                     className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                                 />
                                                 <textarea
@@ -107,8 +129,10 @@ const Modal:React.FC<Props> = ({
                                                     rows={10}
                                                     className="py-[10px] h-[50px] appearance-none outline-none"
                                                     placeholder="推你的回覆"
+                                                    onChange={onChange}
                                                 />
-                                                <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
+                                                <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]"
+                                                    onClick={onClick}>
                                                     回覆
                                                 </button>
                                         </div>

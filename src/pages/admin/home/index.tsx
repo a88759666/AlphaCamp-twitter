@@ -50,7 +50,7 @@ const AdminTweetCard:React.FC<Props> = ({
 
 
 const AdminHome: React.FC = () => {
-  const { dummydata } = useTweetContext() 
+  // const { dummydata } = useTweetContext() 
   return (
     <Container>
       <div className="flex flex-row h-screen">
@@ -60,24 +60,24 @@ const AdminHome: React.FC = () => {
         <div className="basis-5/7 border-l border-r border-slate-200">
           <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">推文清單</header>
           {
-            dummydata?.map((item) => {
-              const {
-                userName,
-                account,
-                postTime,
-                avatar,
-                tweet,
-              } = item
-              return (
-                <AdminTweetCard
-                  name={userName}
-                  account={account}
-                  time={postTime}
-                  avatar={avatar}
-                  text={tweet}
-                />
-              )
-            })
+            // dummydata?.map((item) => {
+            //   const {
+            //     userName,
+            //     account,
+            //     postTime,
+            //     avatar,
+            //     tweet,
+            //   } = item
+            //   return (
+            //     <AdminTweetCard
+            //       name={userName}
+            //       account={account}
+            //       time={postTime}
+            //       avatar={avatar}
+            //       text={tweet}
+            //     />
+            //   )
+            // })
           }
         </div>
         

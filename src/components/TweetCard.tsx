@@ -1,4 +1,4 @@
-import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
+import {LikeIcon, LikeBigActiveIcon, ReplyIcon} from "assets/images/index"
 
 
 export const UserImage = (props: {avatar?: string}) => {
@@ -44,7 +44,7 @@ const TweetCard = (props: {
             </div>
             <div className="basis-1/2 flex ml-5 ">
               <div className="pt-[3.5px]">
-                { isLiked ? <LikeIconActive /> : <LikeIcon />}
+                { isLiked ? <LikeBigActiveIcon /> : <LikeIcon />}
               </div>
               <p className="text-[14px] ml-2">{replyCount}</p>
             </div>

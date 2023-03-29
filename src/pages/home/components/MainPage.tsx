@@ -12,11 +12,33 @@ type ResProp = {
   description: string,
   createdAt: string,
   updatedAt: string,
+  tweetsRepliesCount:number,
+  tweetsLikedCount:number
 }
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
-  
+  const [post , setPost] = useState<string>("")
+
+  function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
+    if(event.currentTarget){
+      setPost(event.currentTarget.value)
+    }
+  }
+
+  async function handlePostClick(post:string){
+    try{
+      const res = await tweet.postTweet(post)
+      if(res === "success"){
+        setShow(false)
+      //重整讓回覆出現
+      window.location.reload()
+    }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   function handleClose() {
       setShow(false)
   }
@@ -44,6 +66,8 @@ const PostTweet = () => {
           postTweetModal={true}
           replyTweetModal={false}
           onClose={handleClose}
+          onPostClick={() => handlePostClick(post)}
+          onPostChange={handleChange} 
       />
     )}
   </>
@@ -75,7 +99,7 @@ const MainPage = () => {
     setShow(!show)
   }
 
-  function handleClick(id:number) {
+  function handleTweetClick(id:number) {
     navigate(`/reply/${id}`)
   }
 
@@ -87,17 +111,17 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             return(
-              <div onClick={() => handleClick?.(item.id)}>
+              <div onClick={() => handleTweetClick?.(item.id)} key={item.id}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"
                   postTime={item.createdAt}
                   tweet={item.description}
-                  likeCount={36}
-                  replyCount={72}
+                  likeCount={item.tweetsLikedCount}
+                  replyCount={item.tweetsRepliesCount}
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
-                  key={item.id}
+                  
                 /> 
               </div>
             )

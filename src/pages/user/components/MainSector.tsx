@@ -180,7 +180,7 @@ const MainSector = () => {
             )
           })
         }
-      </div>
+      </div> 
       {show && (
           <UserInfoEditModal 
             onClose={handleCloseModal}
