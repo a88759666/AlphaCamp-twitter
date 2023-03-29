@@ -17,6 +17,8 @@ type Props = {
     onClick?:React.MouseEventHandler<HTMLButtonElement>
     onPostChange?:React.ChangeEventHandler<HTMLTextAreaElement>
     onPostClick?:React.MouseEventHandler<HTMLButtonElement>
+    post?: string,
+    comment?: string
 }
 
 const Modal:React.FC<Props> = ({
@@ -31,7 +33,9 @@ const Modal:React.FC<Props> = ({
     tweetPostTime,
     currentUserName,
     onPostChange,
-    onPostClick
+    onPostClick,
+    post,
+    comment
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
@@ -62,7 +66,7 @@ const Modal:React.FC<Props> = ({
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel className="w-[500px] relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="w-full flex flex-col items-start border-solid rounded-3xl">
+                                <div className="w-full flex flex-col items-start border-solid rounded-3xl relative">
                                     <div className="w-full p-[24px] border-b-2 border-slate-200 cursor-pointer">
                                         <CloseIcon onClick={onClose}/>
                                     </div>
@@ -86,6 +90,12 @@ const Modal:React.FC<Props> = ({
                                             onClick={onPostClick}>
                                                 推文
                                             </button>
+                                            <div className="absolute left-[15px] bottom-[15px]">
+                                                { post &&
+                                                    post.length === 0 && 
+                                                    <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
+                                                }
+                                            </div>
                                         </div>
                                     )}
                                     {replyTweetModal && (
@@ -135,7 +145,13 @@ const Modal:React.FC<Props> = ({
                                                     onClick={onClick}>
                                                     回覆
                                                 </button>
-                                        </div>
+                                                <div className="absolute left-[15px] bottom-[15px]">
+                                                {   comment &&
+                                                    comment.length === 0 && 
+                                                    <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
+                                                }
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
