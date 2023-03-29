@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const AdminSideBar: React.FC = () => {
     const go = useNavigate()
     function handleClickSignout() {
-        adminLogout()
+        // adminLogout()
         go('/admin/login')
     }
     return (
