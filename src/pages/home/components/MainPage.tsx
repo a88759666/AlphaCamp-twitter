@@ -19,8 +19,13 @@ type ResProp = {
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
+
   const [post , setPost] = useState<string>("")
   const { currentUser } = useTweetContext()
+
+  const [ post , setPost] = useState<string>("")
+
+
   function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
     if(event.currentTarget){
       setPost(event.currentTarget.value)
@@ -69,6 +74,7 @@ const PostTweet = () => {
           onClose={handleClose}
           onPostClick={() => handlePostClick(post)}
           onPostChange={handleChange} 
+          post={post}
       />
     )}
   </>
@@ -142,3 +148,4 @@ const MainPage = () => {
 };
 
 export default MainPage;
+

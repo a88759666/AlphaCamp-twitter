@@ -7,6 +7,7 @@ import {ReactComponent as SettingIcon} from './setting.svg'
 import {ReactComponent as LogoutIcon} from './logout.svg'
 import {ReactComponent as ReplyIcon} from './reply.svg'
 import {ReactComponent as LikeIcon} from './like.svg'
+import {ReactComponent as LikeIconActive} from './likeActive.svg'
 import {ReactComponent as BackIcon} from './back.svg'
 import {ReactComponent as CloseIcon} from './close.svg'
 import {ReactComponent as BellIcon} from './bell.svg'
@@ -26,6 +27,7 @@ export {
     LogoutIcon, 
     ReplyIcon, 
     LikeIcon,
+    LikeIconActive,
     BackIcon,
     CloseIcon,
     BellIcon,
