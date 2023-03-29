@@ -17,6 +17,19 @@ const Modal:React.FC<Props> = ({
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
+    const [ postText, setPostText ] = useState('')
+    const [ replyText, setReplyText ] = useState('')
+
+    function onChangePostTextHandler(event: React.FormEvent<HTMLTextAreaElement>) {
+        if (event.currentTarget) {
+          setPostText(event.currentTarget.value)
+        }
+    }
+    function onChangeReplyTextHandler(event: React.FormEvent<HTMLTextAreaElement>) {
+        if (event.currentTarget) {
+          setReplyText(event.currentTarget.value)
+        }
+    }
     return <>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -44,7 +57,7 @@ const Modal:React.FC<Props> = ({
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel className="w-[500px] relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="w-full flex flex-col items-start border-solid rounded-3xl">
+                                <div className="w-full flex flex-col items-start border-solid rounded-3xl relative">
                                     <div className="w-full p-[24px] border-b-2 border-slate-200 cursor-pointer">
                                         <CloseIcon onClick={onClose}/>
                                     </div>
@@ -61,10 +74,21 @@ const Modal:React.FC<Props> = ({
                                                 rows={10}
                                                 className="py-[10px] h-[50px] appearance-none outline-none"
                                                 placeholder="有什麼新鮮事?"
+                                                value={postText}
+                                                onChange={onChangePostTextHandler}
                                             />
-                                            <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
+                                            <button 
+                                                className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]"
+                                            >
                                                 推文
                                             </button>
+                                            <div className="absolute left-[15px] bottom-[15px]">
+                                                {
+                                                    postText.length === 0 && 
+                                                    <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
+                                                }
+                                            </div>
+                                            
                                         </div>
                                     )}
                                     {replyTweetModal && (
@@ -107,10 +131,19 @@ const Modal:React.FC<Props> = ({
                                                     rows={10}
                                                     className="py-[10px] h-[50px] appearance-none outline-none"
                                                     placeholder="推你的回覆"
+                                                    value={replyText}
+                                                    onChange={onChangeReplyTextHandler}
                                                 />
                                                 <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
                                                     回覆
                                                 </button>
+                                                <div className="absolute left-[15px] bottom-[15px]">
+                                                {
+                                                    replyText.length === 0 && 
+                                                    <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
+                                                }
+                                            </div>
+                                                
                                         </div>
                                         </div>
                                     )}
