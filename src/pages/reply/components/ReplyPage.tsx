@@ -7,7 +7,7 @@ import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "../../../scrollbar.css"
-import { useTweetContext } from "contexts/TweetContextProvider";
+
 
 type ResProp = {
   id: number,
@@ -142,6 +142,7 @@ const ReplyTweetCard = (props: {
           currentUserName="John Doe"
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
+          comment={comment}
       />
     )}
   </>
@@ -210,3 +211,4 @@ const ReplyPage = () => {
 }
 
 export default ReplyPage
+
