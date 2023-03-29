@@ -172,9 +172,3 @@ const Register:React.FC = () => {
   export default Register;
   
 
-      </Container>
-    )
-  };
-  
-  export default Register;
-  
