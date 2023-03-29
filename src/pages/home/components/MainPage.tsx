@@ -81,7 +81,6 @@ const PostTweet = () => {
 
 const MainPage = () => {
   const [tweets, setTweets] = useState<Array<ResProp> | null>(null)
-  const navigate = useNavigate()
 
   useEffect(() => {
     async function getTweetAsync(){
@@ -105,9 +104,7 @@ const MainPage = () => {
     setShow(!show)
   }
 
-  function handleTweetClick(id:number) {
-    navigate(`/reply/${id}`)
-  }
+  
 
 
   return (
@@ -117,7 +114,7 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             return(
-              <div onClick={() => handleTweetClick?.(item.id)} key={item.id}>
+              <div key={item.id}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"
@@ -127,7 +124,7 @@ const MainPage = () => {
                   replyCount={item.tweetsRepliesCount}
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
-                  
+                  id={item.id}
                 /> 
               </div>
             )

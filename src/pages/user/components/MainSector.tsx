@@ -144,6 +144,7 @@ const MainSector = () => {
                 account={tweet.User?.account}
                 avatar={tweet.User?.avatar}
                 userName={tweet.User?.name}
+                id={tweet.id}
               /> 
             )
           })
@@ -176,6 +177,7 @@ const MainSector = () => {
                 account={like.Tweet?.User?.account}
                 avatar={like.Tweet?.User?.avatar}
                 userName={like.Tweet?.User?.name}
+                id={like.Tweet?.id}
               /> 
             )
           })
