@@ -15,6 +15,8 @@ type Props = {
     currentUserName?:string,
     onChange?:React.ChangeEventHandler<HTMLTextAreaElement>
     onClick?:React.MouseEventHandler<HTMLButtonElement>
+    onPostChange?:React.ChangeEventHandler<HTMLTextAreaElement>
+    onPostClick?:React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Modal:React.FC<Props> = ({
@@ -27,7 +29,9 @@ const Modal:React.FC<Props> = ({
     account,
     tweet,
     tweetPostTime,
-    currentUserName
+    currentUserName,
+    onPostChange,
+    onPostClick
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
@@ -76,8 +80,10 @@ const Modal:React.FC<Props> = ({
                                                 rows={10}
                                                 className="py-[10px] h-[50px] appearance-none outline-none"
                                                 placeholder="有什麼新鮮事?"
+                                                onChange={onPostChange}
                                             />
-                                            <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]">
+                                            <button className=" bg-orange-400 rounded-3xl text-white font-[700] ml-auto self-end px-[15px] py-[10px]"
+                                            onClick={onPostClick}>
                                                 推文
                                             </button>
                                         </div>

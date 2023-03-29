@@ -62,6 +62,6 @@ export const unfollow = async (id:number) => {
     const res = await axiosInstance.delete(`${baseUrl}/followships/${id}`)
     return res.data.data as follower
   }catch(error){
-    console.error("unfollow error:", error)
+    console.error("unfollow error: ", error)
   }
 }

@@ -58,10 +58,10 @@ export const getSingleTweet = async (id:number | string) => {
 
 
 //發文
-export const postTweet = async (post:string) => {
+export const postTweet = async (description:string) => {
   try{
-    const response = await axiosInstance.post(`${baseUrl}/tweets`, post)
-    return response.data.data
+    const response = await axiosInstance.post(`${baseUrl}/tweets`, {description})
+    return response.data.status as string
   }catch(error){
     console.error("post tweet error: ", error)
   }

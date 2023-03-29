@@ -18,7 +18,27 @@ type ResProp = {
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
-  
+  const [post , setPost] = useState<string>("")
+
+  function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
+    if(event.currentTarget){
+      setPost(event.currentTarget.value)
+    }
+  }
+
+  async function handlePostClick(post:string){
+    try{
+      const res = await tweet.postTweet(post)
+      if(res === "success"){
+        setShow(false)
+      //重整讓回覆出現
+      window.location.reload()
+    }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   function handleClose() {
       setShow(false)
   }
@@ -46,6 +66,8 @@ const PostTweet = () => {
           postTweetModal={true}
           replyTweetModal={false}
           onClose={handleClose}
+          onPostClick={() => handlePostClick(post)}
+          onPostChange={handleChange} 
       />
     )}
   </>
