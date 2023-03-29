@@ -1,12 +1,12 @@
 import { UserImage } from "components/TweetCard"
 
 const ReplyCard = (props: {
-  userName:string, 
-  account:string, 
-  postTime:string, 
-  tweet:string, 
-  avatar:string,
-  replyAccount:string
+  userName?:string, 
+  account?:string, 
+  postTime?:string, 
+  tweet?:string, 
+  avatar?:string,
+  replyAccount?:string
   }) => {
     const { userName,account,postTime,tweet, avatar, replyAccount } = props
     return(
