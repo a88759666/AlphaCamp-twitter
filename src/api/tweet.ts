@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Follower, Following, Like, RepliedTweet, Tweet } from 'type';
 const baseUrl = 'https://arcane-beyond-08221.herokuapp.com/api';
 
 const axiosInstance = axios.create({
@@ -103,3 +103,59 @@ export const unlikeTweet = async (id:number | string) => {
     console.error("unlike tweet error: ", error)
   }
 }
+
+//取得使用者貼文
+export async function getUserTweets(id:string) {
+    try {
+      const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/tweets`)
+      // console.log(data)
+      return data as Tweet[]
+    } catch (error) {
+      console.error('Get User tweets failed:', error)
+    }
+}
+
+//取得使用者喜歡的內容
+export async function getUserLikes(id:string) {
+  try {
+    const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/likes`)
+    // console.log(data)
+    return data as Like[]
+  } catch (error) {
+    console.error('Get User likes  failed:', error)
+  }
+}
+
+//取得使用者回復
+export async function getUserRepliedTweets(id:string) {
+  try {
+    const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/replied_tweets`)
+    // console.log(data)
+    return data as RepliedTweet[]
+  } catch (error) {
+    console.error('Get User likes  failed:', error)
+  }
+}
+
+//取得使用者追蹤中
+export async function getUserFollowing(id:string) {
+  try {
+    const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/followings`)
+    // console.log(data)
+    return data as Following[]
+  } catch (error) {
+    console.error('Get User Following  failed:', error)
+  }
+}
+
+//取得追隨使用者人
+export async function getUserFollower(id:string) {
+  try {
+    const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/followers`)
+    // console.log(data)
+    return data as Follower[]
+  } catch (error) {
+    console.error('Get User Follower failed:', error)
+  }
+}
+
