@@ -7,6 +7,7 @@ import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "../../../scrollbar.css"
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 type ResProp = {
   id: number,
@@ -36,9 +37,11 @@ const ReplyTweetCard = (props: {
   tweetPostDate?:string,
   tweetReplies?:number,
   tweetLikes?:number,
-  tweetId?:number
+  tweetId?:number,
+  setHeaderTweet: React.Dispatch<React.SetStateAction<ResProp | null>>,
+  headerTweet:ResProp | null
 }) => {
-  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId} = props
+  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId, setHeaderTweet, headerTweet} = props
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")
@@ -53,8 +56,9 @@ const ReplyTweetCard = (props: {
         try{
           const res = await likeTweet(id)
           if(res === "success"){
-            window.location.reload()
-            console.log("like ok")
+            if(headerTweet){
+              setHeaderTweet({...headerTweet, tweetsLikedCount: headerTweet.tweetsLikedCount +1})
+            }
           }
         }catch(error){
           console.log(error)
@@ -64,8 +68,9 @@ const ReplyTweetCard = (props: {
         try{
           const res = await unlikeTweet(id)
           if(res === "success"){
-            window.location.reload()
-            console.log("unlike ok")
+            if(headerTweet){
+              setHeaderTweet({...headerTweet, tweetsLikedCount: headerTweet.tweetsLikedCount -1})
+            }
           }
         }catch(error){
           console.log(error)
@@ -145,7 +150,7 @@ const ReplyTweetCard = (props: {
 
 
 const ReplyPage = () => {
-  const [ titleTweet, setTitleTweet ] = useState<ResProp | null>(null)
+  const [ headerTweet, setHeaderTweet ] = useState<ResProp | null>(null)
   const {id} = useParams()
 
   useEffect(() => {
@@ -153,7 +158,7 @@ const ReplyPage = () => {
       const res = await getSingleTweet(Number(id))
       try{
         if(res){
-          setTitleTweet(res)
+          setHeaderTweet(res)
         }
       }catch(error){
         console.log(error)
@@ -174,16 +179,18 @@ const ReplyPage = () => {
       <ReplyTweetCard 
         tweetUserName="Apple" 
         tweetUserAccount="Apple" 
-        tweetContent={titleTweet?.description} 
-        tweetPostTime={titleTweet?.createdAt} 
-        tweetPostDate={titleTweet?.createdAt}
-        tweetReplies={titleTweet?.tweetsRepliesCount} 
-        tweetLikes={titleTweet?.tweetsLikedCount}
-        tweetId={titleTweet?.id}
+        tweetContent={headerTweet?.description} 
+        tweetPostTime={headerTweet?.createdAt} 
+        tweetPostDate={headerTweet?.createdAt}
+        tweetReplies={headerTweet?.tweetsRepliesCount} 
+        tweetLikes={headerTweet?.tweetsLikedCount}
+        tweetId={headerTweet?.id}
+        setHeaderTweet={setHeaderTweet}
+        headerTweet={headerTweet}
       />
       {/* Reply */}
       <div className="border-t">
-        {titleTweet?.Replies?.map(item => {
+        {headerTweet?.Replies?.map(item => {
             return(
               <ReplyCard 
                 userName="John Doe" 

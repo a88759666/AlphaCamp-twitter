@@ -54,6 +54,7 @@ const UserSelfFollowerPage:React.FC = () => {
     const [ follower, setFollower ] = useState<Follower[]>([])
 
     const go = useNavigate()
+<<<<<<< HEAD
     async function getFollowingAsync() {
         try {
           const userId = localStorage.getItem('userId') as string
@@ -89,6 +90,9 @@ const UserSelfFollowerPage:React.FC = () => {
         getFollowingAsync()
     },[go])
 
+=======
+    // const { friends } = useTweetContext()
+>>>>>>> 8cf4bb3 ([feat]adjust like/unlike interactive effect)
     return (
         <Container>
           <div className="flex flex-row h-screen">
@@ -120,6 +124,7 @@ const UserSelfFollowerPage:React.FC = () => {
                             正在跟隨
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div className="flex flex-col">
                         {Array.isArray(follower) &&
                             follower.map(item => {
@@ -131,10 +136,30 @@ const UserSelfFollowerPage:React.FC = () => {
                                     text={item.Follower?.introduction}
                                     isFollowing={false}
                                 /> 
+=======
+                    {/* <div className="flex flex-col">
+                        {
+                            friends?.map((item) => {
+                                const {
+                                    name,
+                                    id,                    
+                                    avatar,
+                                    text,
+                                    isFollowing,
+                                } = item
+                                return (
+                                    <UserSelfFollowCard
+                                        name={name}
+                                        key={id}
+                                        avatar={avatar}
+                                        text={text}
+                                        isFollowing={isFollowing} 
+                                    />
+>>>>>>> 8cf4bb3 ([feat]adjust like/unlike interactive effect)
                                 )
                             })
                         }
-                    </div>
+                    </div> */}
                 </div>
               
             </div>

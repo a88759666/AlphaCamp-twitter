@@ -89,7 +89,7 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             return(
-              <div onClick={() => handleTweetClick?.(item.id)}>
+              <div onClick={() => handleTweetClick?.(item.id)} key={item.id}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"
@@ -99,7 +99,7 @@ const MainPage = () => {
                   replyCount={item.tweetsRepliesCount}
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
-                  key={item.id}
+                  
                 /> 
               </div>
             )

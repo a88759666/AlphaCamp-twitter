@@ -57,7 +57,6 @@ const RecommendFollowSidebar = () => {
     async function getFollowAsync(){
       try{
         const res = await getTopFollow()
-        console.log(res)
         if(res){
           setTopFollowList(res)
         }
@@ -74,12 +73,12 @@ const RecommendFollowSidebar = () => {
         <h4 className="py-6 pl-6 border-b font-bold" >推薦跟隨</h4>
         {topFollowList?.map(item => {
           return(
-            <div className="ml-4 my-4 flex relative">
+            <div className="ml-4 my-4 flex relative" key={item.id}>
               <UserImage avatar={item.avatar}/>
               <UserBriefCard 
               userName={item.name} 
               account={item.account} 
-              key={item.id}
+              
             /> 
             </div>
           )

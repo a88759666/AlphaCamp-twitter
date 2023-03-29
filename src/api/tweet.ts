@@ -38,6 +38,7 @@ axiosInstance.interceptors.request.use((config) => {
   //瀏覽全部推文
 export const getTweets = async () => {
   try {
+    
         const res =  await axiosInstance.get(`${baseUrl}/tweets`)
         return res.data as Array<ResProp> 
     } catch (error) {

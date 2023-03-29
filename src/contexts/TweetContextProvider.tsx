@@ -1,4 +1,25 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
+import jwt_decode from "jwt-decode"
+
+type JWT = {
+  id: number,
+  account: string,
+  email: string,
+  name: string,
+  avatar: string,
+  cover: string,
+  introduction: string,
+  createdAt: string,
+  updatedAt: string,
+  iat: number,
+  exp: number
+}
+
+const defaultAuthContext ={
+  isAuthenticated: false,  
+  currentUser: {} || null
+}
+
 const friends = [
   {
     id: 1,
@@ -48,10 +69,8 @@ const dummydata = [
   }
 ]
 
-export const TweetContext = createContext({
-  dummydata,
-  friends
-})
+
+export const TweetContext = createContext(defaultAuthContext)
 export function useTweetContext() { 
   return useContext(TweetContext)
 }
@@ -59,12 +78,27 @@ export function useTweetContext() {
 interface Props {children: React.ReactNode}
 
 const TweetContextProvider:React.FC<Props> = ({children}) => {
-  const providerValue = {
-    dummydata,
-    friends
-  }
+  const [payload, setPayload] = useState<JWT | {} | null>({})
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+
+    const authToken = localStorage.getItem("token")
+    if(authToken){
+      const tempPayload = jwt_decode(authToken) 
+      if(tempPayload){
+        setPayload(tempPayload)
+      }
+    }else{
+      setIsAuthenticated(false);
+      setPayload(null);
+      return;
+    }
+  },[])
+
+
   return <>
-        <TweetContext.Provider value={providerValue}>
+        <TweetContext.Provider value={{isAuthenticated: isAuthenticated,  currentUser:payload}}>
             { children }
         </TweetContext.Provider>
     </>
