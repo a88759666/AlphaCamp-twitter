@@ -1,7 +1,7 @@
-import {LikeIcon, ReplyIcon} from "assets/images/index"
+import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
 
 
-export const UserImage = (props: {avatar: string}) => {
+export const UserImage = (props: {avatar?: string}) => {
   const {avatar} = props
   return (
     <img src={avatar} alt="user" className="w-[50px] h-[50px] rounded-full"/>
@@ -10,16 +10,17 @@ export const UserImage = (props: {avatar: string}) => {
 
 
 const TweetCard = (props: {
-  userName:string, 
-  account:string, 
-  postTime:string, 
-  tweet:string, 
-  likeCount:number, 
-  replyCount:number,
-  avatar:string,
+  userName?:string, 
+  account?:string, 
+  postTime?:string, 
+  tweet?:string, 
+  likeCount?:number,
+  isLiked?: boolean 
+  replyCount?:number,
+  avatar?:string,
   handleReplyModal?: () => void
 }) => {
-    const { userName,account,postTime,tweet, likeCount, replyCount, avatar,  handleReplyModal } = props
+    const { userName,account,postTime,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal } = props
 
    
     return (
@@ -43,7 +44,7 @@ const TweetCard = (props: {
             </div>
             <div className="basis-1/2 flex ml-5 ">
               <div className="pt-[3.5px]">
-                <LikeIcon />
+                { isLiked ? <LikeIconActive /> : <LikeIcon />}
               </div>
               <p className="text-[14px] ml-2">{replyCount}</p>
             </div>
