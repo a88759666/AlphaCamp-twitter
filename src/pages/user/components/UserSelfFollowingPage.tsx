@@ -53,11 +53,7 @@ const UserSelfFollowCard:React.FC<Props> = ({
 
 
 const UserSelfFollowingPage:React.FC = () => {
-<<<<<<< HEAD
     const [ following, setFollowing ] = useState<Following[]>([])
-=======
-    // const { friends } = useTweetContext()
->>>>>>> 35fc815 ([feat]adjust like/unlike interactive effect)
     const go = useNavigate()
 
     async function getFollowingAsync() {
