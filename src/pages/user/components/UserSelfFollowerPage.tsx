@@ -4,6 +4,10 @@ import SideBar from "components/SideBar";
 import RecommendFollowSidebar from "pages/home/components/RecommendFollow";
 import { useNavigate } from "react-router-dom";
 import { useTweetContext } from "contexts/TweetContextProvider";
+import { Follower } from "type";
+import { useEffect, useState } from "react";
+import { checkPermissionUser } from "api/Auth";
+import { getUserFollower } from "api/tweet";
 
 type Props = {
     name?: string,
@@ -14,7 +18,6 @@ type Props = {
 }
 const UserSelfFollowCard:React.FC<Props> = ({
     name,
-    key,
     avatar,
     text,
     isFollowing
@@ -49,8 +52,44 @@ const UserSelfFollowCard:React.FC<Props> = ({
 
 
 const UserSelfFollowerPage:React.FC = () => {
+    const [ follower, setFollower ] = useState<Follower[]>([])
+
     const go = useNavigate()
-    const { friends } = useTweetContext()
+    async function getFollowingAsync() {
+        try {
+          const userId = localStorage.getItem('userId') as string
+          const followingData = await getUserFollower(userId)
+          if ( followingData ) {
+            setFollower(followingData)
+            console.log(followingData)
+
+          }
+        } catch (error) {
+          console.error(error)
+        }
+    }
+    async function checkTokenIsValid() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            go('/login')
+        }
+        const userId = localStorage.getItem('userId')
+        if(userId) {
+            const userData = await checkPermissionUser(userId);
+            if (!userData) {
+            go('/login')
+            } else {
+            // setUserData(userData)
+            // console.log(userData)
+            }
+        }
+    }
+      
+    useEffect(() => {
+        checkTokenIsValid()
+        getFollowingAsync()
+    },[go])
+
     return (
         <Container>
           <div className="flex flex-row h-screen">
@@ -83,29 +122,17 @@ const UserSelfFollowerPage:React.FC = () => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        {
-                            friends?.map((item) => {
-                                const {
-                                    name,
-                                    id,                    
-                                    avatar,
-                                    text,
-                                    isFollowing,
-                                } = item
-                                return (
-                                    <UserSelfFollowCard
-                                        name={name}
-                                        key={id}
-                                        avatar={avatar}
-                                        text={text}
-                                        isFollowing={isFollowing} 
-                                    />
+                        {Array.isArray(follower) &&
+                            follower.map(item => {
+                                return(
+                                <UserSelfFollowCard
+                                    key={item.followerId}
+                                    name={item.Follower?.name}
+                                    avatar={item.Follower?.avatar}
+                                    text={item.Follower?.introduction}
+                                    isFollowing={false}
+                                /> 
                                 )
-                            }).filter((item) => {
-                                if ( item.props.isFollowing === false ){
-                                    return item
-                                }
-                                return;
                             })
                         }
                     </div>
@@ -124,6 +151,5 @@ const UserSelfFollowerPage:React.FC = () => {
 }
   
 export default UserSelfFollowerPage;
-
 
 
