@@ -89,9 +89,8 @@ const ReplyTweetCard = (props: {
   async function handleReplyClick(id:number, comment:string){
     try{
       const res = await replyTweet(id,comment)
-      console.log(res, comment)
       if(res === "success"){
-      setShow(false)
+        setShow(false)
       //重整讓回覆出現
       window.location.reload()
     }
