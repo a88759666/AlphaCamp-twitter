@@ -3,7 +3,6 @@ import Container from "components/Container";
 import SideBar from "components/SideBar";
 import RecommendFollowSidebar from "pages/home/components/RecommendFollow";
 import { useNavigate } from "react-router-dom";
-import { useTweetContext } from "contexts/TweetContextProvider";
 import { Follower } from "type";
 import { useEffect, useState } from "react";
 import { checkPermissionUser } from "api/Auth";
