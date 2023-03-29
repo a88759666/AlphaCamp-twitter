@@ -8,6 +8,9 @@ const Login: React.FC = () => {
   const [ account, setAccount ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ userId, setUserId ] = useState()
+  const [ showError, setShowError ] = useState(false)
+  const [ errorMsg, setErrorMsg ] = useState('')
+
   const go = useNavigate()
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
@@ -31,14 +34,20 @@ const Login: React.FC = () => {
       account,
       password,
     });
-    
+    // console.log(error)
     if (success) {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', id)
-      // go('/home')
       setUserId(id)
+    } else {
+      setShowError(true)
+      setErrorMsg('帳號未註冊')
     }
     
+    // if (error) {
+    //   setShowError(true)
+    //   setErrorMsg('帳號未註冊')
+    // }
   }
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -48,7 +57,7 @@ const Login: React.FC = () => {
       }
       
       if(userId) {
-        const result = await checkPermissionUser(token, userId);
+        const result = await checkPermissionUser(userId);
         if (result) {
           go('/home');
         }
@@ -70,6 +79,8 @@ const Login: React.FC = () => {
           placeholder="請輸入帳號"
           wSize="small"
           hSize="small"
+          showError={showError}
+          ErrorText={errorMsg}
         />
         <InputCard
           type='password'
@@ -97,3 +108,4 @@ const Login: React.FC = () => {
   
 export default Login;
   
+
