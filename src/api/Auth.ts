@@ -1,5 +1,6 @@
 import axios from 'axios'
 import User from 'pages/user'
+import { useState } from 'react'
 interface payloadType {
     account?: string,
     password?: string,
@@ -23,6 +24,11 @@ interface editUserType {
     userId?: string
 
 }
+
+interface errorType {
+    status?: string,
+    message?: string 
+}
 const authUrl = 'https://arcane-beyond-08221.herokuapp.com/api' as string
 
 const axiosInstance = axios.create({
@@ -42,6 +48,7 @@ axiosInstance.interceptors.request.use(
 )
 
 export async function login(payload:payloadType) {
+    
     try {
         const { account, password } = payload
         const { data } = await axiosInstance.post(`${authUrl}/signin`, {
@@ -62,9 +69,9 @@ export async function login(payload:payloadType) {
             return data.data
         }
     } catch (error) {
-        console.error('login failed:', error)
+        console.error('login failed: 帳號未註冊', error)
+        return error
     }
-    
 }
 
 export async function register(payload:payloadType) {
@@ -77,9 +84,7 @@ export async function register(payload:payloadType) {
             email,
             checkPassword
         })
-        // console.log(data)
         const { status } = data
-        // console.log(status)
         
         if(status){
             return { 
@@ -89,20 +94,24 @@ export async function register(payload:payloadType) {
         } else {
             return data.data
         }
-    } catch (error) {
-        console.error('register failed:', error)
+    } catch (error: any) {
+        // console.error(error, error.response.data.message)
+        const errorMsg = error.response.data.message
+        localStorage.setItem('errorMsg', errorMsg)
+        return error
     }
    
 }
 
-export async function checkPermissionUser(token:string | null, id: string) {
+export async function logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+}
+export async function checkPermissionUser(id: string) {
     try {
-        const { data } = await axiosInstance.get(`${authUrl}/users/${id}`,{
-            headers:{
-                Authorization: 'Bearer ' + token
-            }
-        })
-        return data
+        const { data } = await axiosInstance.get(`${authUrl}/users/${id}`)
+        const { account, name, avatar, cover, introduction } = data
+        return [ id, account, name, avatar, cover, introduction ]
     } catch (error) {
         console.error('check permissionUser failed:', error)
     }
@@ -129,8 +138,10 @@ export async function editUserSetting(payload:editUserSettingType) {
         } else {
             return data.data
         }
-    } catch (error) {
-        console.error('edit User Setting failed:', error)
+    } catch (error: any) {
+        const errorMsg = error.response.data.message
+        localStorage.setItem('errorMsg', errorMsg)
+        return error
     }
 }
 
@@ -156,4 +167,5 @@ export async function editUserModal(payload:editUserType) {
         console.error('edit User Setting failed:', error)
     }
 }
+
 
