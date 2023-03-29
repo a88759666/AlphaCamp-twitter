@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import * as tweet from "api/tweet"
 import "../../../scrollbar.css"
 import { useNavigate } from "react-router-dom";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 type ResProp = {
   id: number,
@@ -19,7 +20,7 @@ type ResProp = {
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
   const [post , setPost] = useState<string>("")
-
+  const { currentUser } = useTweetContext()
   function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
     if(event.currentTarget){
       setPost(event.currentTarget.value)
@@ -43,9 +44,9 @@ const PostTweet = () => {
       setShow(false)
   }
   return <>
-    <div className=" h-[140px] pl-7 pr-2 mt-4 border-b-[10px] relative">
+    <div className=" h-[140px] pl-5 pr-2 mt-4 border-b-[10px] relative">
       <div className="flex">
-        <UserImage avatar="https://picsum.photos/300/300?text=2" />
+        <UserImage avatar={currentUser.avatar} />
         <label htmlFor="postTweet" className="ml-2 pt-2">
           <textarea 
             id="postTweet" 

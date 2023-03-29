@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import jwt_decode from "jwt-decode"
+import jwt_decode, {JwtPayload} from "jwt-decode"
 
 type JWT = {
   id: number,
@@ -15,62 +15,32 @@ type JWT = {
   exp: number
 }
 
-const defaultAuthContext ={
-  isAuthenticated: false,  
-  currentUser: {} || null
+type defaultAuthContextType = {
+  isAuthenticated: boolean,
+  currentUser: JWT,
+
 }
 
-const friends = [
-  {
-    id: 1,
-    name: 'Apple',
-    account: '@appl3',
-    time: '3 小時',
-    avatar: 'https://picsum.photos/300/300?text=1',
-    showText: true,
-    text: 'Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum',
-    showFollow: false,
-    isFollowing: false,
-    showIcon: true,
-  },
-  {
-    id: 2,
-    name: 'dfrre',
-    account: '@rgtyl3',
-    time: '3 小時',
-    avatar: 'https://picsum.photos/300/300?text=2',
-    showText: true,
-    text: 'Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum',
-    showFollow: false,
-    isFollowing: true,
-    showIcon: true,
-  },
-]
-const dummydata = [
-  {
-  id:1,
-  userName:"Apple", 
-  account:"Apple", 
-  postTime:"3", 
-  tweet:"Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.", 
-  likeCount:13, 
-  replyCount:76,
-  avatar:"https://picsum.photos/300/300?text=2"
-  },
-  {
-  id:2,
-  userName:"Apple", 
-  account:"Apple", 
-  postTime:"3", 
-  tweet:"Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.", 
-  likeCount:13, 
-  replyCount:76,
-  avatar:"https://picsum.photos/300/300?text=2"
-  }
-]
+const defaultAuthContext ={
+  isAuthenticated: false,  
+  currentUser:  {
+    account: "",
+    avatar: "",
+    cover: "",
+    createdAt: "",
+    email: "",
+    exp:0,
+    iat: 0,
+    id: 0,
+    introduction: "",
+    name: "",
+    updatedAt: ""}
+}
 
 
-export const TweetContext = createContext(defaultAuthContext)
+
+
+export const TweetContext = createContext<defaultAuthContextType>(defaultAuthContext)
 export function useTweetContext() { 
   return useContext(TweetContext)
 }
@@ -78,20 +48,19 @@ export function useTweetContext() {
 interface Props {children: React.ReactNode}
 
 const TweetContextProvider:React.FC<Props> = ({children}) => {
-  const [payload, setPayload] = useState<JWT | {} | null>({})
+  const [payload, setPayload] = useState<JWT >(defaultAuthContext.currentUser)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
 
     const authToken = localStorage.getItem("token")
     if(authToken){
-      const tempPayload = jwt_decode(authToken) 
+      const tempPayload = jwt_decode(authToken) as JWT
       if(tempPayload){
         setPayload(tempPayload)
       }
     }else{
       setIsAuthenticated(false);
-      setPayload(null);
       return;
     }
   },[])
