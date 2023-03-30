@@ -193,6 +193,7 @@ const ReplyTweetCard = (props: {
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
           comment={comment}
+          otherAvatar={tweetAvatar}
       />
     )}
   </>
@@ -277,4 +278,5 @@ const ReplyPage = () => {
 }
 
 export default ReplyPage
+
 
