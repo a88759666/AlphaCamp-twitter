@@ -1,6 +1,10 @@
+
+import { adminDeleteTweets, adminGetTweets } from "api/admin";
 import { CloseIcon } from "assets/images";
 import Container from "components/Container";
-import { useTweetContext } from "contexts/TweetContextProvider";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AdminTweetList } from "type";
 
 import AdminSideBar from "../components/AdminSideBar";
 
@@ -11,6 +15,7 @@ type Props = {
   avatar?: string
   id?: number
   text?: string
+  onDelete?: (id: number) => void
 };
 const AdminTweetCard:React.FC<Props> = ({
   name,
@@ -19,7 +24,13 @@ const AdminTweetCard:React.FC<Props> = ({
   avatar,
   id,
   text,
+  onDelete
 }) => {
+  // const handleDelete = async () => {
+  //   if (onDelete && id) {
+  //     await onDelete(id)
+  //   }
+  // }
   return <>
     <div className="px-[24px] py-[16px] border-b border-slate-200 flex flex-col">
       <div className="flex flex-row mb-[5px] items-center">
@@ -37,7 +48,11 @@ const AdminTweetCard:React.FC<Props> = ({
           <div className="w-[4px] h-[4px] rounded-full bg-[#6C757D]"></div>
           <p className="text-[#6C757D] text-[14px] leading-[22px] font-[400]">{time}小時</p>
         </div>
-        <div className="ml-auto">
+        <div 
+          className="ml-auto cursor-pointer"
+          onClick={() => id !== undefined && onDelete?.(id)}
+          // onClick={handleDelete}
+        >
           <CloseIcon />  
         </div>
       </div>
@@ -50,7 +65,41 @@ const AdminTweetCard:React.FC<Props> = ({
 
 
 const AdminHome: React.FC = () => {
-  // const { dummydata } = useTweetContext() 
+  const [ userList, setUserList ] = useState<AdminTweetList[]>([])
+  const go = useNavigate()
+  async function adminGetTweetsAsync(){
+    try {
+      const userList = await adminGetTweets()
+      // console.log(userList)
+      if (userList) {
+        setUserList(userList)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  async function adminDeleteTweetsAsync(id: number){
+    try {
+      const userList = await adminDeleteTweets(id)
+      if (userList) {
+        setUserList(userList)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  async function checkTokenIsValid() {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      go('admin/login')
+    }
+  }
+  
+  useEffect(() => {
+    checkTokenIsValid()
+    adminGetTweetsAsync()
+  }, [go])
+
   return (
     <Container>
       <div className="flex flex-row h-screen">
@@ -60,24 +109,29 @@ const AdminHome: React.FC = () => {
         <div className="basis-5/7 border-l border-r border-slate-200">
           <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">推文清單</header>
           {
-            // dummydata?.map((item) => {
-            //   const {
-            //     userName,
-            //     account,
-            //     postTime,
-            //     avatar,
-            //     tweet,
-            //   } = item
-            //   return (
-            //     <AdminTweetCard
-            //       name={userName}
-            //       account={account}
-            //       time={postTime}
-            //       avatar={avatar}
-            //       text={tweet}
-            //     />
-            //   )
-            // })
+            userList?.map((item) => {
+              const {
+                name,
+                account,
+                avatar,
+                id,
+                UserId,
+                description,
+                createdAt,
+                updatedAt,
+              } = item
+              return (
+                <AdminTweetCard
+                  key={id}
+                  name={name}
+                  account={account}
+                  time={createdAt}
+                  avatar={avatar}
+                  text={description}
+                  onDelete={adminDeleteTweetsAsync}
+                />
+              )
+            })
           }
         </div>
         
@@ -88,5 +142,6 @@ const AdminHome: React.FC = () => {
 };
   
 export default AdminHome;
+
 
 
