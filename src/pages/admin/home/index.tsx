@@ -119,26 +119,16 @@ const AdminHome: React.FC = () => {
           <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">推文清單</header>
           {
             userList?.map((item) => {
-              const {
-                name,
-                account,
-                avatar,
-                id,
-                UserId,
-                description,
-                createdAt,
-                updatedAt,
-              } = item
               return (
                 <AdminTweetCard
-                  key={id}
-                  name={name}
-                  account={account}
-                  time={createdAt}
-                  avatar={avatar}
-                  text={description}
+                  key={item.id}
+                  name={item.User?.name}
+                  account={item.User?.account}
+                  time={item.createdAt}
+                  avatar={item.User?.avatar}
+                  text={item.description}
                   onDelete={adminDeleteTweetsAsync}
-                  id={id}
+                  id={item.id}
                 />
               )
             })
