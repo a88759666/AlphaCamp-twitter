@@ -6,6 +6,8 @@ import * as tweet from "api/tweet"
 import "../../../scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
+import { setSourceMapRange } from "typescript";
+import { setuid } from "process";
 
 type ResProp = {
   id: number,
@@ -110,6 +112,7 @@ const PostTweet = () => {
 const MainPage = () => {
   const [tweets, setTweets] = useState<Array<ResProp> | null>(null)
   const navigate = useNavigate()
+  const {currentUser} = useTweetContext()
 
   useEffect(() => {
     async function getTweetAsync(){
@@ -132,9 +135,12 @@ const MainPage = () => {
   function handleReplyModal() {
     setShow(!show)
   }
-  function handleUserClick(id:number){
-    navigate(`/user/${id}`)
-  }
+  // function handleUserClick(userId:number){
+  //   const currentUserId = currentUser.id
+  //   if(currentUserId !== userId){
+  //     navigate(`/user`)
+  //   }
+  // }
  
 
 
@@ -165,8 +171,8 @@ const MainPage = () => {
                   avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
                   id={item.id}
-                  onGoUserClick={handleUserClick}
-
+                  // onGoUserClick={handleUserClick}
+                  userId={item.User?.id}
                 /> 
               </div>
             )
