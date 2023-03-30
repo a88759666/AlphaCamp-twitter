@@ -43,14 +43,14 @@ const TweetCard = (props: {
     
 
     return (
-      <div className="flex pl-6 pr-8 py-4 border-b"  >
+      <div className="flex pl-6 pr-8 py-4 border-b hover:bg-[#FAFAFB] cursor-pointer"  >
         <UserImage 
           avatar={avatar}
           id={id}
           onGoUserClick={onGoUserClick}
           userName={userName}
         />
-        <div className="ml-2">
+        <div className="ml-2 w-full ">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>
             <p>{userName} 
               <span className="text-[14px] text-[#6C757D] ml-2">

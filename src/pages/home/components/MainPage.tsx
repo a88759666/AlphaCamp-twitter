@@ -15,7 +15,7 @@ type ResProp = {
   updatedAt: string,
   tweetsRepliesCount:number,
   tweetsLikedCount:number,
-  User:User
+  User?:User
 }
 
 type User = {
@@ -25,6 +25,24 @@ type User = {
     avatar: string,
     cover: string
 }
+
+//timestamp跟現在時間差
+ export function getHoursFrom(time:string){
+    //拿總共的毫秒差距
+    let milliseconds = Date.parse(time) - Date.now()
+    //相差的日期天數
+    const days = Math.trunc(milliseconds / 86400000)
+    milliseconds = days * 86400000 - milliseconds
+    //扣掉天數之後剩下得小時差
+    const hours = Math.trunc(milliseconds / 3600000)
+    milliseconds = hours * 3600000 - milliseconds
+    return {
+        days,
+        hours,
+    };
+    
+   
+  }
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
@@ -117,22 +135,7 @@ const MainPage = () => {
     navigate(`/user/${id}`)
   }
 
-  function getHoursFrom(time:string){
-    //拿總共的毫秒差距
-    let milliseconds = Date.parse(time) - Date.now()
-    //相差的日期天數
-    const days = Math.trunc(milliseconds / 86400000)
-    milliseconds = days * 86400000 - milliseconds
-    //扣掉天數之後剩下得小時差
-    const hours = Math.trunc(milliseconds / 3600000)
-    milliseconds = hours * 3600000 - milliseconds
-    return {
-        days,
-        hours,
-    };
-    
-   
-  }
+ 
   
 
 
@@ -146,14 +149,14 @@ const MainPage = () => {
             return(
               <div key={item.id}>
                 <TweetCard 
-                  userName={item.User.name}
-                  account={item.User.account}
+                  userName={item.User?.name}
+                  account={item.User?.account}
                   postTimeHours={hours}
                   postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
-                  avatar={item.User.avatar}
+                  avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
                   id={item.id}
                   onGoUserClick={handleUserClick}

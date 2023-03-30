@@ -15,7 +15,7 @@ type ResProp = {
   tweetsRepliesCount:number,
   tweetsLikedCount:number,
   Replies?:ReplyProps[],
-  User:User
+  User?:User
 }
 type ReplyProps = {
     id: number,
