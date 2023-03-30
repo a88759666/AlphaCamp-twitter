@@ -17,6 +17,9 @@ import { ReactComponent as ReplyBigIcon } from './replyBig.svg';
 import { ReactComponent as LikeBigIcon } from './likeBig.svg';
 import { ReactComponent as LikeBigActiveIcon } from './likeBigActive.svg';
 import { ReactComponent as VectorIcon } from './Vector.svg';
+import { ReactComponent as CancelIcon } from './cancel.svg';
+import { ReactComponent as CameraIcon } from './camera.svg';
+
 
 export { 
     ACLogoIcon,  
@@ -36,5 +39,8 @@ export {
     ReplyBigIcon,
     LikeBigIcon,
     LikeBigActiveIcon,
-    VectorIcon
+    VectorIcon,
+    CancelIcon,
+    CameraIcon
 };
+
