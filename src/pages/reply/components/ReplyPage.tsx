@@ -29,6 +29,22 @@ type ReplyProps = {
 
 }
 
+function getHoursFrom(time:string){
+  //拿總共的毫秒差距
+  let milliseconds = Date.parse(time) - Date.now()
+  //相差的日期天數
+  const days = Math.trunc(milliseconds / 86400000)
+  milliseconds = days * 86400000 - milliseconds
+  //扣掉天數之後剩下得小時差
+  const hours = Math.trunc(milliseconds / 3600000)
+  milliseconds = hours * 3600000 - milliseconds
+  return {
+      days,
+      hours,
+  };
+  
+}
+
 const ReplyTweetCard = (props: {
   tweetUserName?:string,
   tweetUserAccount?:string,
@@ -98,6 +114,12 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
+  //timestamp轉換
+  let time;
+  if(tweetPostTime){
+    const {hours, days} = getHoursFrom(tweetPostTime)
+    time = {hours, days}
+  }
 
   return <>
     <div className="px-4 py-2">
@@ -111,7 +133,7 @@ const ReplyTweetCard = (props: {
       <div className="border-b pb-2">
         <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
         <p className="text-[14px] text-[#7d6c6c]">
-          {tweetPostTime} &#8729; {tweetPostDate}
+          {tweetPostTime} 
         </p>
       </div>
       <div className="border-b py-4">
@@ -138,7 +160,7 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          tweetPostTime={tweetPostTime}
+          postTimeHours={time?.hours}
           currentUserName="John Doe"
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
@@ -168,6 +190,29 @@ const ReplyPage = () => {
   },[id])
 
 
+  //timestamp 轉換
+  //上午 10:05・2021年11月10日
+  function getDateTransform(date:string){
+    let hour;
+    let result;
+    const  newDate = new Date(date)
+    if(newDate.getHours() - 12 === 0){
+      hour = "下午" + " " + "12"
+    }else if(newDate.getHours() -12 > 0 && newDate.getHours() - 12 < 12){
+      hour = "下午" + " " + (newDate.getHours() -12)
+    }else if(newDate.getHours() - 12 < 0){
+      hour = "上午" + " " + newDate.getHours()
+    }else if(newDate.getHours() - 12 === 12){
+      hour = "中午" + " " + "12"
+    }
+    if(newDate?.getMonth()){
+      result = 
+      hour +":" +newDate?.getMinutes()+ " · "
+      +newDate?.getFullYear()+"年"+ (newDate?.getMonth()+1)+"月"+ newDate?.getDate()+"日"
+    }
+    return result
+  }
+
   return(
    <main className="basis-5/7 border-x overflow-auto">
       {/* Header */}
@@ -176,26 +221,31 @@ const ReplyPage = () => {
         <h4 className="py-4 leading-[26px] font-bold border-b">推文</h4>
       </div>
       {/* Tweet */}
-      <ReplyTweetCard 
-        tweetUserName="Apple" 
-        tweetUserAccount="Apple" 
-        tweetContent={headerTweet?.description} 
-        tweetPostTime={headerTweet?.createdAt} 
-        tweetPostDate={headerTweet?.createdAt}
-        tweetReplies={headerTweet?.tweetsRepliesCount} 
-        tweetLikes={headerTweet?.tweetsLikedCount}
-        tweetId={headerTweet?.id}
-        setHeaderTweet={setHeaderTweet}
-        headerTweet={headerTweet}
-      />
+      {headerTweet?.createdAt &&
+          
+        <ReplyTweetCard 
+          tweetUserName="Apple" 
+          tweetUserAccount="Apple" 
+          tweetContent={headerTweet?.description} 
+          tweetPostTime={getDateTransform(headerTweet?.createdAt)} 
+          tweetPostDate={headerTweet?.createdAt}
+          tweetReplies={headerTweet?.tweetsRepliesCount} 
+          tweetLikes={headerTweet?.tweetsLikedCount}
+          tweetId={headerTweet?.id}
+          setHeaderTweet={setHeaderTweet}
+          headerTweet={headerTweet}
+        />
+      }
       {/* Reply */}
       <div className="border-t">
         {headerTweet?.Replies?.map(item => {
+          const {hours , days} = getHoursFrom(item.createdAt)
             return(
               <ReplyCard 
                 userName="John Doe" 
                 account="HeyJohn"
-                postTime={item.createdAt}
+                postTimeHours={hours}
+                postTimeDate={days === 0 ? "" : days * -1}
                 tweet={item.comment}
                 avatar="https://picsum.photos/300/300?text=2"
                 replyAccount="Apple"

@@ -11,7 +11,8 @@ type Props = {
     userName?:string,
     account?:string,
     tweet?:string,
-    tweetPostTime?:string,
+    postTimeHours?:string | number,
+    postTimeDate?: string | number,
     currentUserName?:string,
     onChange?:React.ChangeEventHandler<HTMLTextAreaElement>
     onClick?:React.MouseEventHandler<HTMLButtonElement>
@@ -20,6 +21,8 @@ type Props = {
     post?: string,
     comment?: string
 }
+
+
 
 const Modal:React.FC<Props> = ({
     postTweetModal,
@@ -30,7 +33,8 @@ const Modal:React.FC<Props> = ({
     userName,
     account,
     tweet,
-    tweetPostTime,
+    postTimeHours,
+    postTimeDate,
     currentUserName,
     onPostChange,
     onPostClick,
@@ -116,7 +120,7 @@ const Modal:React.FC<Props> = ({
                                                     <div className="flex flex-row items-end mb-[6px]">
                                                         <p className="font-bold text-[16px] leading-[26px] mr-[8px]">{userName}</p>
                                                         <p className="text-gray-400 text-[14px] leading-[22px] mr-[5px] font-[400]">@{account}</p>
-                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">{tweetPostTime}</p>
+                                                        <p className="text-gray-400 text-[14px] leading-[22px] font-[400]">{postTimeHours}小時</p>
                                                     </div>
                                                     <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>{tweet}</text>
                                                     <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆給 

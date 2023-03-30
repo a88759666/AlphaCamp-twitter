@@ -81,7 +81,6 @@ const PostTweet = () => {
 
 const MainPage = () => {
   const [tweets, setTweets] = useState<Array<ResProp> | null>(null)
-  const navigate = useNavigate()
 
   useEffect(() => {
     async function getTweetAsync(){
@@ -105,9 +104,23 @@ const MainPage = () => {
     setShow(!show)
   }
 
-  function handleTweetClick(id:number) {
-    navigate(`/reply/${id}`)
+  function getHoursFrom(time:string){
+    //拿總共的毫秒差距
+    let milliseconds = Date.parse(time) - Date.now()
+    //相差的日期天數
+    const days = Math.trunc(milliseconds / 86400000)
+    milliseconds = days * 86400000 - milliseconds
+    //扣掉天數之後剩下得小時差
+    const hours = Math.trunc(milliseconds / 3600000)
+    milliseconds = hours * 3600000 - milliseconds
+    return {
+        days,
+        hours,
+    };
+    
+   
   }
+  
 
 
   return (
@@ -116,18 +129,20 @@ const MainPage = () => {
         <PostTweet />
         <div >
           {tweets?.map(item => {
+            const {hours, days} = getHoursFrom(item.createdAt)
             return(
-              <div onClick={() => handleTweetClick?.(item.id)} key={item.id}>
+              <div key={item.id}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"
-                  postTime={item.createdAt}
+                  postTimeHours={hours}
+                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
-                  
+                  id={item.id}
                 /> 
               </div>
             )

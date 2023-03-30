@@ -93,6 +93,10 @@ export async function adminDeleteTweets(id: number) {
 
 
 export const getUsers = async () => {
-  const res = await axiosInstance.get(`${baseUrl}/admin/users`)
-  return res.data as User[]
+  try{
+    const res = await axiosInstance.get(`${baseUrl}/users`)
+    return res.data as User[]
+  }catch(error){
+    console.error("get Users error: ", error)
+  }
 }
