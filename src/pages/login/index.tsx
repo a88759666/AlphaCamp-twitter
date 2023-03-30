@@ -1,14 +1,17 @@
-import { adminLogin } from "api/admin";
-import { InputCard, SubmitBtn, LogoTitle, Container } from "components/AuthInput";
-import { useState } from "react";
+import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/AuthInput"
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { checkPermissionUser, login } from "api/Auth";
 
-const AdminLogin = () => {
+
+const Login: React.FC = () => {
   const [ account, setAccount ] = useState('')
   const [ password, setPassword ] = useState('')
-  const navigate = useNavigate()
-  const go = useNavigate()
+  const [ userId, setUserId ] = useState()
+  const [ showError, setShowError ] = useState(false)
+  const [ errorMsg, setErrorMsg ] = useState('')
 
+  const go = useNavigate()
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
         setAccount(event.currentTarget.value)
@@ -18,9 +21,8 @@ const AdminLogin = () => {
     if (event.currentTarget) {
       setPassword(event.currentTarget.value)
     }
-  } 
-  async function handleClickAdminLogin() {
-  
+  }
+  async function handleClickLogin() {
     if (account.length === 0) {
       return;
     }
@@ -28,21 +30,45 @@ const AdminLogin = () => {
       return;
     }
    
-    const { success, token, id } = await adminLogin({
+    const { success, token, id } = await login({
       account,
       password,
-    })
+    });
+    // console.log(error)
     if (success) {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', id)
-      go('/admin/home')
-    } 
-  }
-  
+      setUserId(id)
+    } else {
+      setShowError(true)
+      setErrorMsg('帳號未註冊')
+    }
     
-  return (
+    // if (error) {
+    //   setShowError(true)
+    //   setErrorMsg('帳號未註冊')
+    // }
+  }
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        return;
+      }
+      
+      if(userId) {
+        const result = await checkPermissionUser(userId);
+        if (result) {
+          go('/home');
+        }
+      }
+    }
+    checkTokenIsValid();
+  }, [go, userId]);
+  
+    return (
       <Container>
-        <LogoTitle title="後台登入"/>
+        <LogoTitle title="登入 Alphitter"/>
         <InputCard 
           type='text'
           name='account'
@@ -53,6 +79,8 @@ const AdminLogin = () => {
           placeholder="請輸入帳號"
           wSize="small"
           hSize="small"
+          showError={showError}
+          ErrorText={errorMsg}
         />
         <InputCard
           type='password'
@@ -67,17 +95,15 @@ const AdminLogin = () => {
         />
         <SubmitBtn 
           btn="登入"
-          onClickEvent={handleClickAdminLogin}
+          onClickEvent={handleClickLogin}
         />
-        <div className="mt-6">
-          <p className="link text-end" onClick={() => navigate("/login")}>前台登入</p>
+        <div className="mt-6 flex">
+            <p className="flex-1 text-end link" onClick={() => go("/register")}>註冊</p>
+            <span className="block px-[20px]">&#8729;</span>
+            <p className="link" onClick={() => go("/admin/login")}>後台登入</p>
         </div>
       </Container>
     )
   };
   
-  export default AdminLogin;
-  
-
-  
-
+export default Login;
