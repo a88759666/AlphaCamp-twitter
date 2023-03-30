@@ -189,6 +189,19 @@ const ReplyPage = () => {
   },[id])
 
 
+  //timestamp 轉換
+  //上午 10:05・2021年11月10日
+  function getDateTransform(date:string){
+    let result;
+    const  newDate = new Date(date)
+    if(newDate?.getMonth()){
+      result = 
+      newDate?.getHours()+":" +newDate?.getMinutes()+ ` &#8729; `
+      +newDate?.getFullYear()+"年"+ (newDate?.getMonth()+1)+"月"+ newDate?.getDate()+"日"
+    }
+    return result
+  }
+
   return(
    <main className="basis-5/7 border-x overflow-auto">
       {/* Header */}
@@ -197,18 +210,21 @@ const ReplyPage = () => {
         <h4 className="py-4 leading-[26px] font-bold border-b">推文</h4>
       </div>
       {/* Tweet */}
-      <ReplyTweetCard 
-        tweetUserName="Apple" 
-        tweetUserAccount="Apple" 
-        tweetContent={headerTweet?.description} 
-        tweetPostTime={headerTweet?.createdAt} 
-        tweetPostDate={headerTweet?.createdAt}
-        tweetReplies={headerTweet?.tweetsRepliesCount} 
-        tweetLikes={headerTweet?.tweetsLikedCount}
-        tweetId={headerTweet?.id}
-        setHeaderTweet={setHeaderTweet}
-        headerTweet={headerTweet}
-      />
+      {headerTweet?.createdAt &&
+          
+        <ReplyTweetCard 
+          tweetUserName="Apple" 
+          tweetUserAccount="Apple" 
+          tweetContent={headerTweet?.description} 
+          tweetPostTime={getDateTransform(headerTweet?.createdAt)} 
+          tweetPostDate={headerTweet?.createdAt}
+          tweetReplies={headerTweet?.tweetsRepliesCount} 
+          tweetLikes={headerTweet?.tweetsLikedCount}
+          tweetId={headerTweet?.id}
+          setHeaderTweet={setHeaderTweet}
+          headerTweet={headerTweet}
+        />
+      }
       {/* Reply */}
       <div className="border-t">
         {headerTweet?.Replies?.map(item => {
