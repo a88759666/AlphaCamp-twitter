@@ -1,11 +1,15 @@
+import { adminLogin } from "api/Admin";
 import { InputCard, SubmitBtn, LogoTitle, Container } from "components/AuthInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const [ account, setAccount ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ userId, setUserId ] = useState()
   const navigate = useNavigate()
+  const go = useNavigate()
+
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget) {
         setAccount(event.currentTarget.value)
@@ -16,7 +20,28 @@ const AdminLogin = () => {
       setPassword(event.currentTarget.value)
     }
   } 
-    return (
+  async function handleClickAdminLogin() {
+  
+    if (account.length === 0) {
+      return;
+    }
+    if (password.length === 0) {
+      return;
+    }
+   
+    const { success, token, id } = await adminLogin({
+      account,
+      password,
+    })
+    if (success) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id)
+      go('/admin/home')
+    } 
+  }
+  
+    
+  return (
       <Container>
         <LogoTitle title="後台登入"/>
         <InputCard 
@@ -41,7 +66,10 @@ const AdminLogin = () => {
           wSize="small"
           hSize="small"
         />
-        <SubmitBtn btn="登入"/>
+        <SubmitBtn 
+          btn="登入"
+          onClickEvent={handleClickAdminLogin}
+        />
         <div className="mt-6">
           <p className="link text-end" onClick={() => navigate("/login")}>前台登入</p>
         </div>
