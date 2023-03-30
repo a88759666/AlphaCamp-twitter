@@ -80,3 +80,15 @@ export type Follower = {
     name?: string
   }
 }
+
+export type AdminTweetList = {
+  name?: string
+  account?: string
+  avatar?: string
+  id?: number
+  UserId?: number
+  description?: string
+  createdAt?: string
+  updatedAt?: string
+
+}
