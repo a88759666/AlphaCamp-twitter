@@ -29,6 +29,22 @@ type ReplyProps = {
 
 }
 
+function getHoursFrom(time:string){
+  //拿總共的毫秒差距
+  let milliseconds = Date.parse(time) - Date.now()
+  //相差的日期天數
+  const days = Math.trunc(milliseconds / 86400000)
+  milliseconds = days * 86400000 - milliseconds
+  //扣掉天數之後剩下得小時差
+  const hours = Math.trunc(milliseconds / 3600000)
+  milliseconds = hours * 3600000 - milliseconds
+  return {
+      days,
+      hours,
+  };
+  
+}
+
 const ReplyTweetCard = (props: {
   tweetUserName?:string,
   tweetUserAccount?:string,
@@ -98,6 +114,11 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
+  let time;
+  if(tweetPostTime){
+    const {hours, days} = getHoursFrom(tweetPostTime)
+    time = {hours, days}
+  }
 
   return <>
     <div className="px-4 py-2">
@@ -138,7 +159,7 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          tweetPostTime={tweetPostTime}
+          postTimeHours={time?.hours}
           currentUserName="John Doe"
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
@@ -191,11 +212,13 @@ const ReplyPage = () => {
       {/* Reply */}
       <div className="border-t">
         {headerTweet?.Replies?.map(item => {
+          const {hours , days} = getHoursFrom(item.createdAt)
             return(
               <ReplyCard 
                 userName="John Doe" 
                 account="HeyJohn"
-                postTime={item.createdAt}
+                postTimeHours={hours}
+                postTimeDate={days === 0 ? "今" : days * -1}
                 tweet={item.comment}
                 avatar="https://picsum.photos/300/300?text=2"
                 replyAccount="Apple"

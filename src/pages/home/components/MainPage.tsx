@@ -104,6 +104,22 @@ const MainPage = () => {
     setShow(!show)
   }
 
+  function getHoursFrom(time:string){
+    //拿總共的毫秒差距
+    let milliseconds = Date.parse(time) - Date.now()
+    //相差的日期天數
+    const days = Math.trunc(milliseconds / 86400000)
+    milliseconds = days * 86400000 - milliseconds
+    //扣掉天數之後剩下得小時差
+    const hours = Math.trunc(milliseconds / 3600000)
+    milliseconds = hours * 3600000 - milliseconds
+    return {
+        days,
+        hours,
+    };
+    
+   
+  }
   
 
 
@@ -113,12 +129,14 @@ const MainPage = () => {
         <PostTweet />
         <div >
           {tweets?.map(item => {
+            const {hours, days} = getHoursFrom(item.createdAt)
             return(
               <div key={item.id}>
                 <TweetCard 
                   userName="Apple"
                   account="Apple"
-                  postTime={item.createdAt}
+                  postTimeHours={hours}
+                  postTimeDate={days === 0 ? "今" : days * -1}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}

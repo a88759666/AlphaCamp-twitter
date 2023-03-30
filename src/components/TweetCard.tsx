@@ -12,7 +12,8 @@ export const UserImage = (props: {avatar?: string}) => {
 const TweetCard = (props: {
   userName?:string, 
   account?:string, 
-  postTime?:string, 
+  postTimeHours?: string | number, 
+  postTimeDate?: string | number, 
   tweet?:string, 
   likeCount?:number,
   isLiked?: boolean 
@@ -21,7 +22,7 @@ const TweetCard = (props: {
   handleReplyModal?: () => void,
   id?:number
 }) => {
-    const { userName,account,postTime,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal,id } = props
+    const { userName,account,postTimeHours,postTimeDate,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal,id } = props
     const go = useNavigate()
 
     function handleTweetClick(id:number) {
@@ -34,7 +35,7 @@ const TweetCard = (props: {
         <div className="ml-2" onClick={() => {if(id){handleTweetClick(id)}}}>
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
-              @{account} &#8729; {postTime}小時
+              @{account} &#8729; {postTimeDate}天{postTimeHours}小時
             </span>
           </p>
           <p className="leading-[26px]">{tweet}</p>

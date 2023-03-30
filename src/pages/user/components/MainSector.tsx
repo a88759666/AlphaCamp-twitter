@@ -33,6 +33,22 @@ export const BackBtn = () => {
 
 type userState = 'user1' | 'user2' 
 
+function getHoursFrom(time:string){
+  //拿總共的毫秒差距
+  let milliseconds = Date.parse(time) - Date.now()
+  //相差的日期天數
+  const days = Math.trunc(milliseconds / 86400000)
+  milliseconds = days * 86400000 - milliseconds
+  //扣掉天數之後剩下得小時差
+  const hours = Math.trunc(milliseconds / 3600000)
+  milliseconds = hours * 3600000 - milliseconds
+  return {
+      days,
+      hours,
+  };
+  
+}
+
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
   const [ user, setUser ] = useState<userState>('user1')
@@ -133,53 +149,66 @@ const MainSector = () => {
       </div>
       <div className="overflow-scroll">
         {currentTab === "tweets" && Array.isArray(tweets) &&
-          tweets.map(tweet => {
-            return(
-              <TweetCard 
-                key={tweet.id}
-                postTime={tweet.createdAt}
-                tweet={tweet.description}
-                likeCount={tweet.likeNum}
-                replyCount={tweet.replyNum}
-                account={tweet.User?.account}
-                avatar={tweet.User?.avatar}
-                userName={tweet.User?.name}
-                id={tweet.id}
-              /> 
-            )
+          tweets?.map(tweet => {
+            if(tweet.createdAt){
+              const {hours, days} = getHoursFrom(tweet.createdAt)
+            
+              return(
+                <TweetCard 
+                  key={tweet.id}
+                  postTimeHours={hours}
+                  postTimeDate={days === 0 ? "今" : days * -1}
+                  tweet={tweet.description}
+                  likeCount={tweet.likeNum}
+                  replyCount={tweet.replyNum}
+                  account={tweet.User?.account}
+                  avatar={tweet.User?.avatar}
+                  userName={tweet.User?.name}
+                  id={tweet.id}
+                /> 
+              )
+            }
           })
         }
         {currentTab === "replies" && 
           repliedTweets.map(reply => {
-            return(
-              <ReplyCard 
-                key={reply.Tweet?.TweetId}
-                postTime={reply.createdAt}
-                tweet={reply.comment}
-                account={reply.Tweet?.User?.account}
-                avatar={reply.Tweet?.User?.avatar}
-                userName={reply.Tweet?.User?.name}
-                replyAccount={reply.User?.name}
-              /> 
-            )
+            if(reply.createdAt){
+              const {hours , days} = getHoursFrom(reply.createdAt)
+              return(
+                <ReplyCard 
+                  key={reply.Tweet?.TweetId}
+                  postTimeHours={hours}
+                  postTimeDate={days === 0 ? "今" : days * -1}
+                  tweet={reply.comment}
+                  account={reply.Tweet?.User?.account}
+                  avatar={reply.Tweet?.User?.avatar}
+                  userName={reply.Tweet?.User?.name}
+                  replyAccount={reply.User?.name}
+                /> 
+              )
+            }
           })
         }
         {currentTab === "likes" && 
           likes.map(like => {
-            return(
-              <TweetCard 
-                key={like.Tweet?.id}
-                postTime={like.Tweet?.createdAt}
-                tweet={like.Tweet?.description}
-                likeCount={like.Tweet?.likeNum}
-                isLiked={true}
-                replyCount={like.Tweet?.replyNum}
-                account={like.Tweet?.User?.account}
-                avatar={like.Tweet?.User?.avatar}
-                userName={like.Tweet?.User?.name}
-                id={like.Tweet?.id}
-              /> 
-            )
+            if(like.Tweet?.createdAt){
+              const {hours, days} = getHoursFrom(like.Tweet?.createdAt)
+              return(
+                <TweetCard 
+                  key={like.Tweet?.id}
+                  postTimeHours={hours}
+                  postTimeDate={days === 0 ? "今" : days * -1}
+                  tweet={like.Tweet?.description}
+                  likeCount={like.Tweet?.likeNum}
+                  isLiked={true}
+                  replyCount={like.Tweet?.replyNum}
+                  account={like.Tweet?.User?.account}
+                  avatar={like.Tweet?.User?.avatar}
+                  userName={like.Tweet?.User?.name}
+                  id={like.Tweet?.id}
+                /> 
+              )
+            }
           })
         }
       </div> 
