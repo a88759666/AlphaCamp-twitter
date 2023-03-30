@@ -35,7 +35,7 @@ const TweetCard = (props: {
         <div className="ml-2" onClick={() => {if(id){handleTweetClick(id)}}}>
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
-              @{account} &#8729; {postTimeDate}天{postTimeHours}小時
+              @{account} &#8729; {postTimeDate}{postTimeHours}小時
             </span>
           </p>
           <p className="leading-[26px]">{tweet}</p>

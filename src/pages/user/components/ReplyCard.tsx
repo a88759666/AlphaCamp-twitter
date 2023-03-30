@@ -16,7 +16,7 @@ const ReplyCard = (props: {
         <div className="ml-2">
           <p>{userName} 
             <span className="text-[14px] text-[#6C757D] ml-2">
-              @{account} &#8729; {postTimeDate}天{postTimeHours}小時
+              @{account} &#8729; {postTimeDate}{postTimeHours}小時
             </span>
           </p>
           <p className="text-[14px] text-[#6C757D]">回覆

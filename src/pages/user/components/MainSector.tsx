@@ -157,7 +157,7 @@ const MainSector = () => {
                 <TweetCard 
                   key={tweet.id}
                   postTimeHours={hours}
-                  postTimeDate={days === 0 ? "今" : days * -1}
+                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={tweet.description}
                   likeCount={tweet.likeNum}
                   replyCount={tweet.replyNum}
@@ -178,7 +178,7 @@ const MainSector = () => {
                 <ReplyCard 
                   key={reply.Tweet?.TweetId}
                   postTimeHours={hours}
-                  postTimeDate={days === 0 ? "今" : days * -1}
+                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={reply.comment}
                   account={reply.Tweet?.User?.account}
                   avatar={reply.Tweet?.User?.avatar}
@@ -197,7 +197,7 @@ const MainSector = () => {
                 <TweetCard 
                   key={like.Tweet?.id}
                   postTimeHours={hours}
-                  postTimeDate={days === 0 ? "今" : days * -1}
+                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={like.Tweet?.description}
                   likeCount={like.Tweet?.likeNum}
                   isLiked={true}

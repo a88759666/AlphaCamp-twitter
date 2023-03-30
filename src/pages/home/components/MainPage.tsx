@@ -136,7 +136,7 @@ const MainPage = () => {
                   userName="Apple"
                   account="Apple"
                   postTimeHours={hours}
-                  postTimeDate={days === 0 ? "今" : days * -1}
+                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}

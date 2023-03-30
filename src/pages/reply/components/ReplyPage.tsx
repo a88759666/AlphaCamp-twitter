@@ -245,7 +245,7 @@ const ReplyPage = () => {
                 userName="John Doe" 
                 account="HeyJohn"
                 postTimeHours={hours}
-                postTimeDate={days === 0 ? "今" : days * -1}
+                postTimeDate={days === 0 ? "" : days * -1}
                 tweet={item.comment}
                 avatar="https://picsum.photos/300/300?text=2"
                 replyAccount="Apple"
