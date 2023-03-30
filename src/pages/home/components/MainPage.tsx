@@ -81,6 +81,7 @@ const PostTweet = () => {
 
 const MainPage = () => {
   const [tweets, setTweets] = useState<Array<ResProp> | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function getTweetAsync(){
@@ -102,6 +103,9 @@ const MainPage = () => {
   }
   function handleReplyModal() {
     setShow(!show)
+  }
+  function handleUserClick(id:number){
+    navigate(`/user/${id}`)
   }
 
   function getHoursFrom(time:string){
@@ -143,6 +147,8 @@ const MainPage = () => {
                   avatar="https://picsum.photos/300/300?text=2"
                   handleReplyModal={handleReplyModal}
                   id={item.id}
+                  onGoUserClick={handleUserClick}
+
                 /> 
               </div>
             )
@@ -162,4 +168,5 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
 
