@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { setSourceMapRange } from "typescript";
 import { setuid } from "process";
 
+
 type ResProp = {
   id: number,
   UserId: number,
@@ -111,6 +112,7 @@ const PostTweet = () => {
 
 const MainPage = () => {
   const [tweets, setTweets] = useState<Array<ResProp> | null>(null)
+  const [ modalUser, setModalUser ] = useState<ResProp | null>(null)
   const navigate = useNavigate()
   const {currentUser} = useTweetContext()
 
@@ -132,15 +134,27 @@ const MainPage = () => {
   function handleClose() {
     setShow(false)
   }
-  function handleReplyModal() {
+  async function handleReplyModal(id: number) {
     setShow(!show)
+    try {
+      const res = await tweet.getSingleTweet(id) 
+      if(res){
+        setModalUser(res)
+      }
+    console.log(res)
+    } catch (error) {
+      
+    }
+    
+
   }
-  // function handleUserClick(userId:number){
-  //   const currentUserId = currentUser.id
-  //   if(currentUserId !== userId){
-  //     navigate(`/user`)
-  //   }
-  // }
+  function handleUserClick(userId:number){
+    const currentUserId = currentUser.id
+    console.log(currentUserId)
+    if(currentUserId !== userId){
+      navigate(`/user`)
+    }
+  }
  
 
 
@@ -171,7 +185,7 @@ const MainPage = () => {
                   avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
                   id={item.id}
-                  // onGoUserClick={handleUserClick}
+                  onGoUserClick={handleUserClick}
                   userId={item.User?.id}
                 /> 
               </div>
@@ -184,6 +198,11 @@ const MainPage = () => {
               postTweetModal={false}
               replyTweetModal={true}
               onClose={handleClose}
+              userName={modalUser?.User?.name}
+              account={modalUser?.User?.account}
+              // postTimeHours={modalUser?.}
+              tweet={modalUser?.description}
+              otherAvatar={modalUser?.User?.avatar}
           />
         )}
       </main>
