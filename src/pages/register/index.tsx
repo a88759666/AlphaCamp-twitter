@@ -75,20 +75,20 @@ const Register:React.FC = () => {
       if( errorMsg === 'Error: account 已重複註冊!'){
         setAccountError(true)
       } 
-      if( errorMsg = 'Error: 暱稱上限50字!'){
+      if( errorMsg === 'Error: 暱稱上限50字!'){
         setNameError(true)
       } 
-      if( errorMsg = 'Error: 還有欄位沒填'){
+      if( errorMsg === 'Error: 還有欄位沒填'){
         setColError(true)
       } 
-      if( errorMsg = 'Error: email 已重複註冊!'){
+      if( errorMsg === 'Error: email 已重複註冊!'){
         setEmailError(true)
       } 
-      if( errorMsg = 'Error: 密碼與確認密碼不同!'){
+      if( errorMsg === 'Error: 密碼與確認密碼不同!'){
         setPasswordError(true)
       }
     }
-    
+    localStorage.removeItem('errorMsg')
   }
     return (
       <Container>
@@ -171,3 +171,4 @@ const Register:React.FC = () => {
   
   export default Register;
   
+
