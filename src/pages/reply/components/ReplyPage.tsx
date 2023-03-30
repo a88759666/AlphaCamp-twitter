@@ -114,6 +114,7 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
+  //timestamp轉換
   let time;
   if(tweetPostTime){
     const {hours, days} = getHoursFrom(tweetPostTime)
@@ -132,7 +133,7 @@ const ReplyTweetCard = (props: {
       <div className="border-b pb-2">
         <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
         <p className="text-[14px] text-[#7d6c6c]">
-          {tweetPostTime} &#8729; {tweetPostDate}
+          {tweetPostTime} 
         </p>
       </div>
       <div className="border-b py-4">
@@ -192,11 +193,21 @@ const ReplyPage = () => {
   //timestamp 轉換
   //上午 10:05・2021年11月10日
   function getDateTransform(date:string){
+    let hour;
     let result;
     const  newDate = new Date(date)
+    if(newDate.getHours() - 12 === 0){
+      hour = "下午" + " " + "12"
+    }else if(newDate.getHours() -12 > 0 && newDate.getHours() - 12 < 12){
+      hour = "下午" + " " + (newDate.getHours() -12)
+    }else if(newDate.getHours() - 12 < 0){
+      hour = "上午" + " " + newDate.getHours()
+    }else if(newDate.getHours() - 12 === 12){
+      hour = "中午" + " " + "12"
+    }
     if(newDate?.getMonth()){
       result = 
-      newDate?.getHours()+":" +newDate?.getMinutes()+ ` &#8729; `
+      hour +":" +newDate?.getMinutes()+ " · "
       +newDate?.getFullYear()+"年"+ (newDate?.getMonth()+1)+"月"+ newDate?.getDate()+"日"
     }
     return result
