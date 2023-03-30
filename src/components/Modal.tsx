@@ -95,8 +95,8 @@ const Modal:React.FC<Props> = ({
                                                 推文
                                             </button>
                                             <div className="absolute left-[15px] bottom-[15px]">
-                                                { post &&
-                                                    post.length === 0 && 
+                                                { 
+                                                    post?.length === 0 && 
                                                     <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
                                                 }
                                             </div>
@@ -150,8 +150,8 @@ const Modal:React.FC<Props> = ({
                                                     回覆
                                                 </button>
                                                 <div className="absolute left-[15px] bottom-[15px]">
-                                                {   comment &&
-                                                    comment.length === 0 && 
+                                                {   
+                                                    comment?.length === 0 && 
                                                     <p className="font-[500] text-[12px] leading-[22px] text-[#FC5A5A]">字數不得為空</p>
                                                 }
                                                 </div>
