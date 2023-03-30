@@ -30,7 +30,7 @@ type ReplyProps = {
     comment: string,
     createdAt: string,
     updatedAt: string,
-
+    User?:User
 }
 type User = {
     id: number,
@@ -116,7 +116,13 @@ const ReplyTweetCard = (props: {
   let time;
   if(tweetPostTime){
      const {hours, days} = getHoursFrom(tweetPostTime)
-    time = {hours, days}
+    if(hours !== 0){
+      time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+    }else if(hours === 0 && days === 0){
+      time = "就在最近"
+    }else if(hours === 0){
+      time = days + "天"
+    }
   }
 
   //timestamp 轉換
@@ -182,7 +188,7 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          postTimeHours={time?.hours}
+          postTimeHours={time}
           currentUserName={currentUser.name}
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
@@ -211,6 +217,17 @@ const ReplyPage = () => {
     getSingleTweetAsync()
   },[id])
 
+  let time = "";
+  if(headerTweet?.createdAt){
+     const {hours, days} = getHoursFrom(headerTweet?.createdAt)
+    if(hours !== 0){
+      time = days === 0 ?  (hours + "小時") : (days + "天" + hours + "小時")
+    }else if(hours === 0 && days === 0){
+      time = "就在最近"
+    }else if(hours === 0){
+      time = days + "天"
+    }
+  }
 
   
   return(
@@ -240,15 +257,13 @@ const ReplyPage = () => {
       {/* Reply */}
       <div className="border-t">
         {headerTweet?.Replies?.map(item => {
-          const {hours , days} = getHoursFrom(item.createdAt)
             return(
               <ReplyCard 
-                userName="John Doe" 
-                account="HeyJohn"
-                postTimeHours={hours}
-                postTimeDate={days === 0 ? "" : days * -1}
+                userName={item.User?.name} 
+                account={item.User?.account}
+                postTimeHours={time}
                 tweet={item.comment}
-                avatar="https://picsum.photos/300/300?text=2"
+                avatar={item.User?.avatar}
                 replyAccount="Apple"
                 key={item.id}
               />

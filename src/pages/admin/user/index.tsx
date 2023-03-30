@@ -36,7 +36,7 @@ const UserCard = (props: {
   const {coverUrl, avatar, userName, userAccount, posts, likes, following, followed} = props
 
   return(
-    <div className="w-[210px] relative break-all cursor-pointer hover:opacity-50">
+    <div className="w-[210px] relative break-all cursor-pointer hover:opacity-80">
       <div className="h-[140px] overflow-hidden" 
         style={{backgroundImage: `url(${coverUrl})`,
             backgroundPosition: "center",
@@ -105,14 +105,14 @@ const AdminUser: React.FC = () => {
                 .map(item => {
                   return(
                     <UserCard 
-                      coverUrl="https://picsum.photos/300/300?text=1"
+                      coverUrl={item.cover}
                       avatar={item.avatar}
                       userName={item.name}
                       userAccount={item.account}
-                      posts={1.5}
-                      likes={20}
-                      following={36}
-                      followed={59}
+                      posts={item.tweetsCount}
+                      likes={item.tweetsLikedCount}
+                      following={item.followingsCount}
+                      followed={item.followersCount}
                       key={item.id}
                       />
                   )

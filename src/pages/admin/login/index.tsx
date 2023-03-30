@@ -1,4 +1,4 @@
-import { adminLogin } from "api/Admin";
+import { adminLogin } from "api/admin";
 import { InputCard, SubmitBtn, LogoTitle, Container } from "components/AuthInput";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

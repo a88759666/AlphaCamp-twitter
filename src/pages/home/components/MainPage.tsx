@@ -31,8 +31,9 @@ type User = {
     //拿總共的毫秒差距
     let milliseconds = Date.parse(time) - Date.now()
     //相差的日期天數
-    const days = Math.trunc(milliseconds / 86400000)
-    milliseconds = days * 86400000 - milliseconds
+    const NegativeDays = Math.trunc(milliseconds / 86400000)
+    const days = NegativeDays * -1
+    milliseconds = NegativeDays * 86400000 - milliseconds
     //扣掉天數之後剩下得小時差
     const hours = Math.trunc(milliseconds / 3600000)
     milliseconds = hours * 3600000 - milliseconds
@@ -134,9 +135,7 @@ const MainPage = () => {
   function handleUserClick(id:number){
     navigate(`/user/${id}`)
   }
-
  
-  
 
 
   return (
@@ -146,13 +145,20 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             const {hours, days} = getHoursFrom(item.createdAt)
+            let time;
+            if(hours !== 0){
+              time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+            }else if(hours === 0 && days === 0){
+              time = "就在最近"
+            }else if(hours === 0){
+              time = days + "天"
+            }
             return(
               <div key={item.id}>
                 <TweetCard 
                   userName={item.User?.name}
                   account={item.User?.account}
-                  postTimeHours={hours}
-                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
+                  postTimeHours={time}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
