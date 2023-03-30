@@ -1,21 +1,40 @@
 import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
+import { useTweetContext } from "contexts/TweetContextProvider"
 import { useNavigate } from "react-router-dom"
-
+type userState = 'user1' | 'user2' 
 export const UserImage = (props: {
   avatar?: string, 
   onGoUserClick?: (id: number) => void
   id?:number,
-  userName?:string
+  userName?:string,
+  userId?:number,
+  setUser?:React.Dispatch<React.SetStateAction<userState>>
+
 }) => {
-  const {avatar, onGoUserClick, id, userName} = props
+  const {avatar, setUser, id, userName, userId} = props
+  const go = useNavigate()
+  const {currentUser} = useTweetContext()
+
+  function handleUserClick(userId:number){
+    const currentUserId = currentUser.id
+    if(setUser !== undefined){
+      console.log(userId)
+      console.log(currentUserId)
+      if(currentUserId !== userId ){
+        setUser("user2")
+        go(`/user`)
+      }
+    }
+  }
   return (
     <img 
       src={avatar} alt={userName} 
       className="w-[50px] h-[50px] rounded-full"
-      onClick={() => id !== undefined && onGoUserClick?.(id)}
+      onClick={() => userId && handleUserClick?.(userId)}
     />
   )
 }
+
 
 
 
@@ -23,7 +42,6 @@ const TweetCard = (props: {
   userName?:string, 
   account?:string, 
   postTimeHours?: string | number, 
-  postTimeDate?: string | number, 
   tweet?:string, 
   likeCount?:number,
   isLiked?: boolean 
@@ -31,10 +49,11 @@ const TweetCard = (props: {
   avatar?:string,
   handleReplyModal?: () => void,
   id?:number,
-  onGoUserClick?: (id: number) => void
-
+  onGoUserClick?: (id: number) => void,
+  userId?:number,
+  setUser?:React.Dispatch<React.SetStateAction<userState>>
 }) => {
-    const { userName,account,postTimeHours,postTimeDate,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, onGoUserClick} = props
+    const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, setUser , userId} = props
     const go = useNavigate()
 
     function handleTweetClick(id:number) {
@@ -47,8 +66,10 @@ const TweetCard = (props: {
         <UserImage 
           avatar={avatar}
           id={id}
-          onGoUserClick={onGoUserClick}
+          // onGoUserClick={onGoUserClick}
           userName={userName}
+          userId={userId}
+          setUser={setUser}
         />
         <div className="ml-2 w-full ">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>

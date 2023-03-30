@@ -4,12 +4,11 @@ const ReplyCard = (props: {
   userName?:string, 
   account?:string, 
   postTimeHours?:number | string,
-  postTimeDate?:number | string, 
   tweet?:string, 
   avatar?:string,
   replyAccount?:string
   }) => {
-    const { userName,account,postTimeHours, postTimeDate ,tweet, avatar, replyAccount } = props
+    const { userName,account,postTimeHours, tweet, avatar, replyAccount } = props
     return(
       <div className="flex px-6 py-4 border-b">
         <UserImage avatar={avatar}/>

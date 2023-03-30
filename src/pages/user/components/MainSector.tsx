@@ -165,6 +165,7 @@ const MainSector = () => {
                   avatar={tweet.User?.avatar}
                   userName={tweet.User?.name}
                   id={tweet.id}
+                  setUser={setUser}
                 /> 
               )
           })
