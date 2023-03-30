@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import * as tweet from "api/tweet"
 import "../../../scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
+import { useNavigate } from "react-router-dom" 
 
 type ResProp = {
   id: number,
