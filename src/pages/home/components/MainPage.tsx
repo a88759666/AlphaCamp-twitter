@@ -23,7 +23,6 @@ const PostTweet = () => {
   const [post , setPost] = useState<string>("")
   const { currentUser } = useTweetContext()
 
-  const [ post , setPost] = useState<string>("")
 
 
   function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
