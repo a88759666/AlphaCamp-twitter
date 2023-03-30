@@ -5,6 +5,7 @@ import Container from "components/Container";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminTweetList } from "type";
+import { getHoursFrom } from "../../home/components/MainPage"
 
 import AdminSideBar from "../components/AdminSideBar";
 
@@ -31,6 +32,17 @@ const AdminTweetCard:React.FC<Props> = ({
   //     await onDelete(id)
   //   }
   // }
+  let newTime;
+  if(time){
+    const {hours, days} = getHoursFrom(time)
+    if(hours !== 0){
+      newTime = days === 0 ?  (hours + "小時") : (days + "天" + hours + "小時")
+    }else if(hours === 0 && days === 0){
+      newTime = "就在最近"
+    }else if(hours === 0){
+      time = days + "天"
+    }
+  }
   return <>
     <div className="px-[24px] py-[16px] border-b border-slate-200 flex flex-col">
       <div className="flex flex-row mb-[5px] items-center">
@@ -46,7 +58,7 @@ const AdminTweetCard:React.FC<Props> = ({
           <p className="font-bold text-[16px] leading-[26px] ">{name}</p>
           <p className="text-[#6C757D] text-[14px] leading-[22px] font-[400]">@{account}</p>
           <div className="w-[4px] h-[4px] rounded-full bg-[#6C757D]"></div>
-          <p className="text-[#6C757D] text-[14px] leading-[22px] font-[400]">{time}小時</p>
+          <p className="text-[#6C757D] text-[14px] leading-[22px] font-[400]">{newTime}</p>
         </div>
         <div 
           className="ml-auto cursor-pointer"

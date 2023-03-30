@@ -7,6 +7,8 @@ import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "../../../scrollbar.css"
+import { useTweetContext } from "contexts/TweetContextProvider";
+import { getHoursFrom } from "../../home/components/MainPage"
 
 
 type ResProp = {
@@ -18,6 +20,8 @@ type ResProp = {
   tweetsRepliesCount:number,
   tweetsLikedCount:number
   Replies?:ReplyProps[],
+  User?:User
+
 }
 type ReplyProps = {
     id: number,
@@ -26,24 +30,16 @@ type ReplyProps = {
     comment: string,
     createdAt: string,
     updatedAt: string,
-
+    User?:User
+}
+type User = {
+    id: number,
+    account: string,
+    name: string,
+    avatar: string,
+    cover: string
 }
 
-function getHoursFrom(time:string){
-  //拿總共的毫秒差距
-  let milliseconds = Date.parse(time) - Date.now()
-  //相差的日期天數
-  const days = Math.trunc(milliseconds / 86400000)
-  milliseconds = days * 86400000 - milliseconds
-  //扣掉天數之後剩下得小時差
-  const hours = Math.trunc(milliseconds / 3600000)
-  milliseconds = hours * 3600000 - milliseconds
-  return {
-      days,
-      hours,
-  };
-  
-}
 
 const ReplyTweetCard = (props: {
   tweetUserName?:string,
@@ -54,13 +50,15 @@ const ReplyTweetCard = (props: {
   tweetReplies?:number,
   tweetLikes?:number,
   tweetId?:number,
+  tweetAvatar?:string,
   setHeaderTweet: React.Dispatch<React.SetStateAction<ResProp | null>>,
   headerTweet:ResProp | null
 }) => {
-  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId, setHeaderTweet, headerTweet} = props
+  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetReplies, tweetLikes, tweetId, tweetAvatar, setHeaderTweet, headerTweet} = props
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")
+  const {currentUser} = useTweetContext()
 
   function handleClose() {
       setShow(false)
@@ -114,17 +112,47 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
-  //timestamp轉換
+  //timestamp跟現在時間差
   let time;
   if(tweetPostTime){
-    const {hours, days} = getHoursFrom(tweetPostTime)
-    time = {hours, days}
+     const {hours, days} = getHoursFrom(tweetPostTime)
+    if(hours !== 0){
+      time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+    }else if(hours === 0 && days === 0){
+      time = "就在最近"
+    }else if(hours === 0){
+      time = days + "天"
+    }
   }
+
+  //timestamp 轉換
+  //上午 10:05・2021年11月10日
+  function getDateTransform(date:string){
+    let hour;
+    let result;
+    const  newDate = new Date(date)
+    if(newDate.getHours() - 12 === 0){
+      hour = "下午" + " " + "12"
+    }else if(newDate.getHours() -12 > 0 && newDate.getHours() - 12 < 12){
+      hour = "下午" + " " + (newDate.getHours() -12)
+    }else if(newDate.getHours() - 12 < 0){
+      hour = "上午" + " " + newDate.getHours()
+    }else if(newDate.getHours() - 12 === 12){
+      hour = "中午" + " " + "12"
+    }
+    if(newDate?.getMonth()){
+      result = 
+      hour +":" +newDate?.getMinutes()+ " · "
+      +newDate?.getFullYear()+"年"+ (newDate?.getMonth()+1)+"月"+ newDate?.getDate()+"日"
+    }
+    return result
+  }
+
 
   return <>
     <div className="px-4 py-2">
       <div className="flex">
-        <UserImage avatar="https://picsum.photos/300/300?text=2"/>
+        <UserImage avatar={tweetAvatar} userName={tweetUserName}/>
         <div className="ml-2">
           <p className=" font-bold">{tweetUserName}</p>
           <p className="text-[14px] text-[#7d6c6c] ">@{tweetUserAccount}</p>
@@ -133,7 +161,7 @@ const ReplyTweetCard = (props: {
       <div className="border-b pb-2">
         <p className="text-[24px] py-2 leading-[36px]">{tweetContent}</p>
         <p className="text-[14px] text-[#7d6c6c]">
-          {tweetPostTime} 
+          {tweetPostTime && getDateTransform(tweetPostTime)} 
         </p>
       </div>
       <div className="border-b py-4">
@@ -160,8 +188,8 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          postTimeHours={time?.hours}
-          currentUserName="John Doe"
+          postTimeHours={time}
+          currentUserName={currentUser.name}
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
           comment={comment}
@@ -189,30 +217,19 @@ const ReplyPage = () => {
     getSingleTweetAsync()
   },[id])
 
-
-  //timestamp 轉換
-  //上午 10:05・2021年11月10日
-  function getDateTransform(date:string){
-    let hour;
-    let result;
-    const  newDate = new Date(date)
-    if(newDate.getHours() - 12 === 0){
-      hour = "下午" + " " + "12"
-    }else if(newDate.getHours() -12 > 0 && newDate.getHours() - 12 < 12){
-      hour = "下午" + " " + (newDate.getHours() -12)
-    }else if(newDate.getHours() - 12 < 0){
-      hour = "上午" + " " + newDate.getHours()
-    }else if(newDate.getHours() - 12 === 12){
-      hour = "中午" + " " + "12"
+  let time = "";
+  if(headerTweet?.createdAt){
+     const {hours, days} = getHoursFrom(headerTweet?.createdAt)
+    if(hours !== 0){
+      time = days === 0 ?  (hours + "小時") : (days + "天" + hours + "小時")
+    }else if(hours === 0 && days === 0){
+      time = "就在最近"
+    }else if(hours === 0){
+      time = days + "天"
     }
-    if(newDate?.getMonth()){
-      result = 
-      hour +":" +newDate?.getMinutes()+ " · "
-      +newDate?.getFullYear()+"年"+ (newDate?.getMonth()+1)+"月"+ newDate?.getDate()+"日"
-    }
-    return result
   }
 
+  
   return(
    <main className="basis-5/7 border-x overflow-auto">
       {/* Header */}
@@ -224,14 +241,15 @@ const ReplyPage = () => {
       {headerTweet?.createdAt &&
           
         <ReplyTweetCard 
-          tweetUserName="Apple" 
-          tweetUserAccount="Apple" 
+          tweetUserName={headerTweet.User?.name} 
+          tweetUserAccount={headerTweet.User?.account} 
           tweetContent={headerTweet?.description} 
-          tweetPostTime={getDateTransform(headerTweet?.createdAt)} 
+          tweetPostTime={headerTweet?.createdAt} 
           tweetPostDate={headerTweet?.createdAt}
           tweetReplies={headerTweet?.tweetsRepliesCount} 
           tweetLikes={headerTweet?.tweetsLikedCount}
           tweetId={headerTweet?.id}
+          tweetAvatar={headerTweet.User?.avatar}
           setHeaderTweet={setHeaderTweet}
           headerTweet={headerTweet}
         />
@@ -239,15 +257,13 @@ const ReplyPage = () => {
       {/* Reply */}
       <div className="border-t">
         {headerTweet?.Replies?.map(item => {
-          const {hours , days} = getHoursFrom(item.createdAt)
             return(
               <ReplyCard 
-                userName="John Doe" 
-                account="HeyJohn"
-                postTimeHours={hours}
-                postTimeDate={days === 0 ? "" : days * -1}
+                userName={item.User?.name} 
+                account={item.User?.account}
+                postTimeHours={time}
                 tweet={item.comment}
-                avatar="https://picsum.photos/300/300?text=2"
+                avatar={item.User?.avatar}
                 replyAccount="Apple"
                 key={item.id}
               />

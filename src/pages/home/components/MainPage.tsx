@@ -4,8 +4,8 @@ import TweetCard, { UserImage } from "components/TweetCard";
 import { useState, useEffect } from "react";
 import * as tweet from "api/tweet"
 import "../../../scrollbar.css"
-import { useNavigate } from "react-router-dom";
 import { useTweetContext } from "contexts/TweetContextProvider";
+import { useNavigate } from "react-router-dom" 
 
 type ResProp = {
   id: number,
@@ -14,8 +14,36 @@ type ResProp = {
   createdAt: string,
   updatedAt: string,
   tweetsRepliesCount:number,
-  tweetsLikedCount:number
+  tweetsLikedCount:number,
+  User?:User
 }
+
+type User = {
+    id: number,
+    account: string,
+    name: string,
+    avatar: string,
+    cover: string
+}
+
+//timestamp跟現在時間差
+ export function getHoursFrom(time:string){
+    //拿總共的毫秒差距
+    let milliseconds = Date.parse(time) - Date.now()
+    //相差的日期天數
+    const NegativeDays = Math.trunc(milliseconds / 86400000)
+    const days = NegativeDays * -1
+    milliseconds = NegativeDays * 86400000 - milliseconds
+    //扣掉天數之後剩下得小時差
+    const hours = Math.trunc(milliseconds / 3600000)
+    milliseconds = hours * 3600000 - milliseconds
+    return {
+        days,
+        hours,
+    };
+    
+   
+  }
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
@@ -50,7 +78,7 @@ const PostTweet = () => {
   return <>
     <div className=" h-[140px] pl-5 pr-2 mt-4 border-b-[10px] relative">
       <div className="flex">
-        <UserImage avatar={currentUser.avatar} />
+        <UserImage avatar={currentUser.avatar} userName={currentUser.name}/>
         <label htmlFor="postTweet" className="ml-2 pt-2">
           <textarea 
             id="postTweet" 
@@ -107,24 +135,7 @@ const MainPage = () => {
   function handleUserClick(id:number){
     navigate(`/user/${id}`)
   }
-
-  function getHoursFrom(time:string){
-    //拿總共的毫秒差距
-    let milliseconds = Date.parse(time) - Date.now()
-    //相差的日期天數
-    const days = Math.trunc(milliseconds / 86400000)
-    milliseconds = days * 86400000 - milliseconds
-    //扣掉天數之後剩下得小時差
-    const hours = Math.trunc(milliseconds / 3600000)
-    milliseconds = hours * 3600000 - milliseconds
-    return {
-        days,
-        hours,
-    };
-    
-   
-  }
-  
+ 
 
 
   return (
@@ -134,17 +145,24 @@ const MainPage = () => {
         <div >
           {tweets?.map(item => {
             const {hours, days} = getHoursFrom(item.createdAt)
+            let time;
+            if(hours !== 0){
+              time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+            }else if(hours === 0 && days === 0){
+              time = "就在最近"
+            }else if(hours === 0){
+              time = days + "天"
+            }
             return(
               <div key={item.id}>
                 <TweetCard 
-                  userName="Apple"
-                  account="Apple"
-                  postTimeHours={hours}
-                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
+                  userName={item.User?.name}
+                  account={item.User?.account}
+                  postTimeHours={time}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
-                  avatar="https://picsum.photos/300/300?text=2"
+                  avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
                   id={item.id}
                   onGoUserClick={handleUserClick}

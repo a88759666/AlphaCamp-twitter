@@ -18,8 +18,9 @@ type JWT = {
 type defaultAuthContextType = {
   isAuthenticated: boolean,
   currentUser: JWT,
-
 }
+
+
 
 const defaultAuthContext ={
   isAuthenticated: false,  
@@ -34,7 +35,8 @@ const defaultAuthContext ={
     id: 0,
     introduction: "",
     name: "",
-    updatedAt: ""}
+    updatedAt: ""
+  }
 }
 
 
@@ -67,7 +69,7 @@ const TweetContextProvider:React.FC<Props> = ({children}) => {
 
 
   return <>
-        <TweetContext.Provider value={{isAuthenticated: isAuthenticated,  currentUser:payload}}>
+        <TweetContext.Provider value={{isAuthenticated: isAuthenticated,  currentUser:payload }}>
             { children }
         </TweetContext.Provider>
     </>

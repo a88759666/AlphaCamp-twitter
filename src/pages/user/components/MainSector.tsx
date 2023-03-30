@@ -7,7 +7,9 @@ import UserInfoEditModal from "./UserInfoEditModal";
 import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
 import { Like, RepliedTweet, Tweet, User } from "type";
 import { checkPermissionUser } from "api/Auth";
-
+import { useTweetContext } from "contexts/TweetContextProvider";
+import { getHoursFrom } from "pages/home/components/MainPage";
+import "scrollbar.css"
 
 const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
   const {currentUserName, currentUserTweetsCount} = props
@@ -33,22 +35,6 @@ export const BackBtn = () => {
 
 type userState = 'user1' | 'user2' 
 
-function getHoursFrom(time:string){
-  //拿總共的毫秒差距
-  let milliseconds = Date.parse(time) - Date.now()
-  //相差的日期天數
-  const days = Math.trunc(milliseconds / 86400000)
-  milliseconds = days * 86400000 - milliseconds
-  //扣掉天數之後剩下得小時差
-  const hours = Math.trunc(milliseconds / 3600000)
-  milliseconds = hours * 3600000 - milliseconds
-  return {
-      days,
-      hours,
-  };
-  
-}
-
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
   const [ user, setUser ] = useState<userState>('user1')
@@ -58,6 +44,7 @@ const MainSector = () => {
   const [ tweets, setTweets ] = useState<Tweet[]>([])
   const [ repliedTweets, setRepliedTweets ] = useState<RepliedTweet[]>([])
   const [ likes, setLikes ] = useState<Like[]>([])
+  const {currentUser} = useTweetContext()
 
   const go = useNavigate()
 
@@ -126,17 +113,33 @@ const MainSector = () => {
     getLIkesAsync()
     getRepliedTweetsAsync()
   },[go])
+
+  function getTimeTransForm(tragetTime:string){
+  //timestamp跟現在時間差
+    let time;
+    if(tragetTime){
+      const {hours, days} = getHoursFrom(tragetTime)
+      if(hours !== 0){
+        time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+      }else if(hours === 0 && days === 0){
+        time = "就在最近"
+      }else if(hours === 0){
+        time = days + "天"
+      }
+    }
+    return time
+  }
   
   return <>
-    <main className="basis-5/7 border-x ">
-      <MainHeader currentUserName="John Doe" currentUserTweetsCount={25} />
+    <main className="basis-5/7 border-x overflow-auto">
+      <MainHeader currentUserName={currentUser.name} currentUserTweetsCount={25} />
       <ProfileCard 
-        currentUserName="John Doe" 
-        currentUserAccount="JohnDoe" 
-        currentUserBio="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint." 
-        currentUserFollow={34} 
+        currentUserName={currentUser.name} 
+        currentUserAccount={currentUser.account} 
+        currentUserBio={currentUser.introduction} 
+        currentUserFollow={36} 
         currentUserFollowed={29}
-        coverUrl="https://picsum.photos/300/300?text=1"
+        coverUrl={currentUser.cover}
         handleEdit={handleEditModal}
         type={user} 
         ringBell={ringBell}
@@ -150,14 +153,11 @@ const MainSector = () => {
       <div className="overflow-scroll">
         {currentTab === "tweets" && Array.isArray(tweets) &&
           tweets?.map(tweet => {
-            if(tweet.createdAt){
-              const {hours, days} = getHoursFrom(tweet.createdAt)
             
               return(
                 <TweetCard 
                   key={tweet.id}
-                  postTimeHours={hours}
-                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
+                  postTimeHours={tweet.createdAt && getTimeTransForm(tweet.createdAt)}
                   tweet={tweet.description}
                   likeCount={tweet.likeNum}
                   replyCount={tweet.replyNum}
@@ -167,18 +167,14 @@ const MainSector = () => {
                   id={tweet.id}
                 /> 
               )
-            }
           })
         }
         {currentTab === "replies" && 
           repliedTweets.map(reply => {
-            if(reply.createdAt){
-              const {hours , days} = getHoursFrom(reply.createdAt)
               return(
                 <ReplyCard 
                   key={reply.Tweet?.TweetId}
-                  postTimeHours={hours}
-                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
+                  postTimeHours={reply.createdAt && getTimeTransForm(reply.createdAt)}
                   tweet={reply.comment}
                   account={reply.Tweet?.User?.account}
                   avatar={reply.Tweet?.User?.avatar}
@@ -186,29 +182,24 @@ const MainSector = () => {
                   replyAccount={reply.User?.name}
                 /> 
               )
-            }
           })
         }
         {currentTab === "likes" && 
           likes.map(like => {
-            if(like.Tweet?.createdAt){
-              const {hours, days} = getHoursFrom(like.Tweet?.createdAt)
-              return(
-                <TweetCard 
-                  key={like.Tweet?.id}
-                  postTimeHours={hours}
-                  postTimeDate={days === 0 ? "" : days * -1 + "天"}
-                  tweet={like.Tweet?.description}
-                  likeCount={like.Tweet?.likeNum}
-                  isLiked={true}
-                  replyCount={like.Tweet?.replyNum}
-                  account={like.Tweet?.User?.account}
-                  avatar={like.Tweet?.User?.avatar}
-                  userName={like.Tweet?.User?.name}
-                  id={like.Tweet?.id}
-                /> 
-              )
-            }
+            return(
+              <TweetCard 
+                key={like.Tweet?.id}
+                postTimeHours={like.Tweet?.createdAt && getTimeTransForm(like.Tweet?.createdAt)}
+                tweet={like.Tweet?.description}
+                likeCount={like.Tweet?.likeNum}
+                isLiked={true}
+                replyCount={like.Tweet?.replyNum}
+                account={like.Tweet?.User?.account}
+                avatar={like.Tweet?.User?.avatar}
+                userName={like.Tweet?.User?.name}
+                id={like.Tweet?.id}
+              /> 
+            )
           })
         }
       </div> 
