@@ -1,20 +1,22 @@
-import {LikeIcon, LikeBigActiveIcon, ReplyIcon} from "assets/images/index"
+import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
 import { useNavigate } from "react-router-dom"
 
 export const UserImage = (props: {
   avatar?: string, 
   onGoUserClick?: (id: number) => void
-  id?:number
+  id?:number,
+  userName?:string
 }) => {
-  const {avatar, onGoUserClick, id} = props
+  const {avatar, onGoUserClick, id, userName} = props
   return (
     <img 
-      src={avatar} alt="user" 
+      src={avatar} alt={userName} 
       className="w-[50px] h-[50px] rounded-full"
       onClick={() => id !== undefined && onGoUserClick?.(id)}
     />
   )
 }
+
 
 
 const TweetCard = (props: {
@@ -28,7 +30,7 @@ const TweetCard = (props: {
   replyCount?:number,
   avatar?:string,
   handleReplyModal?: () => void,
-  id?:number
+  id?:number,
   onGoUserClick?: (id: number) => void
 
 }) => {
@@ -46,6 +48,7 @@ const TweetCard = (props: {
           avatar={avatar}
           id={id}
           onGoUserClick={onGoUserClick}
+          userName={userName}
         />
         <div className="ml-2">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>
@@ -67,7 +70,7 @@ const TweetCard = (props: {
             </div>
             <div className="basis-1/2 flex ml-5 ">
               <div className="pt-[3.5px]">
-                { isLiked ? <LikeBigActiveIcon /> : <LikeIcon />}
+                { isLiked ? <LikeIconActive /> : <LikeIcon />}
               </div>
               <p className="text-[14px] ml-2">{replyCount}</p>
             </div>

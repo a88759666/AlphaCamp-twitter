@@ -7,6 +7,7 @@ import UserInfoEditModal from "./UserInfoEditModal";
 import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
 import { Like, RepliedTweet, Tweet, User } from "type";
 import { checkPermissionUser } from "api/Auth";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 
 const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
@@ -58,6 +59,7 @@ const MainSector = () => {
   const [ tweets, setTweets ] = useState<Tweet[]>([])
   const [ repliedTweets, setRepliedTweets ] = useState<RepliedTweet[]>([])
   const [ likes, setLikes ] = useState<Like[]>([])
+  const {currentUser} = useTweetContext()
 
   const go = useNavigate()
 
@@ -131,12 +133,12 @@ const MainSector = () => {
     <main className="basis-5/7 border-x ">
       <MainHeader currentUserName="John Doe" currentUserTweetsCount={25} />
       <ProfileCard 
-        currentUserName="John Doe" 
-        currentUserAccount="JohnDoe" 
-        currentUserBio="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint." 
-        currentUserFollow={34} 
+        currentUserName={currentUser.name} 
+        currentUserAccount={currentUser.account} 
+        currentUserBio={currentUser.introduction} 
+        currentUserFollow={36} 
         currentUserFollowed={29}
-        coverUrl="https://picsum.photos/300/300?text=1"
+        coverUrl={currentUser.cover}
         handleEdit={handleEditModal}
         type={user} 
         ringBell={ringBell}

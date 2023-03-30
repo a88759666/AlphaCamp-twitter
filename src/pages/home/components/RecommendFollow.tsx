@@ -66,7 +66,7 @@ export const UserBriefCard = (props: {
 
   return(
     <>
-      <div className="max-w-[200px] overflow-auto ">
+      <div className="max-w-[200px] overflow-x-scroll ">
         <p className="ml-2 font-bold">{userName}</p>
         <p className="text-[14px] text-[#6C757D] ml-2">@{account}</p>
       </div>
@@ -101,7 +101,7 @@ const RecommendFollowSidebar = () => {
         {topFollowList?.map(item => {
           return(
             <div className="ml-4 my-4 flex relative" key={item.id}>
-              <UserImage avatar={item.avatar}/>
+              <UserImage avatar={item.avatar} userName={item.name}/>
               <UserBriefCard 
               userName={item.name} 
               account={item.account} 

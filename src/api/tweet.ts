@@ -14,7 +14,8 @@ type ResProp = {
   updatedAt: string,
   tweetsRepliesCount:number,
   tweetsLikedCount:number,
-  Replies?:ReplyProps[]
+  Replies?:ReplyProps[],
+  User:User
 }
 type ReplyProps = {
     id: number,
@@ -23,6 +24,14 @@ type ReplyProps = {
     comment: string,
     createdAt: string,
     updatedAt: string
+}
+
+type User = {
+    id: number,
+    account: string,
+    name: string,
+    avatar: string,
+    cover: string
 }
 
 axiosInstance.interceptors.request.use((config) => {
@@ -38,7 +47,6 @@ axiosInstance.interceptors.request.use((config) => {
   //瀏覽全部推文
 export const getTweets = async () => {
   try {
-    
         const res =  await axiosInstance.get(`${baseUrl}/tweets`)
         return res.data as Array<ResProp> 
     } catch (error) {

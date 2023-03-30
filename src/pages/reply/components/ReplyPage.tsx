@@ -57,7 +57,7 @@ const ReplyTweetCard = (props: {
   setHeaderTweet: React.Dispatch<React.SetStateAction<ResProp | null>>,
   headerTweet:ResProp | null
 }) => {
-  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetPostDate, tweetReplies, tweetLikes, tweetId, setHeaderTweet, headerTweet} = props
+  const {tweetUserName, tweetUserAccount, tweetContent, tweetPostTime, tweetReplies, tweetLikes, tweetId, setHeaderTweet, headerTweet} = props
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")

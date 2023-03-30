@@ -4,7 +4,6 @@ import TweetCard, { UserImage } from "components/TweetCard";
 import { useState, useEffect } from "react";
 import * as tweet from "api/tweet"
 import "../../../scrollbar.css"
-import { useNavigate } from "react-router-dom";
 import { useTweetContext } from "contexts/TweetContextProvider";
 
 type ResProp = {
@@ -14,7 +13,16 @@ type ResProp = {
   createdAt: string,
   updatedAt: string,
   tweetsRepliesCount:number,
-  tweetsLikedCount:number
+  tweetsLikedCount:number,
+  User:User
+}
+
+type User = {
+    id: number,
+    account: string,
+    name: string,
+    avatar: string,
+    cover: string
 }
 
 const PostTweet = () => {
@@ -50,7 +58,7 @@ const PostTweet = () => {
   return <>
     <div className=" h-[140px] pl-5 pr-2 mt-4 border-b-[10px] relative">
       <div className="flex">
-        <UserImage avatar={currentUser.avatar} />
+        <UserImage avatar={currentUser.avatar} userName={currentUser.name}/>
         <label htmlFor="postTweet" className="ml-2 pt-2">
           <textarea 
             id="postTweet" 
@@ -137,14 +145,14 @@ const MainPage = () => {
             return(
               <div key={item.id}>
                 <TweetCard 
-                  userName="Apple"
-                  account="Apple"
+                  userName={item.User.name}
+                  account={item.User.account}
                   postTimeHours={hours}
                   postTimeDate={days === 0 ? "" : days * -1 + "天"}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
-                  avatar="https://picsum.photos/300/300?text=2"
+                  avatar={item.User.avatar}
                   handleReplyModal={handleReplyModal}
                   id={item.id}
                   onGoUserClick={handleUserClick}
