@@ -1,6 +1,7 @@
 import { CloseIcon } from "assets/images"
 import React, { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { useTweetContext } from "contexts/TweetContextProvider"
 
 
 
@@ -20,6 +21,7 @@ type Props = {
     onPostClick?:React.MouseEventHandler<HTMLButtonElement>
     post?: string,
     comment?: string
+    otherAvatar?: string
 }
 
 
@@ -39,10 +41,12 @@ const Modal:React.FC<Props> = ({
     onPostChange,
     onPostClick,
     post,
-    comment
+    comment,
+    otherAvatar
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
+    const { currentUser } = useTweetContext()
     return <>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -77,7 +81,7 @@ const Modal:React.FC<Props> = ({
                                     {postTweetModal && (
                                         <div className="w-full flex flex-row  p-[15px] min-h-[210px] justify-start items-start">
                                             <img
-                                                src="https://picsum.photos/300/300?text=1"
+                                                src={currentUser.avatar}
                                                 alt="user"
                                                 className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                             />
@@ -106,13 +110,9 @@ const Modal:React.FC<Props> = ({
                                         <div className="w-full flex flex-col">
                                             <div className="flex flex-row px-[24px] py-[16px]">
                                                 <div className='flex flex-col items-center'>
-                                                    <div
-                                                        className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mb-[16px]"
-                                                        style={{
-                                                            backgroundImage: `url(https://picsum.photos/300/300?text=2)`,
-                                                            backgroundPosition: "center",
-                                                            backgroundSize: "cover",
-                                                        }}
+                                                    <img
+                                                        className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mb-[16px] bg-center bg-cover"
+                                                        src={otherAvatar}
                                                     />
                                                     <hr className='bg-slate-500 w-[2px] h-[86px]' />
                                                 </div>
@@ -125,14 +125,14 @@ const Modal:React.FC<Props> = ({
                                                     <text className='text-[16px] font-[400] leading-[26px] mb-[10px]'>{tweet}</text>
                                                     <text className='text-[15px] font-[500] leading-[22px] mb-[10px]'>回覆給 
                                                         <span className='text-[#FF6600]'>
-                                                            @{currentUserName}
+                                                            @{currentUser.name}
                                                         </span>
                                                     </text>
                                                 </div>
                                             </div>
                                             <div className="flex flex-row px-[24px] pb-[16px] justify-start items-start min-h-[120px]">
                                                 <img
-                                                    src="https://picsum.photos/300/300?text=1"
+                                                    src={currentUser.avatar}
                                                     alt="user"
                                                     className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                                 />
@@ -169,3 +169,4 @@ const Modal:React.FC<Props> = ({
 }
 
 export default Modal
+
