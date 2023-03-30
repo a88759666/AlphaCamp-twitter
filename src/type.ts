@@ -82,13 +82,16 @@ export type Follower = {
 }
 
 export type AdminTweetList = {
-  name?: string
-  account?: string
-  avatar?: string
+  
   id?: number
   UserId?: number
   description?: string
   createdAt?: string
   updatedAt?: string
-
+  User?:{
+    account?: string
+    avatar?: string
+    name?: string
+  }
 }
+
