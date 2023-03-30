@@ -1,10 +1,10 @@
-import { CloseIcon } from "assets/images"
+import { CameraIcon, CancelIcon, CloseIcon } from "assets/images"
 import { InputCard } from "components/AuthInput"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useNavigate } from "react-router-dom";
-import { editUserModal } from "api/Auth";
+import { checkPermissionUser, editUserModal } from "api/Auth";
 
 type Props = {
     onClose?: () => void
@@ -19,25 +19,50 @@ const UserInfoEditModal:React.FC<Props> = ({
     const [ avatar, setAvatar ] = useState('')
     const [ cover, setCover ] = useState('')
     const [ introduction, setIntroduction ] = useState('')
+    const [ isUpdating, setIsUpdating ] = useState(false)
     const go = useNavigate()
+   
 
     function onChangeNameHandler(event: React.FormEvent<HTMLInputElement>) {
+        if(isUpdating){
+            return;
+        }
         if (event.currentTarget) {
           setName(event.currentTarget.value)
         }
     }
     function onChangeIntroductionHandler(event: React.FormEvent<HTMLInputElement>) {
+        if(isUpdating){
+            return;
+        }
         if (event.currentTarget) {
           setIntroduction(event.currentTarget.value)
         }
     }
+    function onChangeAvatarHandler(event: React.FormEvent<HTMLInputElement>) {
+        if(isUpdating){
+            return;
+        }
+        if (event.currentTarget) {
+          setAvatar(event.currentTarget.value)
+        }
+    }
+    function onChangeCoverHandler(event: React.FormEvent<HTMLInputElement>) {
+        if(isUpdating){
+            return;
+        }
+        if (event.currentTarget) {
+          setCover(event.currentTarget.value)
+        }
+    }
+
     async function handleClickSaveModal(){
-        // if (avatar.length === 0) {
-        //     return;
-        // }
-        // if (cover.length === 0) {
-        // return;
-        // }
+        if (avatar.length === 0) {
+            return;
+        }
+        if (cover.length === 0) {
+        return;
+        }
         if (name.length === 0) {
             return;
         }
@@ -50,6 +75,7 @@ const UserInfoEditModal:React.FC<Props> = ({
         if (introduction.length >= 160) {
             return;
         }
+        setIsUpdating(true)
         const userId = localStorage.getItem('userId') as string
         const { success } = await editUserModal({
             name,
@@ -62,7 +88,55 @@ const UserInfoEditModal:React.FC<Props> = ({
             console.log(success)
             setOpen(false)
         }
+        setIsUpdating(false)
     }
+
+    async function getUserInfo(){
+        const id = localStorage.getItem('userId') as string
+        const UserInfo = await checkPermissionUser(id)
+        if(UserInfo) {
+            setName(UserInfo[2])
+            setAvatar(UserInfo[3])
+            setCover(UserInfo[4])
+            setIntroduction(UserInfo[5])
+        }
+        console.log(UserInfo)
+    }
+    function handleUploadCover(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files ? e.target.files[0] : null
+        if(file){
+            const fileReader = new FileReader()
+            fileReader.readAsDataURL(file)
+        
+            fileReader.addEventListener("load", async() => {
+                const url = await fileReader.result as string // 將 any 型別轉換為 string
+                setCover(url)
+                // console.log(cover)
+            })
+        }
+    }
+    function handleUploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files ? e.target.files[0] : null
+        if(file){
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+        
+            fileReader.addEventListener("load", async() => {
+                const url = await fileReader.result as string
+                setAvatar(url)
+                // console.log(Avatar)
+            })
+        }
+    }
+    function handleClearCover(event: React.MouseEvent<HTMLDivElement>) {
+        event.preventDefault()
+        setCover('')
+    }
+
+    
+    useEffect(() => {
+        getUserInfo()
+    }, [])
     return <>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -105,13 +179,54 @@ const UserInfoEditModal:React.FC<Props> = ({
                                     </div>
                                     <div className="w-[600px] h-[200px] relative">
                                         <img
-                                            src="https://picsum.photos/600/200?text=2"
+                                            src={cover}
                                             className="bg-cover bg-center"
                                         />
-                                        <img
-                                            src="https://picsum.photos/200/200?text=2"
-                                            className="w-[120px] h-[120px] rounded-full bg-cover bg-center absolute left-0 bottom-0 translate-x-[15px] translate-y-[60px]"
-                                        />
+                                        <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-black bg-fixed opacity-50" />
+                                        <div className="absolute flex flex-row gap-[60px] top-[90px] left-[220px]">
+                                            <label
+                                                className="cursor-pointer" 
+                                                htmlFor='inputCover'
+                                            >
+                                                <CameraIcon />
+                                            </label>
+                                            <input 
+                                                type='file' 
+                                                id='inputCover' 
+                                                className="hidden"
+                                                accept="image/png, image/svg, image/jpg"
+                                                onChange={handleUploadCover}
+                                            />
+                                            <div
+                                                className="cursor-pointer" 
+                                                onClick={handleClearCover}
+                                            >
+                                                <CancelIcon />
+                                            </div>
+                                        </div>
+
+                                        <div className="absolute left-0 bottom-0 translate-x-[15px] translate-y-[60px]">
+                                            <img
+                                                src={avatar}
+                                                className="w-[120px] h-[120px] rounded-full bg-cover bg-center relative"
+                                            />
+                                            <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full rounded-full overflow-hidden bg-black bg-fixed opacity-50" />
+                                            <label
+                                                className="cursor-pointer absolute top-[50px] left-[50px]"
+                                                htmlFor='inputAvatar'
+                                            >
+                                                <CameraIcon />
+                                            </label>
+                                            <input 
+                                                type='file' 
+                                                id='inputAvatar' 
+                                                className="hidden"
+                                                accept="image/png, image/svg, image/jpg"
+                                                onChange={handleUploadAvatar}
+                                            />
+                                        </div>
+                                        
+
                                     </div>
                                     <div className="flex flex-col px-[15px] mt-[80px] mb-[50px]">
                                         <InputCard 
