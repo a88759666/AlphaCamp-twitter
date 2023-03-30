@@ -69,10 +69,10 @@ const AdminHome: React.FC = () => {
   const go = useNavigate()
   async function adminGetTweetsAsync(){
     try {
-      const userList = await adminGetTweets()
+      const res = await adminGetTweets()
       // console.log(userList)
-      if (userList) {
-        setUserList(userList)
+      if (res) {
+        setUserList(res)
       }
     } catch (error) {
       console.error(error)
@@ -80,10 +80,19 @@ const AdminHome: React.FC = () => {
   }
   async function adminDeleteTweetsAsync(id: number){
     try {
-      const userList = await adminDeleteTweets(id)
-      if (userList) {
-        setUserList(userList)
-      }
+      // const res = await adminDeleteTweets(id)
+      // if (res) {
+      //   setUserList(res)
+      // }
+      await adminDeleteTweets(id)
+      setUserList((prevUserList) => {
+        return prevUserList.filter((userList) => {
+          if (userList.id === id){
+            return null
+          }
+          return userList
+        })
+      })
     } catch (error) {
       console.error(error)
     }
@@ -129,6 +138,7 @@ const AdminHome: React.FC = () => {
                   avatar={avatar}
                   text={description}
                   onDelete={adminDeleteTweetsAsync}
+                  id={id}
                 />
               )
             })
