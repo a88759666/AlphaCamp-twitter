@@ -8,8 +8,6 @@ import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
 import { setSourceMapRange } from "typescript";
 import { setuid } from "process";
-import { getTimeTransForm } from "pages/user/components/MainSector";
-
 
 
 type ResProp = {
@@ -80,6 +78,7 @@ const PostTweet = () => {
   function handleClose() {
       setShow(false)
   }
+  
   return <>
     <div className=" h-[140px] pl-5 pr-2 mt-4 border-b-[10px] relative">
       <div className="flex">
@@ -150,15 +149,23 @@ const MainPage = () => {
     
 
   }
-  function handleUserClick(userId:number){
-    const currentUserId = currentUser.id
+  // function handleUserClick(userId:number){
+  //   const currentUserId = currentUser.id
+  //   console.log(currentUserId)
+  //   if(currentUserId !== userId){
+  //     navigate(`/user`)
+  //   }
+  // }
+  function handleUserClick(id:number){
+    const currentUserId = currentUser.id 
     console.log(currentUserId)
-    if(currentUserId !== userId){
-      navigate(`/user`)
+    if(currentUserId !== id){
+      const userId = id as unknown as string
+      localStorage.setItem('userId', userId)
+      navigate(`/user/${id}`)
+      console.log(id)
     }
   }
- 
-
 
   return (
       <main className="basis-5/7 border-x overflow-auto scrollbarStyle" >
@@ -166,20 +173,31 @@ const MainPage = () => {
         <PostTweet />
         <div >
           {tweets?.map(item => {
+            const {hours, days} = getHoursFrom(item.createdAt)
+            let time;
+            if(hours !== 0){
+              time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+            }else if(hours === 0 && days === 0){
+              time = "就在最近"
+            }else if(hours === 0){
+              time = days + "天"
+            }
             return(
               <div key={item.id}>
                 <TweetCard 
                   userName={item.User?.name}
                   account={item.User?.account}
-                  postTimeHours={getTimeTransForm(item.createdAt)}
+                  postTimeHours={time}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
                   avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
-                  id={item.id}
+                  id={item.UserId}
                   onGoUserClick={handleUserClick}
-                  userId={item.User?.id}
+                  
+
+                  // userId={item.User?.id}
                 /> 
               </div>
             )
@@ -193,7 +211,7 @@ const MainPage = () => {
               onClose={handleClose}
               userName={modalUser?.User?.name}
               account={modalUser?.User?.account}
-              postTimeHours={modalUser?.createdAt && getTimeTransForm(modalUser?.createdAt)}
+              // postTimeHours={modalUser?.}
               tweet={modalUser?.description}
               otherAvatar={modalUser?.User?.avatar}
           />
