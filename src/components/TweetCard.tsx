@@ -88,13 +88,13 @@ const TweetCard = (props: {
                   onDoubleClick={() => id && handleReplyModal?.(id)}
                 />
               </div>
-              <p className="text-[14px] ml-2">{likeCount}</p>
+              <p className="text-[14px] ml-2">{replyCount}</p>
             </div>
             <div className="basis-1/2 flex ml-5 ">
               <div className="pt-[3.5px]">
                 { isLiked ? <LikeIconActive /> : <LikeIcon />}
               </div>
-              <p className="text-[14px] ml-2">{replyCount}</p>
+              <p className="text-[14px] ml-2">{likeCount}</p>
             </div>
           </div>
         </div>
