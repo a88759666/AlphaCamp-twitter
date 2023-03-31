@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
-import "../../../scrollbar.css"
+import "styles/scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
-import { getHoursFrom } from "../../home/components/MainPage"
+import { getHoursFrom, getTimeTransForm } from "../../home/components/MainPage"
 
 
 type ResProp = {
@@ -112,18 +112,7 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
-  //timestamp跟現在時間差
-  let time;
-  if(tweetPostTime){
-     const {hours, days} = getHoursFrom(tweetPostTime)
-    if(hours !== 0){
-      time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
-    }else if(hours === 0 && days === 0){
-      time = "就在最近"
-    }else if(hours === 0){
-      time = days + "天"
-    }
-  }
+
 
   //timestamp 轉換
   //上午 10:05・2021年11月10日
@@ -188,8 +177,7 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          postTimeHours={time}
-          currentUserName={currentUser.name}
+          postTimeHours={tweetPostTime && getTimeTransForm(tweetPostTime)}
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
           comment={comment}

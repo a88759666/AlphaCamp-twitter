@@ -2,6 +2,7 @@ import { InputCard, SubmitBtn, LogoTitle, Container} from "../../components/Auth
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { checkPermissionUser, login } from "api/Auth";
+import Loading from "components/Loading";
 
 
 const Login: React.FC = () => {
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
   const [ userId, setUserId ] = useState()
   const [ showError, setShowError ] = useState(false)
   const [ errorMsg, setErrorMsg ] = useState('')
+  const [ loading , setLoading] = useState(false)
 
   const go = useNavigate()
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
@@ -29,7 +31,7 @@ const Login: React.FC = () => {
     if (password.length === 0) {
       return;
     }
-   
+    setLoading(() => true)
     const { success, token, id } = await login({
       account,
       password,
@@ -39,7 +41,9 @@ const Login: React.FC = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', id)
       setUserId(id)
+      setLoading(() => false)
     } else {
+      setLoading(() => false)
       setShowError(true)
       setErrorMsg('帳號未註冊')
     }
@@ -68,6 +72,7 @@ const Login: React.FC = () => {
   
     return (
       <Container>
+        {loading ?  <Loading /> : null}
         <LogoTitle title="登入 Alphitter"/>
         <InputCard 
           type='text'

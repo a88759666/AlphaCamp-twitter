@@ -13,8 +13,6 @@ type Props = {
     account?:string,
     tweet?:string,
     postTimeHours?:string | number,
-    postTimeDate?: string | number,
-    currentUserName?:string,
     onChange?:React.ChangeEventHandler<HTMLTextAreaElement>
     onClick?:React.MouseEventHandler<HTMLButtonElement>
     onPostChange?:React.ChangeEventHandler<HTMLTextAreaElement>
@@ -36,8 +34,6 @@ const Modal:React.FC<Props> = ({
     account,
     tweet,
     postTimeHours,
-    postTimeDate,
-    currentUserName,
     onPostChange,
     onPostClick,
     post,
@@ -82,7 +78,7 @@ const Modal:React.FC<Props> = ({
                                         <div className="w-full flex flex-row  p-[15px] min-h-[210px] justify-start items-start">
                                             <img
                                                 src={currentUser.avatar}
-                                                alt="user"
+                                                alt={currentUser.name}
                                                 className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mr-[10px]"
                                             />
                                             <textarea
@@ -113,6 +109,7 @@ const Modal:React.FC<Props> = ({
                                                     <img
                                                         className="w-[50px] h-[50px] overflow-hidden rounded-full min-w-[50px] mb-[16px] bg-center bg-cover"
                                                         src={otherAvatar}
+                                                        alt={userName}
                                                     />
                                                     <hr className='bg-slate-500 w-[2px] h-[86px]' />
                                                 </div>
