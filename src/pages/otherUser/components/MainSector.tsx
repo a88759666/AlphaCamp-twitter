@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserInfoEditModal from "./UserInfoEditModal";
 import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
-import { Like, RepliedTweet, Tweet, User } from "type";
+import { Like, RepliedTweet, Tweet } from "type";
 import { checkPermissionUser } from "api/Auth";
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom } from "pages/home/components/MainPage";
 import "styles/scrollbar.css"
-import { on } from "events";
 
 const MainHeader = (props:{currentUserName?: string, currentUserTweetsCount:number}) => {
   const {currentUserName, currentUserTweetsCount} = props
@@ -61,7 +60,6 @@ const MainSector = () => {
   const [ tweets, setTweets ] = useState<Tweet[]>([])
   const [ repliedTweets, setRepliedTweets ] = useState<RepliedTweet[]>([])
   const [ likes, setLikes ] = useState<Like[]>([])
-  const {currentUser} = useTweetContext()
 
   const go = useNavigate()
 
@@ -107,40 +105,38 @@ const MainSector = () => {
       console.error(error)
     }
   }
-  async function checkTokenIsValid() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      go('/login')
-    }
-    const userId = localStorage.getItem('userId')
-    if(userId) {
-      const res = await checkPermissionUser(userId)
-      if (!res) {
+  
+  useEffect(() => {
+    async function checkTokenIsValid() {
+      const token = localStorage.getItem('token');
+      if (!token) {
         go('/login')
-      } else {
-        const userdata = {
-          UserId: res[0],
-          account: res[1],
-          name: res[2],
-          avatar: res[3],
-          description: res[5],
-          followingCount: res[6],
-          followerCounts: res[7]
+      }
+      const userId = localStorage.getItem('userId')
+      if(userId) {
+        const res = await checkPermissionUser(userId)
+        if (!res) {
+          go('/login')
+        } else {
+          const userdata = {
+            UserId: res[0],
+            account: res[1],
+            name: res[2],
+            avatar: res[3],
+            description: res[5],
+            followingCount: res[6],
+            followerCounts: res[7]
+          }
+          setUserData(userdata) 
+          console.log(userData)
         }
-        setUserData(userdata) 
-        console.log(userData)
       }
     }
-  }
-  function changeUserMode() {
-    setUser('user2')
-  }
-  useEffect(() => {
     checkTokenIsValid()
     getTweetsAsync()
     getLIkesAsync()
     getRepliedTweetsAsync()
-  },[go])
+  },[go, userData])
 
   function getTimeTransForm(tragetTime:string){
   //timestamp跟現在時間差
@@ -193,9 +189,6 @@ const MainSector = () => {
                   avatar={tweet.User?.avatar}
                   userName={tweet.User?.name}
                   id={tweet.id}
-                  // changeUserMode={changeUserMode}
-                  // onGoUserClick={handleUserClick}
-
                 /> 
               )
           })

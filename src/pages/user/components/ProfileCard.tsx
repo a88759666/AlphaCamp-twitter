@@ -8,13 +8,14 @@ const ProfileCard = (props :{
   currentUserBio:string,
   currentUserFollow:number,
   currentUserFollowed:number,
+  currentUserAvatar:string,
   coverUrl:string,
   handleEdit:() => void,
   type?: string,
   ringBell?: boolean,
   handleBellIcon: () => void
   }) => {
-    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserFollowed, coverUrl, handleEdit, type, ringBell, handleBellIcon} = props
+    const {currentUserAccount, currentUserName, currentUserBio, currentUserFollow, currentUserAvatar, currentUserFollowed, coverUrl, handleEdit, type, ringBell, handleBellIcon} = props
     const go = useNavigate()
   return(
     <div className="flex flex-col h-1/2 relative">
@@ -76,7 +77,7 @@ const ProfileCard = (props :{
           )
         }
       </div>
-      <img src="https://picsum.photos/300/300?text=2" alt="profile pic" className="absolute rounded-full width-[140px] h-[140px] top-[80px] left-4 border-4 border-white" />
+      <img src={currentUserAvatar} alt="profile pic" className="absolute rounded-full width-[140px] h-[140px] top-[80px] left-4 border-4 border-white" />
     </div>
   )
 }

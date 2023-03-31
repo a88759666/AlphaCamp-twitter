@@ -14,11 +14,7 @@ type followProps = {
   followingNum: number
 }
 
-type followStatus = {
-    status:string,
-    data?: follower,
-    message?:string
-  }
+
 type follower = {
     followerId: number,
     followingId: number,

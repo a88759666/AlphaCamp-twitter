@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import jwt_decode, {JwtPayload} from "jwt-decode"
+import jwt_decode from "jwt-decode"
 
 type JWT = {
   id: number,

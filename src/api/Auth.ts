@@ -1,6 +1,4 @@
 import axios from 'axios'
-import User from 'pages/user'
-import { useState } from 'react'
 interface payloadType {
     account?: string,
     password?: string,
@@ -25,10 +23,6 @@ interface editUserType {
 
 }
 
-interface errorType {
-    status?: string,
-    message?: string 
-}
 const authUrl = 'https://arcane-beyond-08221.herokuapp.com/api' as string
 
 const axiosInstance = axios.create({
@@ -55,7 +49,6 @@ export async function login(payload:payloadType) {
             account,
             password
         })
-        // console.log(data)
         const { token, user } = data.data
         const { id } = user
         
@@ -95,7 +88,6 @@ export async function register(payload:payloadType) {
             return data.data
         }
     } catch (error: any) {
-        // console.error(error, error.response.data.message)
         const errorMsg = error.response.data.message
         localStorage.setItem('errorMsg', errorMsg)
         return error
@@ -110,8 +102,8 @@ export async function logout() {
 export async function checkPermissionUser(id: string) {
     try {
         const { data } = await axiosInstance.get(`${authUrl}/users/${id}`)
-        const { account, name, avatar, cover, introduction, followingCount, followerCounts } = data
-        return [ id, account, name, avatar, cover, introduction, followingCount, followerCounts ]
+        const { account, name, avatar, cover, introduction, followingCount, followerCounts, tweetCounts } = data
+        return [ id, account, name, avatar, cover, introduction, followingCount, followerCounts, tweetCounts ]
     } catch (error) {
         console.error('check permissionUser failed:', error)
     }

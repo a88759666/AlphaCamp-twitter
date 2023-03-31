@@ -1,4 +1,3 @@
-import { adminLogout } from 'api/admin';
 import { ACLogoSmallIcon, HomeIcon, ProfileIcon, LogoutIcon } from 'assets/images';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const AdminSideBar: React.FC = () => {
     const go = useNavigate()
     function handleClickSignout() {
-        // adminLogout()
         go('/admin/login')
     }
     return (
