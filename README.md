@@ -4,6 +4,14 @@ Alpha Camp驗收專案
 
 ## Getting Start
 
+    git clone https://github.com/a88759666/AlphaCamp-twitter.git
+
+    npm install
+
+    mpn start
+
+## Deployment
+
 前往 https://a88759666.github.io/AlphaCamp-twitter
 
 ## 指標功能
