@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# Alphitter
+
+Alpha Camp驗收專案
+
+## Getting Start
+
+前往 https://a88759666.github.io/AlphaCamp-twitter
+
+## 指標功能
+
+登入
+
+1. 前台使用 user1 / 12345678 登入
+2. 後台使用 root / 12345678 登入
+
+推文
+
+1. 在首頁可以瀏覽全部推文並且點擊推文可以直接前往查看回覆
+2. 雙擊發文區塊或是直接在首頁輸入發文資料點擊發文
+3. 雙擊回覆圖示可以回覆推文
+4. 點擊使用者頭像可前往查看個人資訊
+
+個人頁面
+
+1. 個人頁面可以編輯個人資料
+2. 可以編輯登入者設定
+3. 可以查看已按過讚的推文、已回覆貼文、已發的推文
+4. 可以查看追蹤以及被追蹤的使用者
+
+後台
+
+1. 無法使用一般使用者登入後台
+2. 可以查看所有推文並且刪除
+3. 可以查看所有使用者
+
+
+## 開發環境
+
+  * React框架
+  * Typescript
+  * Tailwind樣式開發
+
+![screenshot](./src/assets/images/screenshot.png)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
