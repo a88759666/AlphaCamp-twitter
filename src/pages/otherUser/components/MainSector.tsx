@@ -9,18 +9,9 @@ import { Like, RepliedTweet, Tweet, User } from "type";
 import { checkPermissionUser } from "api/Auth";
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom } from "pages/home/components/MainPage";
-import "scrollbar.css"
+import "styles/scrollbar.css"
 import { on } from "events";
-type ResProp = {
-  id: number,
-  UserId: number,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsRepliesCount:number,
-  tweetsLikedCount:number,
-  User?:User
-}
+
 const MainHeader = (props:{currentUserName?: string, currentUserTweetsCount:number}) => {
   const {currentUserName, currentUserTweetsCount} = props
   return(

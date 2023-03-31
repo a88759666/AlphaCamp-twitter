@@ -8,7 +8,7 @@ import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
 import { Like, RepliedTweet, Tweet, User } from "type";
 import { checkPermissionUser } from "api/Auth";
 import { useTweetContext } from "contexts/TweetContextProvider";
-import { getTimeTransForm } from "pages/home/components/MainPage";
+import { getHoursFrom } from "pages/home/components/MainPage";
 import "styles/scrollbar.css"
 
 const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
