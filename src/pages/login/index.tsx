@@ -45,7 +45,7 @@ const Login: React.FC = () => {
     } else {
       setLoading(() => false)
       setShowError(true)
-      setErrorMsg('帳號未註冊')
+      setErrorMsg('帳號未註冊或是帳號密碼錯誤')
     }
     
     // if (error) {
