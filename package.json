@@ -1,7 +1,7 @@
 {
   "name": "firstwork",
   "version": "0.1.0",
-  "homepage":"http://a88759666.github.io/AlphaCamp-twitter",
+  "homepage":"https://a88759666.github.io/AlphaCamp-twitter",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
