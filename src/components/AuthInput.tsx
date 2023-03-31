@@ -78,13 +78,18 @@ export const Container: React.FC<Props> = ({children}) => {
   )
 }
 
-export const SubmitBtn = (props: { btn: string, onClickEvent?: () => Promise<void> }) => {
-  const {btn, onClickEvent} = props
+export const SubmitBtn = (props: { btn: string, onClickEvent?: () => Promise<void>, onKeyEvent?:() => void }) => {
+  const {btn, onClickEvent, onKeyEvent} = props
   return(
     <div>
       <button 
         className="bg-[#FF6600] text-white w-full h-[46px] rounded-[50px] cursor-pointer hover:bg-orange-700 focus:ring-orange-300"
         onClick={onClickEvent}
+        onKeyDown={(e) => {
+            if (e.key === 'Enter' && onKeyEvent !== undefined) {
+              onKeyEvent();
+            }
+          }}
       >{btn}</button>
         
     </div>

@@ -127,7 +127,7 @@ const AdminHome: React.FC = () => {
         <div className="basis-1/4 pl-[30px] py-4">
           <AdminSideBar />
         </div>
-        <div className="basis-5/7 border-l border-r border-slate-200">
+        <div className="basis-5/7 border-l border-r border-slate-200 overflow-auto">
           <header className="font-[700] text-[24px] leading-[26px] border-b border-slate-200 px-[20px] py-[24px]">推文清單</header>
           {
             userList?.map((item) => {
