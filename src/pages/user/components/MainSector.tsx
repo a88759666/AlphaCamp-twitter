@@ -35,22 +35,6 @@ export const BackBtn = () => {
 
 type userState = 'user1' | 'user2' 
 
-export function getTimeTransForm(tragetTime:string){
-  //timestamp跟現在時間差
-    let time;
-    if(tragetTime){
-      const {hours, days} = getHoursFrom(tragetTime)
-      if(hours !== 0){
-        time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
-      }else if(hours === 0 && days === 0){
-        time = "就在最近"
-      }else if(hours === 0){
-        time = days + "天"
-      }
-    }
-    return time
-  }
-
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
   const [ user, setUser ] = useState<userState>('user1')
@@ -130,7 +114,21 @@ const MainSector = () => {
     getRepliedTweetsAsync()
   },[go])
 
-  
+  function getTimeTransForm(tragetTime:string){
+  //timestamp跟現在時間差
+    let time;
+    if(tragetTime){
+      const {hours, days} = getHoursFrom(tragetTime)
+      if(hours !== 0){
+        time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+      }else if(hours === 0 && days === 0){
+        time = "就在最近"
+      }else if(hours === 0){
+        time = days + "天"
+      }
+    }
+    return time
+  }
   
   return <>
     <main className="basis-5/7 border-x overflow-auto">
@@ -167,7 +165,7 @@ const MainSector = () => {
                   avatar={tweet.User?.avatar}
                   userName={tweet.User?.name}
                   id={tweet.id}
-                  setUser={setUser}
+                  // setUser={setUser}
                 /> 
               )
           })
@@ -215,3 +213,4 @@ const MainSector = () => {
   </>
 } 
 export default MainSector;
+
