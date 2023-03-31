@@ -225,7 +225,7 @@ const ReplyPage = () => {
                 postTimeHours={time}
                 tweet={item.comment}
                 avatar={item.User?.avatar}
-                replyAccount="Apple"
+                replyAccount={item.User?.account}
                 key={item.id}
               />
             )
