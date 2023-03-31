@@ -10,6 +10,7 @@ import AdminLogin from "pages/admin/login"
 import AdminUser from "pages/admin/user"
 import UserSelfFollowingPage from "pages/user/components/UserSelfFollowingPage"
 import UserSelfFollowerPage from "pages/user/components/UserSelfFollowerPage"
+import User2 from "pages/otherUser"
 
 
 
@@ -42,6 +43,11 @@ const routes: RouteObject[] = [
     {
         path: "/user",
         element: <User />,
+        children: []
+    },
+    {
+        path: "/user/:id",
+        element: <User2 />,
         children: []
     },
     {
