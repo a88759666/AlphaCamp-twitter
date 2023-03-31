@@ -7,30 +7,34 @@ export const UserImage = (props: {
   onGoUserClick?: (id: number) => void
   id?:number,
   userName?:string,
-  userId?:number,
-  setUser?:React.Dispatch<React.SetStateAction<userState>>
+  // userId?:number,
+  // changeUserMode?: () => void 
 
 }) => {
-  const {avatar, setUser, id, userName, userId} = props
+  // const {avatar, changeUserMode, id, userName, userId, onGoUserClick} = props
+
+  const {avatar, id, userName,  onGoUserClick} = props
+  // console.log(changeUserMode)
+
   const go = useNavigate()
   const {currentUser} = useTweetContext()
 
-  function handleUserClick(userId:number){
-    const currentUserId = currentUser.id
-    if(setUser !== undefined){
-      console.log(userId)
-      console.log(currentUserId)
-      if(currentUserId !== userId ){
-        setUser("user2")
-        go(`/user`)
-      }
-    }
-  }
+  // function handleUserClick(userId:number){
+  //   const currentUserId = currentUser.id
+  //   // console.log(changeUserMode)
+  //   if(changeUserMode) {
+  //     if(currentUserId !== userId){
+  //       changeUserMode() 
+  //       go(`/user`)
+  //     }
+  //   }
+  // }
+
   return (
     <img 
       src={avatar} alt={userName} 
       className="w-[50px] h-[50px] rounded-full"
-      onClick={() => userId && handleUserClick?.(userId)}
+      onClick={() => id && onGoUserClick?.(id)}
     />
   )
 }
@@ -47,17 +51,22 @@ const TweetCard = (props: {
   isLiked?: boolean 
   replyCount?:number,
   avatar?:string,
-  handleReplyModal?: (id:number) => void,
+  handleReplyModal?: (id: number) => void,
   id?:number,
   onGoUserClick?: (id: number) => void,
-  userId?:number,
-  setUser?:React.Dispatch<React.SetStateAction<userState>>
+  // userId?:number,
+  // changeUserMode?: () => void
 }) => {
-    const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, setUser , userId} = props
+    // const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, changeUserMode , userId} = props
+    const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, onGoUserClick } = props
+
     const go = useNavigate()
 
     function handleTweetClick(id:number) {
       go(`/reply/${id}`)
+    
+      
+
     }
     
 
@@ -66,10 +75,10 @@ const TweetCard = (props: {
         <UserImage 
           avatar={avatar}
           id={id}
-          // onGoUserClick={onGoUserClick}
+          onGoUserClick={onGoUserClick}
           userName={userName}
-          userId={userId}
-          setUser={setUser}
+          // userId={userId}
+          // changeUserMode={changeUserMode}
         />
         <div className="ml-2 w-full ">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>
@@ -82,9 +91,9 @@ const TweetCard = (props: {
           </div>
           <div className="flex max-w-[150px]">
             <div className="basis-1/2 flex">
-              <div className="pt-[3.5px]" onDoubleClick={() =>id && handleReplyModal?.(id)}>
+              <div className="pt-[3.5px]">
                 <ReplyIcon 
-                  
+                  onDoubleClick={() => id && handleReplyModal?.(id)}
                 />
               </div>
               <p className="text-[14px] ml-2">{likeCount}</p>
@@ -102,4 +111,5 @@ const TweetCard = (props: {
   };
 
 export default TweetCard;
+
 
