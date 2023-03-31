@@ -50,6 +50,33 @@ const AdminLogin = () => {
       } 
     }
   }
+
+  async function handleKeyDownAdminLogin() {
+  
+    if (account.length === 0) {
+      return;
+    }
+    if (password.length === 0) {
+      return;
+    }
+    setLoading(() => true)
+    const { success, token, id } = await adminLogin({
+      account,
+      password,
+    })
+    if(id !== 4){
+      setLoading(() => false)
+      go('/admin/login')
+      alert("無此權限")
+    }else{
+      if (success) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', id)
+        setLoading(() => false)
+        go('/admin/home')
+      } 
+    }
+  }
   
     
   return (
@@ -81,6 +108,7 @@ const AdminLogin = () => {
         <SubmitBtn 
           btn="登入"
           onClickEvent={handleClickAdminLogin}
+          onKeyEvent={handleKeyDownAdminLogin}
         />
         <div className="mt-6">
           <p className="link text-end" onClick={() => navigate("/login")}>前台登入</p>
