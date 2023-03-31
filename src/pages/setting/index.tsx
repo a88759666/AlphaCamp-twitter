@@ -11,7 +11,6 @@ const Setting: React.FC = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ checkPassword, setCheckPassword ] = useState('')
-  const [ userId, setUserId ] = useState('')
   const [ accountError, setAccountError ] = useState(false)
   const [ emailError, setEmailError ] = useState(false)
   const go = useNavigate()
@@ -68,14 +67,13 @@ const Setting: React.FC = () => {
       userId
     })
     if (success) {
-      console.log(success)
       go('/home')
     } else {
       let errorMsg = localStorage.getItem('errorMsg')
       if( errorMsg === 'Error: account 已重複註冊!'){
         setAccountError(true)
       }
-      if( errorMsg = 'Error: email 已重複註冊!'){
+      if( errorMsg === 'Error: email 已重複註冊!'){
         setEmailError(true)
       }  
     }

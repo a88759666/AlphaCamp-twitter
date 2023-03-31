@@ -1,7 +1,7 @@
 import AdminSideBar from "../components/AdminSideBar";
 import Container from "components/Container";
 import { VectorIcon, LikeBigIcon } from "assets/images";
-import TweetContextProvider, { useTweetContext } from "contexts/TweetContextProvider";
+import TweetContextProvider from "contexts/TweetContextProvider";
 import { useEffect, useState } from "react";
 import { getUsers } from "api/admin";
 import "styles/scrollbar.css"
