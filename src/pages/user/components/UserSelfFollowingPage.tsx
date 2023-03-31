@@ -138,17 +138,13 @@ const UserSelfFollowingPage:React.FC = () => {
                         }
                     </div>
                 </div>
-              
             </div>
             <div className="basis-3/7">
               <RecommendFollowSidebar />
             </div>
           </div>
         </Container>
-        
       );
-    
-    
 }
   
 export default UserSelfFollowingPage;

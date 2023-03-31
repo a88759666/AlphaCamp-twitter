@@ -186,7 +186,12 @@ const MainSector = () => {
           })
         }
         {currentTab === "likes" && 
-          likes.map(like => {
+          likes.sort((a,b)=>{
+            const likeA = a.Tweet?.createdAt && Number(Date.parse(a.Tweet?.createdAt))
+            const likeB = b.Tweet?.createdAt && Number(Date.parse(b.Tweet?.createdAt))
+            return Number(likeB) - Number(likeA)
+          })
+            .map(like => {
             return(
               <TweetCard 
                 key={like.Tweet?.id}

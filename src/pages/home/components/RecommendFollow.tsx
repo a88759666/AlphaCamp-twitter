@@ -1,14 +1,8 @@
 import { UserImage } from "components/TweetCard"
 import { useEffect, useState } from "react"
 import { follow, getTopFollow, unfollow } from "api/follow";
+import { followProps } from "type"
 
-type followProps = {
-  id: number,
-  name: string,
-  account: string,
-  avatar: string,
-  followingNum: number
-}
 
 
 const FollowBtn = (props: {

@@ -9,36 +9,8 @@ import { useParams } from "react-router-dom";
 import "styles/scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom, getTimeTransForm } from "../../home/components/MainPage"
+import { ResProp } from "type"
 
-
-type ResProp = {
-  id: number,
-  UserId: number,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsRepliesCount:number,
-  tweetsLikedCount:number
-  Replies?:ReplyProps[],
-  User?:User
-
-}
-type ReplyProps = {
-    id: number,
-    UserId: number,
-    TweetId: number,
-    comment: string,
-    createdAt: string,
-    updatedAt: string,
-    User?:User
-}
-type User = {
-    id: number,
-    account: string,
-    name: string,
-    avatar: string,
-    cover: string
-}
 
 
 const ReplyTweetCard = (props: {
@@ -58,7 +30,7 @@ const ReplyTweetCard = (props: {
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")
-  const {currentUser} = useTweetContext()
+  const { currentUser } = useTweetContext()
 
   function handleClose() {
       setShow(false)

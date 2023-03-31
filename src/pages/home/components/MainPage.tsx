@@ -8,26 +8,8 @@ import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
 import { setSourceMapRange } from "typescript";
 import { setuid } from "process";
+import { ResProp } from "type"
 
-
-type ResProp = {
-  id: number,
-  UserId: number,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsRepliesCount:number,
-  tweetsLikedCount:number,
-  User?:User
-}
-
-type User = {
-    id: number,
-    account: string,
-    name: string,
-    avatar: string,
-    cover: string
-}
 
 //timestamp跟現在時間差
  export function getHoursFrom(time:string){

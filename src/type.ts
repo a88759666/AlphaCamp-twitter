@@ -95,3 +95,49 @@ export type AdminTweetList = {
   }
 }
 
+export type AdminUser = {
+  id: number,
+  account: string,
+  email: string,
+  name: string,
+  avatar: string,
+  cover: string,
+  introduction: string,
+  role: string,
+  createdAt: string,
+  updatedAt: string,
+  tweetsCount: number,
+  followersCount: number,
+  followingsCount: number,
+  tweetsLikedCount: number
+}
+
+export type ResProp = {
+  id: number,
+  UserId: number,
+  description: string,
+  createdAt: string,
+  updatedAt: string,
+  tweetsRepliesCount:number,
+  tweetsLikedCount:number,
+  Replies?:ReplyProps[],
+  User?:User
+}
+
+export type followProps = {
+  id: number,
+  name: string,
+  account: string,
+  avatar: string,
+  followingNum: number
+}
+
+export type ReplyProps = {
+    id: number,
+    UserId: number,
+    TweetId: number,
+    comment: string,
+    createdAt: string,
+    updatedAt: string,
+    User?:User
+}
