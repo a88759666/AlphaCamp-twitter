@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { checkPermissionUser } from "api/Auth";
 import { getUserFollowing } from "api/tweet";
 import { Following } from "type";
+import { useTweetContext } from "contexts/TweetContextProvider";
 
 
 type Props = {
@@ -55,6 +56,7 @@ const UserSelfFollowCard:React.FC<Props> = ({
 const UserSelfFollowingPage:React.FC = () => {
     const [ following, setFollowing ] = useState<Following[]>([])
     const go = useNavigate()
+    const { currentUser} = useTweetContext()
 
     async function getFollowingAsync() {
         try {
@@ -69,24 +71,21 @@ const UserSelfFollowingPage:React.FC = () => {
           console.error(error)
         }
     }
-    async function checkTokenIsValid() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            go('/login')
-        }
-        const userId = localStorage.getItem('userId')
-        if(userId) {
-            const userData = await checkPermissionUser(userId);
-            if (!userData) {
-            go('/login')
-            } else {
-            // setUserData(userData)
-            // console.log(userData)
+    
+    useEffect(() => {
+        async function checkTokenIsValid() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                go('/login')
+            }
+            const userId = localStorage.getItem('userId')
+            if(userId) {
+                const userData = await checkPermissionUser(userId);
+                if (!userData) {
+                go('/login')
+                } 
             }
         }
-    }
-      
-    useEffect(() => {
         checkTokenIsValid()
         getFollowingAsync()
     },[go])
@@ -104,7 +103,7 @@ const UserSelfFollowingPage:React.FC = () => {
                             onClick={() => go('/user')}
                         />
                         <div className="flex flex-col items-start">
-                            <div className="font-[700] text-[18px] leading-[26px]">Joho Doe</div>
+                            <div className="font-[700] text-[18px] leading-[26px]">{currentUser.name}</div>
                             <div className="font-[500] text-[13px] leading-[18px]">25 推文</div>
                         </div>
                     </header>
