@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminTweetList } from "type";
 import { getHoursFrom } from "../../home/components/MainPage"
-
+import "styles/scrollbar.css"
 import AdminSideBar from "../components/AdminSideBar";
 
 type Props = {
@@ -124,7 +124,7 @@ const AdminHome: React.FC = () => {
   return (
     <Container>
       <div className="flex flex-row h-screen">
-        <div className="basis-1/3 pl-[30px] py-4">
+        <div className="basis-1/4 pl-[30px] py-4">
           <AdminSideBar />
         </div>
         <div className="basis-5/7 border-l border-r border-slate-200">

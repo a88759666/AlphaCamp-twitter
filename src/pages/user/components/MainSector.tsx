@@ -9,7 +9,7 @@ import { Like, RepliedTweet, Tweet, User } from "type";
 import { checkPermissionUser } from "api/Auth";
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom } from "pages/home/components/MainPage";
-import "scrollbar.css"
+import "styles/scrollbar.css"
 
 const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
   const {currentUserName, currentUserTweetsCount} = props
@@ -186,7 +186,12 @@ const MainSector = () => {
           })
         }
         {currentTab === "likes" && 
-          likes.map(like => {
+          likes.sort((a,b)=>{
+            const likeA = a.Tweet?.createdAt && Number(Date.parse(a.Tweet?.createdAt))
+            const likeB = b.Tweet?.createdAt && Number(Date.parse(b.Tweet?.createdAt))
+            return Number(likeB) - Number(likeA)
+          })
+            .map(like => {
             return(
               <TweetCard 
                 key={like.Tweet?.id}

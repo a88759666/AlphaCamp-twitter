@@ -2,11 +2,15 @@ import { adminLogin } from "api/admin";
 import { InputCard, SubmitBtn, LogoTitle, Container } from "components/AuthInput";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "components/Loading";
+
 
 const AdminLogin = () => {
   const [ account, setAccount ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ userId, setUserId ] = useState()
+  const [ loading , setLoading] = useState(false)
+
   const navigate = useNavigate()
   const go = useNavigate()
 
@@ -28,21 +32,29 @@ const AdminLogin = () => {
     if (password.length === 0) {
       return;
     }
-   
+    setLoading(() => true)
     const { success, token, id } = await adminLogin({
       account,
       password,
     })
-    if (success) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', id)
-      go('/admin/home')
-    } 
+    if(id !== 4){
+      setLoading(() => false)
+      go('/admin/login')
+      alert("無此權限")
+    }else{
+      if (success) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', id)
+        setLoading(() => false)
+        go('/admin/home')
+      } 
+    }
   }
   
     
   return (
       <Container>
+        {loading ?  <Loading /> : null}
         <LogoTitle title="後台登入"/>
         <InputCard 
           type='text'

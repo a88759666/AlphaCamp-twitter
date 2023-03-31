@@ -1,7 +1,6 @@
 import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
 import { useTweetContext } from "contexts/TweetContextProvider"
 import { useNavigate } from "react-router-dom"
-type userState = 'user1' | 'user2' 
 export const UserImage = (props: {
   avatar?: string, 
   onGoUserClick?: (id: number) => void
@@ -39,9 +38,6 @@ export const UserImage = (props: {
   )
 }
 
-
-
-
 const TweetCard = (props: {
   userName?:string, 
   account?:string, 
@@ -64,12 +60,8 @@ const TweetCard = (props: {
 
     function handleTweetClick(id:number) {
       go(`/reply/${id}`)
-    
-      
-
     }
     
-
     return (
       <div className="flex pl-6 pr-8 py-4 border-b hover:bg-[#FAFAFB] cursor-pointer"  >
         <UserImage 

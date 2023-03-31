@@ -6,39 +6,11 @@ import { useState, useEffect } from "react";
 import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
-import "../../../scrollbar.css"
+import "styles/scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
-import { getHoursFrom } from "../../home/components/MainPage"
+import { getHoursFrom, getTimeTransForm } from "../../home/components/MainPage"
+import { ResProp } from "type"
 
-
-type ResProp = {
-  id: number,
-  UserId: number,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsRepliesCount:number,
-  tweetsLikedCount:number
-  Replies?:ReplyProps[],
-  User?:User
-
-}
-type ReplyProps = {
-    id: number,
-    UserId: number,
-    TweetId: number,
-    comment: string,
-    createdAt: string,
-    updatedAt: string,
-    User?:User
-}
-type User = {
-    id: number,
-    account: string,
-    name: string,
-    avatar: string,
-    cover: string
-}
 
 
 const ReplyTweetCard = (props: {
@@ -58,7 +30,7 @@ const ReplyTweetCard = (props: {
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")
-  const {currentUser} = useTweetContext()
+  const { currentUser } = useTweetContext()
 
   function handleClose() {
       setShow(false)
@@ -112,18 +84,7 @@ const ReplyTweetCard = (props: {
       console.log(error)
     }
   }
-  //timestamp跟現在時間差
-  let time;
-  if(tweetPostTime){
-     const {hours, days} = getHoursFrom(tweetPostTime)
-    if(hours !== 0){
-      time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
-    }else if(hours === 0 && days === 0){
-      time = "就在最近"
-    }else if(hours === 0){
-      time = days + "天"
-    }
-  }
+
 
   //timestamp 轉換
   //上午 10:05・2021年11月10日
@@ -188,8 +149,7 @@ const ReplyTweetCard = (props: {
           userName={tweetUserName}
           account={tweetUserAccount}
           tweet={tweetContent}
-          postTimeHours={time}
-          currentUserName={currentUser.name}
+          postTimeHours={tweetPostTime && getTimeTransForm(tweetPostTime)}
           onChange={handleChange}
           onClick={() => {if(tweetId){handleReplyClick(tweetId, comment)}}}
           comment={comment}

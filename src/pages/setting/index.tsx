@@ -142,7 +142,7 @@ const Setting: React.FC = () => {
               placeholder="請再次輸入密碼"
               type='password'
               name='checkPassword'
-              id="password"
+              id="checkPassword"
               value={checkPassword}
               onChange={onChangeCheckPasswordHandler}
               wSize='large'

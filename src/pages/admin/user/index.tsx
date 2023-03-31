@@ -4,7 +4,7 @@ import { VectorIcon, LikeBigIcon } from "assets/images";
 import TweetContextProvider, { useTweetContext } from "contexts/TweetContextProvider";
 import { useEffect, useState } from "react";
 import { getUsers } from "api/admin";
-import "scrollbar.css"
+import "styles/scrollbar.css"
 
 interface User  {
   id: number,

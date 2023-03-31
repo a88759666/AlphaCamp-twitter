@@ -1,27 +1,11 @@
 import axios from 'axios';
-import { AdminTweetList } from 'type';
+import { AdminTweetList, AdminUser } from 'type';
 
 const baseUrl = 'https://arcane-beyond-08221.herokuapp.com/api/';
 
 interface payloadType {
   account?: string,
   password?: string,
-}
-interface User  {
-  id: number,
-  account: string,
-  email: string,
-  name: string,
-  avatar: string,
-  cover: string,
-  introduction: string,
-  role: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsCount: number,
-  followersCount: number,
-  followingsCount: number,
-  tweetsLikedCount: number
 }
 
 
@@ -95,7 +79,7 @@ export async function adminDeleteTweets(id: number) {
 export const getUsers = async () => {
   try{
     const res = await axiosInstance.get(`${baseUrl}/admin/users`)
-    return res.data as User[]
+    return res.data as AdminUser[]
   }catch(error){
     console.error("get Users error: ", error)
   }

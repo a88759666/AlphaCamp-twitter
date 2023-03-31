@@ -3,31 +3,13 @@ import Modal from "components/Modal";
 import TweetCard, { UserImage } from "components/TweetCard";
 import { useState, useEffect } from "react";
 import * as tweet from "api/tweet"
-import "../../../scrollbar.css"
+import "styles/scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
 import { setSourceMapRange } from "typescript";
 import { setuid } from "process";
+import { ResProp } from "type"
 
-
-type ResProp = {
-  id: number,
-  UserId: number,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
-  tweetsRepliesCount:number,
-  tweetsLikedCount:number,
-  User?:User
-}
-
-type User = {
-    id: number,
-    account: string,
-    name: string,
-    avatar: string,
-    cover: string
-}
 
 //timestamp跟現在時間差
  export function getHoursFrom(time:string){
@@ -44,8 +26,21 @@ type User = {
         days,
         hours,
     };
-    
-   
+  }
+
+  export function getTimeTransForm(tragetTime:string){
+    let time;
+    if(tragetTime){
+      const {hours, days} = getHoursFrom(tragetTime)
+      if(hours !== 0){
+        time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
+      }else if(hours === 0 && days === 0){
+        time = "就在最近"
+      }else if(hours === 0){
+        time = days + "天"
+      }
+    }
+    return time
   }
 
 const PostTweet = () => {
