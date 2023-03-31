@@ -8,6 +8,8 @@ import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
 import { setSourceMapRange } from "typescript";
 import { setuid } from "process";
+import { getTimeTransForm } from "pages/user/components/MainSector";
+
 
 
 type ResProp = {
@@ -164,21 +166,12 @@ const MainPage = () => {
         <PostTweet />
         <div >
           {tweets?.map(item => {
-            const {hours, days} = getHoursFrom(item.createdAt)
-            let time;
-            if(hours !== 0){
-              time = days === 0 ?  (hours + "小時") : days + "天" + hours + "小時"
-            }else if(hours === 0 && days === 0){
-              time = "就在最近"
-            }else if(hours === 0){
-              time = days + "天"
-            }
             return(
               <div key={item.id}>
                 <TweetCard 
                   userName={item.User?.name}
                   account={item.User?.account}
-                  postTimeHours={time}
+                  postTimeHours={getTimeTransForm(item.createdAt)}
                   tweet={item.description}
                   likeCount={item.tweetsLikedCount}
                   replyCount={item.tweetsRepliesCount}
@@ -200,7 +193,7 @@ const MainPage = () => {
               onClose={handleClose}
               userName={modalUser?.User?.name}
               account={modalUser?.User?.account}
-              // postTimeHours={modalUser?.}
+              postTimeHours={modalUser?.createdAt && getTimeTransForm(modalUser?.createdAt)}
               tweet={modalUser?.description}
               otherAvatar={modalUser?.User?.avatar}
           />
