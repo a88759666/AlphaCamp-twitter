@@ -1,4 +1,3 @@
-
 import { adminDeleteTweets, adminGetTweets } from "api/admin";
 import { CloseIcon } from "assets/images";
 import Container from "components/Container";
@@ -27,11 +26,6 @@ const AdminTweetCard:React.FC<Props> = ({
   text,
   onDelete
 }) => {
-  // const handleDelete = async () => {
-  //   if (onDelete && id) {
-  //     await onDelete(id)
-  //   }
-  // }
   let newTime;
   if(time){
     const {hours, days} = getHoursFrom(time)
@@ -63,7 +57,6 @@ const AdminTweetCard:React.FC<Props> = ({
         <div 
           className="ml-auto cursor-pointer"
           onClick={() => id !== undefined && onDelete?.(id)}
-          // onClick={handleDelete}
         >
           <CloseIcon />  
         </div>
@@ -82,7 +75,6 @@ const AdminHome: React.FC = () => {
   async function adminGetTweetsAsync(){
     try {
       const res = await adminGetTweets()
-      // console.log(userList)
       if (res) {
         setUserList(res)
       }
@@ -92,10 +84,6 @@ const AdminHome: React.FC = () => {
   }
   async function adminDeleteTweetsAsync(id: number){
     try {
-      // const res = await adminDeleteTweets(id)
-      // if (res) {
-      //   setUserList(res)
-      // }
       await adminDeleteTweets(id)
       setUserList((prevUserList) => {
         return prevUserList.filter((userList) => {
@@ -109,14 +97,14 @@ const AdminHome: React.FC = () => {
       console.error(error)
     }
   }
-  async function checkTokenIsValid() {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      go('admin/login')
-    }
-  }
   
   useEffect(() => {
+    async function checkTokenIsValid() {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        go('admin/login')
+      }
+    }
     checkTokenIsValid()
     adminGetTweetsAsync()
   }, [go])

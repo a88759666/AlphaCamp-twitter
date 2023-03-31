@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserInfoEditModal from "./UserInfoEditModal";
 import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
-import { Like, RepliedTweet, Tweet, User } from "type";
+import { Like, RepliedTweet, Tweet } from "type";
 import { checkPermissionUser } from "api/Auth";
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom } from "pages/home/components/MainPage";
@@ -38,7 +38,6 @@ type userState = 'user1' | 'user2'
 const MainSector = () => {
   const [currentTab, setCurrentTab] = useState("tweets")
   const [ user, setUser ] = useState<userState>('user1')
-  // const [ userData, setUserData ] = useState([])
   const [ show, setShow ] = useState(false)
   const [ ringBell, setRingBell ] = useState(false)
   const [ tweets, setTweets ] = useState<Tweet[]>([])
@@ -90,24 +89,22 @@ const MainSector = () => {
       console.error(error)
     }
   }
-  async function checkTokenIsValid() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      go('/login')
-    }
-    const userId = localStorage.getItem('userId')
-    if(userId) {
-      const userData = await checkPermissionUser(userId);
-      if (!userData) {
-        go('/login')
-      } else {
-        // setUserData(userData)
-        // console.log(userData)
-      }
-    }
-  }
   
   useEffect(() => {
+    async function checkTokenIsValid() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        go('/login')
+      }
+      const userId = localStorage.getItem('userId')
+      if(userId) {
+        const userData = await checkPermissionUser(userId);
+        if (!userData) {
+          go('/login')
+        } else {
+        }
+      }
+    }
     checkTokenIsValid()
     getTweetsAsync()
     getLIkesAsync()
@@ -139,6 +136,7 @@ const MainSector = () => {
         currentUserBio={currentUser.introduction} 
         currentUserFollow={36} 
         currentUserFollowed={29}
+        currentUserAvatar={currentUser.avatar}
         coverUrl={currentUser.cover}
         handleEdit={handleEditModal}
         type={user} 
@@ -153,7 +151,6 @@ const MainSector = () => {
       <div className="overflow-scroll">
         {currentTab === "tweets" && Array.isArray(tweets) &&
           tweets?.map(tweet => {
-            
               return(
                 <TweetCard 
                   key={tweet.id}
@@ -165,7 +162,6 @@ const MainSector = () => {
                   avatar={tweet.User?.avatar}
                   userName={tweet.User?.name}
                   id={tweet.id}
-                  // setUser={setUser}
                 /> 
               )
           })

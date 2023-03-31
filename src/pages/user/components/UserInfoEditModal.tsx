@@ -3,7 +3,6 @@ import { InputCard } from "components/AuthInput"
 import React, { useEffect } from 'react';
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { useNavigate } from "react-router-dom";
 import { checkPermissionUser, editUserModal } from "api/Auth";
 
 type Props = {
@@ -20,8 +19,6 @@ const UserInfoEditModal:React.FC<Props> = ({
     const [ cover, setCover ] = useState('')
     const [ introduction, setIntroduction ] = useState('')
     const [ isUpdating, setIsUpdating ] = useState(false)
-    const go = useNavigate()
-   
 
     function onChangeNameHandler(event: React.FormEvent<HTMLInputElement>) {
         if(isUpdating){
@@ -37,22 +34,6 @@ const UserInfoEditModal:React.FC<Props> = ({
         }
         if (event.currentTarget) {
           setIntroduction(event.currentTarget.value)
-        }
-    }
-    function onChangeAvatarHandler(event: React.FormEvent<HTMLInputElement>) {
-        if(isUpdating){
-            return;
-        }
-        if (event.currentTarget) {
-          setAvatar(event.currentTarget.value)
-        }
-    }
-    function onChangeCoverHandler(event: React.FormEvent<HTMLInputElement>) {
-        if(isUpdating){
-            return;
-        }
-        if (event.currentTarget) {
-          setCover(event.currentTarget.value)
         }
     }
 
@@ -111,7 +92,6 @@ const UserInfoEditModal:React.FC<Props> = ({
             fileReader.addEventListener("load", async() => {
                 const url = await fileReader.result as string // 將 any 型別轉換為 string
                 setCover(url)
-                // console.log(cover)
             })
         }
     }
@@ -124,7 +104,6 @@ const UserInfoEditModal:React.FC<Props> = ({
             fileReader.addEventListener("load", async() => {
                 const url = await fileReader.result as string
                 setAvatar(url)
-                // console.log(Avatar)
             })
         }
     }
@@ -180,6 +159,7 @@ const UserInfoEditModal:React.FC<Props> = ({
                                     <div className="w-[600px] h-[200px] relative">
                                         <img
                                             src={cover}
+                                            alt={cover}
                                             className="bg-cover bg-center"
                                         />
                                         <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-black bg-fixed opacity-50" />
@@ -208,6 +188,7 @@ const UserInfoEditModal:React.FC<Props> = ({
                                         <div className="absolute left-0 bottom-0 translate-x-[15px] translate-y-[60px]">
                                             <img
                                                 src={avatar}
+                                                alt={name}
                                                 className="w-[120px] h-[120px] rounded-full bg-cover bg-center relative"
                                             />
                                             <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full rounded-full overflow-hidden bg-black bg-fixed opacity-50" />
@@ -279,11 +260,6 @@ const UserInfoEditModal:React.FC<Props> = ({
                 </div>
             </Dialog>
         </Transition.Root>
-        
-  
-        
-        
-        
     </>
 }
 

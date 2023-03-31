@@ -109,7 +109,6 @@ export const unlikeTweet = async (id:number | string) => {
 export async function getUserTweets(id:string) {
     try {
       const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/tweets`)
-      // console.log(data)
       return data as Tweet[]
     } catch (error) {
       console.error('Get User tweets failed:', error)
@@ -120,7 +119,6 @@ export async function getUserTweets(id:string) {
 export async function getUserLikes(id:string) {
   try {
     const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/likes`)
-    // console.log(data)
     return data as Like[]
   } catch (error) {
     console.error('Get User likes  failed:', error)
@@ -131,7 +129,6 @@ export async function getUserLikes(id:string) {
 export async function getUserRepliedTweets(id:string) {
   try {
     const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/replied_tweets`)
-    // console.log(data)
     return data as RepliedTweet[]
   } catch (error) {
     console.error('Get User likes  failed:', error)
@@ -142,7 +139,6 @@ export async function getUserRepliedTweets(id:string) {
 export async function getUserFollowing(id:string) {
   try {
     const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/followings`)
-    // console.log(data)
     return data as Following[]
   } catch (error) {
     console.error('Get User Following  failed:', error)
@@ -153,7 +149,6 @@ export async function getUserFollowing(id:string) {
 export async function getUserFollower(id:string) {
   try {
     const { data } =  await axiosInstance.get(`${baseUrl}/users/${id}/followers`)
-    // console.log(data)
     return data as Follower[]
   } catch (error) {
     console.error('Get User Follower failed:', error)

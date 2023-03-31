@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react"
 import { checkPermissionUser } from "api/Auth";
-import { useTweetContext } from "contexts/TweetContextProvider";
 
 //總導引頁
 const HomePage = () => {
@@ -20,8 +19,6 @@ const HomePage = () => {
         if (!userData) {
           go('/login')
         } else {
-          // setUserData(userData)
-          // console.log(userData)
           go('/home')
         }
     }

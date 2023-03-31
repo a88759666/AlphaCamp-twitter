@@ -1,33 +1,13 @@
 import {LikeIcon, LikeIconActive, ReplyIcon} from "assets/images/index"
-import { useTweetContext } from "contexts/TweetContextProvider"
 import { useNavigate } from "react-router-dom"
 export const UserImage = (props: {
   avatar?: string, 
   onGoUserClick?: (id: number) => void
   id?:number,
   userName?:string,
-  // userId?:number,
-  // changeUserMode?: () => void 
-
 }) => {
-  // const {avatar, changeUserMode, id, userName, userId, onGoUserClick} = props
 
   const {avatar, id, userName,  onGoUserClick} = props
-  // console.log(changeUserMode)
-
-  const go = useNavigate()
-  const {currentUser} = useTweetContext()
-
-  // function handleUserClick(userId:number){
-  //   const currentUserId = currentUser.id
-  //   // console.log(changeUserMode)
-  //   if(changeUserMode) {
-  //     if(currentUserId !== userId){
-  //       changeUserMode() 
-  //       go(`/user`)
-  //     }
-  //   }
-  // }
 
   return (
     <img 
@@ -50,10 +30,7 @@ const TweetCard = (props: {
   handleReplyModal?: (id: number) => void,
   id?:number,
   onGoUserClick?: (id: number) => void,
-  // userId?:number,
-  // changeUserMode?: () => void
 }) => {
-    // const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, changeUserMode , userId} = props
     const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, onGoUserClick } = props
 
     const go = useNavigate()
@@ -69,8 +46,6 @@ const TweetCard = (props: {
           id={id}
           onGoUserClick={onGoUserClick}
           userName={userName}
-          // userId={userId}
-          // changeUserMode={changeUserMode}
         />
         <div className="ml-2 w-full ">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>

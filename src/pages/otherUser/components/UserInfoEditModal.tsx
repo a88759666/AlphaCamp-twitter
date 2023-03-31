@@ -3,7 +3,6 @@ import { InputCard } from "components/AuthInput"
 import React from 'react';
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { useNavigate } from "react-router-dom";
 import { editUserModal } from "api/Auth";
 
 type Props = {
@@ -19,7 +18,6 @@ const UserInfoEditModal:React.FC<Props> = ({
     const [ avatar, setAvatar ] = useState('')
     const [ cover, setCover ] = useState('')
     const [ introduction, setIntroduction ] = useState('')
-    const go = useNavigate()
 
     function onChangeNameHandler(event: React.FormEvent<HTMLInputElement>) {
         if (event.currentTarget) {
@@ -32,12 +30,6 @@ const UserInfoEditModal:React.FC<Props> = ({
         }
     }
     async function handleClickSaveModal(){
-        // if (avatar.length === 0) {
-        //     return;
-        // }
-        // if (cover.length === 0) {
-        // return;
-        // }
         if (name.length === 0) {
             return;
         }
@@ -105,11 +97,13 @@ const UserInfoEditModal:React.FC<Props> = ({
                                     </div>
                                     <div className="w-[600px] h-[200px] relative">
                                         <img
-                                            src="https://picsum.photos/600/200?text=2"
+                                            src={cover}
+                                            alt="cover"
                                             className="bg-cover bg-center"
                                         />
                                         <img
-                                            src="https://picsum.photos/200/200?text=2"
+                                            src={avatar}
+                                            alt={name}
                                             className="w-[120px] h-[120px] rounded-full bg-cover bg-center absolute left-0 bottom-0 translate-x-[15px] translate-y-[60px]"
                                         />
                                     </div>

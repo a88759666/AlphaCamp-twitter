@@ -15,7 +15,6 @@ const Register:React.FC = () => {
   const [ emailError, setEmailError ] = useState(false)
   const [ passwordError, setPasswordError ] = useState(false)
 
-  const [ errorMsg, setErrorMsg ] = useState('')
   const go = useNavigate()
 
   function onChangeAccountHandler(event: React.FormEvent<HTMLInputElement>) {
@@ -68,7 +67,6 @@ const Register:React.FC = () => {
       checkPassword
     })
     if (success) {
-      console.log(success)
       go('/login')
     } else {
       let errorMsg = localStorage.getItem('errorMsg')

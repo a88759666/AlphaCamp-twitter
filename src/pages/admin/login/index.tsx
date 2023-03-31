@@ -1,6 +1,6 @@
 import { adminLogin } from "api/admin";
 import { InputCard, SubmitBtn, LogoTitle, Container } from "components/AuthInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "components/Loading";
 
@@ -8,7 +8,6 @@ import Loading from "components/Loading";
 const AdminLogin = () => {
   const [ account, setAccount ] = useState('')
   const [ password, setPassword ] = useState('')
-  const [ userId, setUserId ] = useState()
   const [ loading , setLoading] = useState(false)
 
   const navigate = useNavigate()

@@ -7,7 +7,6 @@ import Modal from "components/Modal";
 import {getSingleTweet, likeTweet, unlikeTweet, replyTweet} from "api/tweet"
 import { useParams } from "react-router-dom";
 import "styles/scrollbar.css"
-import { useTweetContext } from "contexts/TweetContextProvider";
 import { getHoursFrom, getTimeTransForm } from "../../home/components/MainPage"
 import { ResProp } from "type"
 
@@ -30,7 +29,6 @@ const ReplyTweetCard = (props: {
   const [ show, setShow ] = useState(false)
   const [ like, setLike ] = useState(false)
   const [ comment, setComment] = useState<string>("")
-  const { currentUser } = useTweetContext()
 
   function handleClose() {
       setShow(false)
@@ -93,13 +91,13 @@ const ReplyTweetCard = (props: {
     let result;
     const  newDate = new Date(date)
     if(newDate.getHours() - 12 === 0){
-      hour = "下午" + " " + "12"
+      hour = "下午 12"
     }else if(newDate.getHours() -12 > 0 && newDate.getHours() - 12 < 12){
-      hour = "下午" + " " + (newDate.getHours() -12)
+      hour = "下午 " + (newDate.getHours() -12)
     }else if(newDate.getHours() - 12 < 0){
-      hour = "上午" + " " + newDate.getHours()
+      hour = "上午 "  + newDate.getHours()
     }else if(newDate.getHours() - 12 === 12){
-      hour = "中午" + " " + "12"
+      hour = "中午 12"
     }
     if(newDate?.getMonth()){
       result = 

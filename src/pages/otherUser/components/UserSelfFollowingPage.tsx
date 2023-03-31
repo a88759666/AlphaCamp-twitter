@@ -69,24 +69,23 @@ const UserSelfFollowingPage:React.FC = () => {
           console.error(error)
         }
     }
-    async function checkTokenIsValid() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            go('/login')
-        }
-        const userId = localStorage.getItem('userId')
-        if(userId) {
-            const userData = await checkPermissionUser(userId);
-            if (!userData) {
-            go('/login')
-            } else {
-            // setUserData(userData)
-            // console.log(userData)
+    
+    useEffect(() => {
+        async function checkTokenIsValid() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                go('/login')
+            }
+            const userId = localStorage.getItem('userId')
+            if(userId) {
+                const userData = await checkPermissionUser(userId);
+                if (!userData) {
+                    go('/login')
+                } else {
+                    go('/home')
+                }
             }
         }
-    }
-      
-    useEffect(() => {
         checkTokenIsValid()
         getFollowingAsync()
     },[go])

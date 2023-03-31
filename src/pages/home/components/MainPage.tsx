@@ -6,8 +6,6 @@ import * as tweet from "api/tweet"
 import "styles/scrollbar.css"
 import { useTweetContext } from "contexts/TweetContextProvider";
 import { useNavigate } from "react-router-dom" 
-import { setSourceMapRange } from "typescript";
-import { setuid } from "process";
 import { ResProp } from "type"
 
 
@@ -45,11 +43,8 @@ import { ResProp } from "type"
 
 const PostTweet = () => {
   const [ show, setShow ] = useState(false)
-
   const [post , setPost] = useState<string>("")
   const { currentUser } = useTweetContext()
-
-
 
   function handleChange(event:React.FormEvent<HTMLTextAreaElement>) {
     if(event.currentTarget){
@@ -137,28 +132,16 @@ const MainPage = () => {
       if(res){
         setModalUser(res)
       }
-    console.log(res)
     } catch (error) {
-      
+      console.log(error)
     }
-    
-
   }
-  // function handleUserClick(userId:number){
-  //   const currentUserId = currentUser.id
-  //   console.log(currentUserId)
-  //   if(currentUserId !== userId){
-  //     navigate(`/user`)
-  //   }
-  // }
   function handleUserClick(id:number){
     const currentUserId = currentUser.id 
-    console.log(currentUserId)
     if(currentUserId !== id){
       const userId = id as unknown as string
       localStorage.setItem('userId', userId)
       navigate(`/user/${id}`)
-      console.log(id)
     }
   }
 
@@ -188,11 +171,8 @@ const MainPage = () => {
                   replyCount={item.tweetsRepliesCount}
                   avatar={item.User?.avatar}
                   handleReplyModal={handleReplyModal}
-                  id={item.UserId}
+                  id={item.id}
                   onGoUserClick={handleUserClick}
-                  
-
-                  // userId={item.User?.id}
                 /> 
               </div>
             )
@@ -206,7 +186,6 @@ const MainPage = () => {
               onClose={handleClose}
               userName={modalUser?.User?.name}
               account={modalUser?.User?.account}
-              // postTimeHours={modalUser?.}
               tweet={modalUser?.description}
               otherAvatar={modalUser?.User?.avatar}
           />
