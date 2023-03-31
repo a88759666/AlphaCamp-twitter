@@ -60,6 +60,7 @@ const TweetContextProvider:React.FC<Props> = ({children}) => {
       const tempPayload = jwt_decode(authToken) as JWT
       if(tempPayload){
         setPayload(tempPayload)
+        setIsAuthenticated(true)
       }
     }else{
       setIsAuthenticated(false);

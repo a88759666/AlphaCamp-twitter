@@ -1,4 +1,5 @@
 import type { RouteObject } from "react-router-dom"
+import HomePage from "pages/homePage"
 import Home from "./pages/home"
 import Reply from "./pages/reply"
 import Login from "./pages/login"
@@ -15,6 +16,11 @@ import User2 from "pages/otherUser"
 
 
 const routes: RouteObject[] = [
+    {
+        path: "*",
+        element: <HomePage />,
+        children: []
+    },
     {
         path: "/login",
         element: <Login />,
