@@ -5,15 +5,16 @@ export const UserImage = (props: {
   onGoUserClick?: (id: number) => void
   id?:number,
   userName?:string,
+  userId?:number
 }) => {
 
-  const {avatar, id, userName,  onGoUserClick} = props
+  const {avatar, userId, userName,  onGoUserClick} = props
 
   return (
     <img 
       src={avatar} alt={userName} 
       className="w-[50px] h-[50px] rounded-full"
-      onClick={() => id && onGoUserClick?.(id)}
+      onClick={() => userId && onGoUserClick?.(userId)}
     />
   )
 }
@@ -30,8 +31,9 @@ const TweetCard = (props: {
   handleReplyModal?: (id: number) => void,
   id?:number,
   onGoUserClick?: (id: number) => void,
+  userId?:number,
 }) => {
-    const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, onGoUserClick } = props
+    const { userName,account,postTimeHours,tweet, likeCount, isLiked, replyCount, avatar,  handleReplyModal, id, onGoUserClick, userId } = props
 
     const go = useNavigate()
 
@@ -46,6 +48,7 @@ const TweetCard = (props: {
           id={id}
           onGoUserClick={onGoUserClick}
           userName={userName}
+          userId={userId}
         />
         <div className="ml-2 w-full ">
           <div onClick={() => {if(id){handleTweetClick(id)}}}>
