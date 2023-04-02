@@ -102,8 +102,8 @@ export async function logout() {
 export async function checkPermissionUser(id: string) {
     try {
         const { data } = await axiosInstance.get(`${authUrl}/users/${id}`)
-        const { account, name, avatar, cover, introduction, followingCount, followerCounts, tweetCounts } = data
-        return [ id, account, name, avatar, cover, introduction, followingCount, followerCounts, tweetCounts ]
+        const { account, name, avatar, cover, introduction, followingCount, followerCounts } = data
+        return [ id, account, name, avatar, cover, introduction, followingCount, followerCounts ]
     } catch (error) {
         console.error('check permissionUser failed:', error)
     }

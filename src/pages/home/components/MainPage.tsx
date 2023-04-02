@@ -173,6 +173,7 @@ const MainPage = () => {
                   handleReplyModal={handleReplyModal}
                   id={item.id}
                   onGoUserClick={handleUserClick}
+                  userId={item.UserId}
                 /> 
               </div>
             )
