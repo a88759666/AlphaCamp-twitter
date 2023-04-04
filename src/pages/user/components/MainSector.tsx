@@ -6,12 +6,25 @@ import { useEffect, useState } from "react";
 import UserInfoEditModal from "./UserInfoEditModal";
 import { getUserLikes, getUserRepliedTweets, getUserTweets } from "api/tweet";
 import { Like, RepliedTweet, Tweet } from "type";
-import { checkPermissionUser } from "api/Auth";
-import { useTweetContext } from "contexts/TweetContextProvider";
+import { checkPermissionUser, getCurrentUser } from "api/Auth";
 import { getHoursFrom } from "pages/home/components/MainPage";
 import "styles/scrollbar.css"
 
-const MainHeader = (props:{currentUserName: string, currentUserTweetsCount:number}) => {
+type CurrentUser = {
+    id: 14,
+    name: string,
+    account: string,
+    avatar: string,
+    cover: string,
+    introduction: string,
+    isFollowed: number,
+    tweetCounts: number,
+    followingCount: number,
+    followerCounts: number
+}
+
+
+const MainHeader = (props:{currentUserName?: string, currentUserTweetsCount:number}) => {
   const {currentUserName, currentUserTweetsCount} = props
   return(
     <div className="flex py-3 ">
@@ -43,7 +56,7 @@ const MainSector = () => {
   const [ tweets, setTweets ] = useState<Tweet[]>([])
   const [ repliedTweets, setRepliedTweets ] = useState<RepliedTweet[]>([])
   const [ likes, setLikes ] = useState<Like[]>([])
-  const {currentUser} = useTweetContext()
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null)
 
   const go = useNavigate()
 
@@ -89,8 +102,14 @@ const MainSector = () => {
       console.error(error)
     }
   }
+
   
   useEffect(() => {
+    async function getUserInfo(){
+      const userId = localStorage.getItem('userId') as string
+      const res = await getCurrentUser(Number(userId)) as CurrentUser
+      setCurrentUser(res)
+    }
     async function checkTokenIsValid() {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -101,15 +120,15 @@ const MainSector = () => {
         const userData = await checkPermissionUser(userId);
         if (!userData) {
           go('/login')
-        } else {
-        }
+        } 
       }
     }
+    getUserInfo()
     checkTokenIsValid()
     getTweetsAsync()
     getLIkesAsync()
     getRepliedTweetsAsync()
-  },[go])
+  },[go, currentUser])
 
   function getTimeTransForm(tragetTime:string){
   //timestamp跟現在時間差
@@ -129,15 +148,15 @@ const MainSector = () => {
   
   return <>
     <main className="basis-5/7 border-x overflow-auto">
-      <MainHeader currentUserName={currentUser.name} currentUserTweetsCount={25} />
+      <MainHeader currentUserName={currentUser?.name} currentUserTweetsCount={25} />
       <ProfileCard 
-        currentUserName={currentUser.name} 
-        currentUserAccount={currentUser.account} 
-        currentUserBio={currentUser.introduction} 
-        currentUserFollow={36} 
-        currentUserFollowed={29}
-        currentUserAvatar={currentUser.avatar}
-        coverUrl={currentUser.cover}
+        currentUserName={currentUser?.name} 
+        currentUserAccount={currentUser?.account} 
+        currentUserBio={currentUser?.introduction} 
+        currentUserFollow={currentUser?.followingCount} 
+        currentUserFollowed={currentUser?.followerCounts}
+        currentUserAvatar={currentUser?.avatar}
+        coverUrl={currentUser?.cover}
         handleEdit={handleEditModal}
         type={user} 
         ringBell={ringBell}
@@ -208,6 +227,7 @@ const MainSector = () => {
       {show && (
           <UserInfoEditModal 
             onClose={handleCloseModal}
+            setCurrentUser={setCurrentUser}
           />
       )}
     </main>

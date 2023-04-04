@@ -23,6 +23,21 @@ interface editUserType {
 
 }
 
+type CurrentUser = {
+    id: 14,
+    name: string,
+    account: string,
+    avatar: string,
+    cover: string,
+    introduction: string,
+    isFollowed: number,
+    tweetCounts: number,
+    followingCount: number,
+    followerCounts: number
+}
+
+
+
 const authUrl = 'https://arcane-beyond-08221.herokuapp.com/api' as string
 
 const axiosInstance = axios.create({
@@ -160,4 +175,11 @@ export async function editUserModal(payload:editUserType) {
     }
 }
 
-
+export async function getCurrentUser(id:number){
+    try{
+        const res = await axiosInstance.get(`${authUrl}/users/${id}`) 
+        return res.data as CurrentUser
+    }catch(error){
+        console.error(error)
+    }
+}
