@@ -5,12 +5,26 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { editUserModal } from "api/Auth";
 
+type CurrentUser = {
+    id: 14,
+    name: string,
+    account: string,
+    avatar: string,
+    cover: string,
+    introduction: string,
+    isFollowed: number,
+    tweetCounts: number,
+    followingCount: number,
+    followerCounts: number
+}
+
 type Props = {
-    onClose?: () => void
+    onClose?: () => void,
+    setCurrentUser?:React.Dispatch<React.SetStateAction<CurrentUser | null>>
 }
 
 const UserInfoEditModal:React.FC<Props> = ({
-    onClose
+    onClose, setCurrentUser
 }) => {
     const [open, setOpen] = useState(true)
     const cancelButtonRef = useRef(null)
@@ -89,10 +103,10 @@ const UserInfoEditModal:React.FC<Props> = ({
                                         </div>
                                         <h1 className="font-[700] text-[19px] leading-[28px]">編輯個人資料</h1>
                                         <div 
-                                            className="btn-orange focus:btn-orange-focus hover:btn-orange-hover ml-auto"
+                                            className="btn-orange focus:btn-orange-focus hover:btn-orange-hover ml-auto hover:cursor-pointer"
                                             onClick={handleClickSaveModal} 
                                         >
-                                            <h1 className="px-[15px] text-[15px] text-white font-[700] leading-[15px]">儲存</h1>
+                                            <h1 className="px-[15px] text-[15px] text-white font-[700] leading-[15px] ">儲存</h1>
                                         </div>
                                     </div>
                                     <div className="w-[600px] h-[200px] relative">
@@ -158,11 +172,6 @@ const UserInfoEditModal:React.FC<Props> = ({
                 </div>
             </Dialog>
         </Transition.Root>
-        
-  
-        
-        
-        
     </>
 }
 

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom"
 
 
 const ProfileCard = (props :{
-  currentUserName:string,
-  currentUserAccount:string,
-  currentUserBio:string,
-  currentUserFollow:number,
-  currentUserFollowed:number,
-  currentUserAvatar:string,
-  coverUrl:string,
+  currentUserName?:string,
+  currentUserAccount?:string,
+  currentUserBio?:string,
+  currentUserFollow?:number,
+  currentUserFollowed?:number,
+  currentUserAvatar?:string,
+  coverUrl?:string,
   handleEdit:() => void,
   type?: string,
   ringBell?: boolean,
