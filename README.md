@@ -8,7 +8,7 @@ Alpha Camp驗收專案
 
     npm install
 
-    mpn start
+    npm run start
 
 ## Deployment
 
