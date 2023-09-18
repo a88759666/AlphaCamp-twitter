@@ -1,6 +1,4 @@
-# Alphitter
-
-Alpha Camp驗收專案
+# Alpha Camp驗收專案
 
 ## Getting Start
 
